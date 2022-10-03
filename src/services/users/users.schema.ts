@@ -1,17 +1,16 @@
 import { schema, querySyntax } from '@feathersjs/schema'
 import type { Infer } from '@feathersjs/schema'
-import { ShoppersData } from '../shoppers/shoppers.schema'
 
 // Schema for the basic data model (e.g. creating new entries)
 export const usersDataSchema = schema({
   $id: 'UsersData',
   type: 'object',
   additionalProperties: false,
-  required: ['phoneNo'],
+  required: ['firstname','lastname','phone'],
   properties: {
     firstname: {type: 'string'},
     lastname: {type:'string'},
-    phoneNo: {type: 'string'},
+    phone: {type: 'string'},
     email: { type: 'string' },
     password: { type: 'string' }
   }
