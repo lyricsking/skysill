@@ -1,0 +1,4 @@
+node_modules/
+
+#Hide SQLite
+skysill.sqlite
