@@ -1,61 +1,43 @@
-import { resolve, getDataValidator, getValidator, querySyntax } from '@feathersjs/schema'
-import type { FromSchema } from '@feathersjs/schema'
+import { resolve } from '@feathersjs/schema'
+import { Type, getDataValidator, getValidator, querySyntax } from '@feathersjs/typebox'
+import type { Static } from '@feathersjs/typebox'
 
 import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../schemas/validators'
 
 // Main data model schema
-export const shopSchema = {
-  $id: 'Shop',
-  type: 'object',
-  additionalProperties: false,
-  required: ['id', 'text'],
-  properties: {
-    id: {
-      type: 'number'
-    },
-    text: {
-      type: 'string'
-    }
-  }
-} as const
-export type Shop = FromSchema<typeof shopSchema>
-export const shopResolver = resolve<Shop, HookContext>({
-  properties: {}
-})
-export const shopExternalResolver = resolve<Shop, HookContext>({
+export const shopsSchema = Type.Object(
+  {
+    id: Type.Number(),
+    text: Type.String()
+  },
+  { $id: 'Shops', additionalProperties: false }
+)
+export type Shops = Static<typeof shopsSchema>
+export const shopsResolver = resolve<Shops, HookContext>({
   properties: {}
 })
 
-// Schema for creating new data
-export const shopDataSchema = {
-  $id: 'ShopData',
-  type: 'object',
-  additionalProperties: false,
-  required: ['text'],
-  properties: {
-    text: {
-      type: 'string'
-    }
-  }
-} as const
-export type ShopData = FromSchema<typeof shopDataSchema>
-export const shopDataValidator = getDataValidator(shopDataSchema, dataValidator)
-export const shopDataResolver = resolve<ShopData, HookContext>({
+export const shopsExternalResolver = resolve<Shops, HookContext>({
+  properties: {}
+})
+
+// Schema for creating new entries
+export const shopsDataSchema = Type.Pick(shopsSchema, ['text'], {
+  $id: 'ShopsData',
+  additionalProperties: false
+})
+export type ShopsData = Static<typeof shopsDataSchema>
+export const shopsDataValidator = getDataValidator(shopsDataSchema, dataValidator)
+export const shopsDataResolver = resolve<Shops, HookContext>({
   properties: {}
 })
 
 // Schema for allowed query properties
-export const shopQuerySchema = {
-  $id: 'ShopQuery',
-  type: 'object',
-  additionalProperties: false,
-  properties: {
-    ...querySyntax(shopSchema.properties)
-  }
-} as const
-export type ShopQuery = FromSchema<typeof shopQuerySchema>
-export const shopQueryValidator = getValidator(shopQuerySchema, queryValidator)
-export const shopQueryResolver = resolve<ShopQuery, HookContext>({
+export const shopsQueryProperties = Type.Pick(shopsSchema, ['id', 'text'], { additionalProperties: false })
+export const shopsQuerySchema = querySyntax(shopsQueryProperties)
+export type ShopsQuery = Static<typeof shopsQuerySchema>
+export const shopsQueryValidator = getValidator(shopsQuerySchema, queryValidator)
+export const shopsQueryResolver = resolve<ShopsQuery, HookContext>({
   properties: {}
 })

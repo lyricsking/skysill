@@ -1,24 +1,24 @@
 import { hooks as schemaHooks } from '@feathersjs/schema'
 
 import {
-  productCategoryDataValidator,
-  productCategoryQueryValidator,
-  productCategoryResolver,
-  productCategoryDataResolver,
-  productCategoryQueryResolver,
-  productCategoryExternalResolver
+  pcategoriesDataValidator,
+  pcategoriesQueryValidator,
+  pcategoriesResolver,
+  pcategoriesDataResolver,
+  pcategoriesQueryResolver,
+  pcategoriesExternalResolver
 } from './pcategories.schema'
 
 import type { Application } from '../../declarations'
-import { ProductCategoryService, getOptions } from './pcategories.class'
+import { PcategoriesService, getOptions } from './pcategories.class'
 
 export * from './pcategories.class'
 export * from './pcategories.schema'
 
 // A configure function that registers the service and its hooks via `app.configure`
-export const productCategory = (app: Application) => {
+export const pcategories = (app: Application) => {
   // Register our service on the Feathers application
-  app.use('pcategories', new ProductCategoryService(getOptions(app)), {
+  app.use('pcategories', new PcategoriesService(getOptions(app)), {
     // A list of all methods this service exposes externally
     methods: ['find', 'get', 'create', 'update', 'patch', 'remove'],
     // You can add additional custom events to be sent to clients here
@@ -31,16 +31,16 @@ export const productCategory = (app: Application) => {
     },
     before: {
       all: [
-        schemaHooks.validateQuery(productCategoryQueryValidator),
-        schemaHooks.validateData(productCategoryDataValidator),
-        schemaHooks.resolveQuery(productCategoryQueryResolver),
-        schemaHooks.resolveData(productCategoryDataResolver)
+        schemaHooks.validateQuery(pcategoriesQueryValidator),
+        schemaHooks.validateData(pcategoriesDataValidator),
+        schemaHooks.resolveQuery(pcategoriesQueryResolver),
+        schemaHooks.resolveData(pcategoriesDataResolver)
       ]
     },
     after: {
       all: [
-        schemaHooks.resolveResult(productCategoryResolver),
-        schemaHooks.resolveExternal(productCategoryExternalResolver)
+        schemaHooks.resolveResult(pcategoriesResolver),
+        schemaHooks.resolveExternal(pcategoriesExternalResolver)
       ]
     },
     error: {
@@ -52,6 +52,6 @@ export const productCategory = (app: Application) => {
 // Add this service to the service type index
 declare module '../../declarations' {
   interface ServiceTypes {
-    pcategories: ProductCategoryService
+    pcategories: PcategoriesService
   }
 }

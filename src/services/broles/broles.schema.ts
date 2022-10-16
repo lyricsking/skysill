@@ -1,60 +1,42 @@
-import { resolve, getDataValidator, getValidator, querySyntax } from '@feathersjs/schema'
-import type { FromSchema } from '@feathersjs/schema'
+import { resolve } from '@feathersjs/schema'
+import { Type, getDataValidator, getValidator, querySyntax } from '@feathersjs/typebox'
+import type { Static } from '@feathersjs/typebox'
 
 import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../schemas/validators'
 
 // Main data model schema
-export const brolesSchema = {
-  $id: 'Broles',
-  type: 'object',
-  additionalProperties: false,
-  required: ['id', 'text'],
-  properties: {
-    id: {
-      type: 'number'
-    },
-    text: {
-      type: 'string'
-    }
-  }
-} as const
-export type Broles = FromSchema<typeof brolesSchema>
+export const brolesSchema = Type.Object(
+  {
+    id: Type.Number(),
+    text: Type.String()
+  },
+  { $id: 'Broles', additionalProperties: false }
+)
+export type Broles = Static<typeof brolesSchema>
 export const brolesResolver = resolve<Broles, HookContext>({
   properties: {}
 })
+
 export const brolesExternalResolver = resolve<Broles, HookContext>({
   properties: {}
 })
 
-// Schema for creating new data
-export const brolesDataSchema = {
+// Schema for creating new entries
+export const brolesDataSchema = Type.Pick(brolesSchema, ['text'], {
   $id: 'BrolesData',
-  type: 'object',
-  additionalProperties: false,
-  required: ['text'],
-  properties: {
-    text: {
-      type: 'string'
-    }
-  }
-} as const
-export type BrolesData = FromSchema<typeof brolesDataSchema>
+  additionalProperties: false
+})
+export type BrolesData = Static<typeof brolesDataSchema>
 export const brolesDataValidator = getDataValidator(brolesDataSchema, dataValidator)
-export const brolesDataResolver = resolve<BrolesData, HookContext>({
+export const brolesDataResolver = resolve<Broles, HookContext>({
   properties: {}
 })
 
 // Schema for allowed query properties
-export const brolesQuerySchema = {
-  $id: 'BrolesQuery',
-  type: 'object',
-  additionalProperties: false,
-  properties: {
-    ...querySyntax(brolesSchema.properties)
-  }
-} as const
-export type BrolesQuery = FromSchema<typeof brolesQuerySchema>
+export const brolesQueryProperties = Type.Pick(brolesSchema, ['id', 'text'], { additionalProperties: false })
+export const brolesQuerySchema = querySyntax(brolesQueryProperties)
+export type BrolesQuery = Static<typeof brolesQuerySchema>
 export const brolesQueryValidator = getValidator(brolesQuerySchema, queryValidator)
 export const brolesQueryResolver = resolve<BrolesQuery, HookContext>({
   properties: {}

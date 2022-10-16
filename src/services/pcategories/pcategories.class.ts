@@ -3,14 +3,14 @@ import { KnexService } from '@feathersjs/knex'
 import type { KnexAdapterParams, KnexAdapterOptions } from '@feathersjs/knex'
 
 import type { Application } from '../../declarations'
-import type { ProductCategory, ProductCategoryData, ProductCategoryQuery } from './pcategories.schema'
+import type { Pcategories, PcategoriesData, PcategoriesQuery } from './pcategories.schema'
 
-export interface ProductCategoryParams extends KnexAdapterParams<ProductCategoryQuery> {}
+export interface PcategoriesParams extends KnexAdapterParams<PcategoriesQuery> {}
 
 // By default calls the standard Knex adapter service methods but can be customized with your own functionality.
-export class ProductCategoryService<ServiceParams extends Params = ProductCategoryParams> extends KnexService<
-  ProductCategory,
-  ProductCategoryData,
+export class PcategoriesService<ServiceParams extends Params = PcategoriesParams> extends KnexService<
+  Pcategories,
+  PcategoriesData,
   ServiceParams
 > {}
 

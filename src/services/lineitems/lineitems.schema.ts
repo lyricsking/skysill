@@ -1,60 +1,44 @@
-import { resolve, getDataValidator, getValidator, querySyntax } from '@feathersjs/schema'
-import type { FromSchema } from '@feathersjs/schema'
+import { resolve } from '@feathersjs/schema'
+import { Type, getDataValidator, getValidator, querySyntax } from '@feathersjs/typebox'
+import type { Static } from '@feathersjs/typebox'
 
 import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../schemas/validators'
 
 // Main data model schema
-export const lineitemsSchema = {
-  $id: 'Lineitems',
-  type: 'object',
-  additionalProperties: false,
-  required: ['id', 'text'],
-  properties: {
-    id: {
-      type: 'number'
-    },
-    text: {
-      type: 'string'
-    }
-  }
-} as const
-export type Lineitems = FromSchema<typeof lineitemsSchema>
+export const lineitemsSchema = Type.Object(
+  {
+    id: Type.Number(),
+    text: Type.String()
+  },
+  { $id: 'Lineitems', additionalProperties: false }
+)
+export type Lineitems = Static<typeof lineitemsSchema>
 export const lineitemsResolver = resolve<Lineitems, HookContext>({
   properties: {}
 })
+
 export const lineitemsExternalResolver = resolve<Lineitems, HookContext>({
   properties: {}
 })
 
-// Schema for creating new data
-export const lineitemsDataSchema = {
+// Schema for creating new entries
+export const lineitemsDataSchema = Type.Pick(lineitemsSchema, ['text'], {
   $id: 'LineitemsData',
-  type: 'object',
-  additionalProperties: false,
-  required: ['text'],
-  properties: {
-    text: {
-      type: 'string'
-    }
-  }
-} as const
-export type LineitemsData = FromSchema<typeof lineitemsDataSchema>
+  additionalProperties: false
+})
+export type LineitemsData = Static<typeof lineitemsDataSchema>
 export const lineitemsDataValidator = getDataValidator(lineitemsDataSchema, dataValidator)
-export const lineitemsDataResolver = resolve<LineitemsData, HookContext>({
+export const lineitemsDataResolver = resolve<Lineitems, HookContext>({
   properties: {}
 })
 
 // Schema for allowed query properties
-export const lineitemsQuerySchema = {
-  $id: 'LineitemsQuery',
-  type: 'object',
-  additionalProperties: false,
-  properties: {
-    ...querySyntax(lineitemsSchema.properties)
-  }
-} as const
-export type LineitemsQuery = FromSchema<typeof lineitemsQuerySchema>
+export const lineitemsQueryProperties = Type.Pick(lineitemsSchema, ['id', 'text'], {
+  additionalProperties: false
+})
+export const lineitemsQuerySchema = querySyntax(lineitemsQueryProperties)
+export type LineitemsQuery = Static<typeof lineitemsQuerySchema>
 export const lineitemsQueryValidator = getValidator(lineitemsQuerySchema, queryValidator)
 export const lineitemsQueryResolver = resolve<LineitemsQuery, HookContext>({
   properties: {}

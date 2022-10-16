@@ -1,60 +1,44 @@
-import { resolve, getDataValidator, getValidator, querySyntax } from '@feathersjs/schema'
-import type { FromSchema } from '@feathersjs/schema'
+import { resolve } from '@feathersjs/schema'
+import { Type, getDataValidator, getValidator, querySyntax } from '@feathersjs/typebox'
+import type { Static } from '@feathersjs/typebox'
 
 import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../schemas/validators'
 
 // Main data model schema
-export const productsSchema = {
-  $id: 'Products',
-  type: 'object',
-  additionalProperties: false,
-  required: ['id', 'text'],
-  properties: {
-    id: {
-      type: 'number'
-    },
-    text: {
-      type: 'string'
-    }
-  }
-} as const
-export type Products = FromSchema<typeof productsSchema>
+export const productsSchema = Type.Object(
+  {
+    id: Type.Number(),
+    text: Type.String()
+  },
+  { $id: 'Products', additionalProperties: false }
+)
+export type Products = Static<typeof productsSchema>
 export const productsResolver = resolve<Products, HookContext>({
   properties: {}
 })
+
 export const productsExternalResolver = resolve<Products, HookContext>({
   properties: {}
 })
 
-// Schema for creating new data
-export const productsDataSchema = {
+// Schema for creating new entries
+export const productsDataSchema = Type.Pick(productsSchema, ['text'], {
   $id: 'ProductsData',
-  type: 'object',
-  additionalProperties: false,
-  required: ['text'],
-  properties: {
-    text: {
-      type: 'string'
-    }
-  }
-} as const
-export type ProductsData = FromSchema<typeof productsDataSchema>
+  additionalProperties: false
+})
+export type ProductsData = Static<typeof productsDataSchema>
 export const productsDataValidator = getDataValidator(productsDataSchema, dataValidator)
-export const productsDataResolver = resolve<ProductsData, HookContext>({
+export const productsDataResolver = resolve<Products, HookContext>({
   properties: {}
 })
 
 // Schema for allowed query properties
-export const productsQuerySchema = {
-  $id: 'ProductsQuery',
-  type: 'object',
-  additionalProperties: false,
-  properties: {
-    ...querySyntax(productsSchema.properties)
-  }
-} as const
-export type ProductsQuery = FromSchema<typeof productsQuerySchema>
+export const productsQueryProperties = Type.Pick(productsSchema, ['id', 'text'], {
+  additionalProperties: false
+})
+export const productsQuerySchema = querySyntax(productsQueryProperties)
+export type ProductsQuery = Static<typeof productsQuerySchema>
 export const productsQueryValidator = getValidator(productsQuerySchema, queryValidator)
 export const productsQueryResolver = resolve<ProductsQuery, HookContext>({
   properties: {}

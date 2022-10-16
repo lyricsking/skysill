@@ -1,60 +1,44 @@
-import { resolve, getDataValidator, getValidator, querySyntax } from '@feathersjs/schema'
-import type { FromSchema } from '@feathersjs/schema'
+import { resolve } from '@feathersjs/schema'
+import { Type, getDataValidator, getValidator, querySyntax } from '@feathersjs/typebox'
+import type { Static } from '@feathersjs/typebox'
 
 import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../schemas/validators'
 
 // Main data model schema
-export const pmodifiersSchema = {
-  $id: 'Pmodifiers',
-  type: 'object',
-  additionalProperties: false,
-  required: ['id', 'text'],
-  properties: {
-    id: {
-      type: 'number'
-    },
-    text: {
-      type: 'string'
-    }
-  }
-} as const
-export type Pmodifiers = FromSchema<typeof pmodifiersSchema>
+export const pmodifiersSchema = Type.Object(
+  {
+    id: Type.Number(),
+    text: Type.String()
+  },
+  { $id: 'Pmodifiers', additionalProperties: false }
+)
+export type Pmodifiers = Static<typeof pmodifiersSchema>
 export const pmodifiersResolver = resolve<Pmodifiers, HookContext>({
   properties: {}
 })
+
 export const pmodifiersExternalResolver = resolve<Pmodifiers, HookContext>({
   properties: {}
 })
 
-// Schema for creating new data
-export const pmodifiersDataSchema = {
+// Schema for creating new entries
+export const pmodifiersDataSchema = Type.Pick(pmodifiersSchema, ['text'], {
   $id: 'PmodifiersData',
-  type: 'object',
-  additionalProperties: false,
-  required: ['text'],
-  properties: {
-    text: {
-      type: 'string'
-    }
-  }
-} as const
-export type PmodifiersData = FromSchema<typeof pmodifiersDataSchema>
+  additionalProperties: false
+})
+export type PmodifiersData = Static<typeof pmodifiersDataSchema>
 export const pmodifiersDataValidator = getDataValidator(pmodifiersDataSchema, dataValidator)
-export const pmodifiersDataResolver = resolve<PmodifiersData, HookContext>({
+export const pmodifiersDataResolver = resolve<Pmodifiers, HookContext>({
   properties: {}
 })
 
 // Schema for allowed query properties
-export const pmodifiersQuerySchema = {
-  $id: 'PmodifiersQuery',
-  type: 'object',
-  additionalProperties: false,
-  properties: {
-    ...querySyntax(pmodifiersSchema.properties)
-  }
-} as const
-export type PmodifiersQuery = FromSchema<typeof pmodifiersQuerySchema>
+export const pmodifiersQueryProperties = Type.Pick(pmodifiersSchema, ['id', 'text'], {
+  additionalProperties: false
+})
+export const pmodifiersQuerySchema = querySyntax(pmodifiersQueryProperties)
+export type PmodifiersQuery = Static<typeof pmodifiersQuerySchema>
 export const pmodifiersQueryValidator = getValidator(pmodifiersQuerySchema, queryValidator)
 export const pmodifiersQueryResolver = resolve<PmodifiersQuery, HookContext>({
   properties: {}

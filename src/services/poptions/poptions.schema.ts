@@ -1,60 +1,44 @@
-import { resolve, getDataValidator, getValidator, querySyntax } from '@feathersjs/schema'
-import type { FromSchema } from '@feathersjs/schema'
+import { resolve } from '@feathersjs/schema'
+import { Type, getDataValidator, getValidator, querySyntax } from '@feathersjs/typebox'
+import type { Static } from '@feathersjs/typebox'
 
 import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../schemas/validators'
 
 // Main data model schema
-export const poptionsSchema = {
-  $id: 'Poptions',
-  type: 'object',
-  additionalProperties: false,
-  required: ['id', 'text'],
-  properties: {
-    id: {
-      type: 'number'
-    },
-    text: {
-      type: 'string'
-    }
-  }
-} as const
-export type Poptions = FromSchema<typeof poptionsSchema>
+export const poptionsSchema = Type.Object(
+  {
+    id: Type.Number(),
+    text: Type.String()
+  },
+  { $id: 'Poptions', additionalProperties: false }
+)
+export type Poptions = Static<typeof poptionsSchema>
 export const poptionsResolver = resolve<Poptions, HookContext>({
   properties: {}
 })
+
 export const poptionsExternalResolver = resolve<Poptions, HookContext>({
   properties: {}
 })
 
-// Schema for creating new data
-export const poptionsDataSchema = {
+// Schema for creating new entries
+export const poptionsDataSchema = Type.Pick(poptionsSchema, ['text'], {
   $id: 'PoptionsData',
-  type: 'object',
-  additionalProperties: false,
-  required: ['text'],
-  properties: {
-    text: {
-      type: 'string'
-    }
-  }
-} as const
-export type PoptionsData = FromSchema<typeof poptionsDataSchema>
+  additionalProperties: false
+})
+export type PoptionsData = Static<typeof poptionsDataSchema>
 export const poptionsDataValidator = getDataValidator(poptionsDataSchema, dataValidator)
-export const poptionsDataResolver = resolve<PoptionsData, HookContext>({
+export const poptionsDataResolver = resolve<Poptions, HookContext>({
   properties: {}
 })
 
 // Schema for allowed query properties
-export const poptionsQuerySchema = {
-  $id: 'PoptionsQuery',
-  type: 'object',
-  additionalProperties: false,
-  properties: {
-    ...querySyntax(poptionsSchema.properties)
-  }
-} as const
-export type PoptionsQuery = FromSchema<typeof poptionsQuerySchema>
+export const poptionsQueryProperties = Type.Pick(poptionsSchema, ['id', 'text'], {
+  additionalProperties: false
+})
+export const poptionsQuerySchema = querySyntax(poptionsQueryProperties)
+export type PoptionsQuery = Static<typeof poptionsQuerySchema>
 export const poptionsQueryValidator = getValidator(poptionsQuerySchema, queryValidator)
 export const poptionsQueryResolver = resolve<PoptionsQuery, HookContext>({
   properties: {}

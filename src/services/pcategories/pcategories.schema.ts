@@ -1,61 +1,45 @@
-import { resolve, getDataValidator, getValidator, querySyntax } from '@feathersjs/schema'
-import type { FromSchema } from '@feathersjs/schema'
+import { resolve } from '@feathersjs/schema'
+import { Type, getDataValidator, getValidator, querySyntax } from '@feathersjs/typebox'
+import type { Static } from '@feathersjs/typebox'
 
 import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../schemas/validators'
 
 // Main data model schema
-export const productCategorySchema = {
-  $id: 'ProductCategory',
-  type: 'object',
-  additionalProperties: false,
-  required: ['id', 'text'],
-  properties: {
-    id: {
-      type: 'number'
-    },
-    text: {
-      type: 'string'
-    }
-  }
-} as const
-export type ProductCategory = FromSchema<typeof productCategorySchema>
-export const productCategoryResolver = resolve<ProductCategory, HookContext>({
-  properties: {}
-})
-export const productCategoryExternalResolver = resolve<ProductCategory, HookContext>({
+export const pcategoriesSchema = Type.Object(
+  {
+    id: Type.Number(),
+    text: Type.String()
+  },
+  { $id: 'Pcategories', additionalProperties: false }
+)
+export type Pcategories = Static<typeof pcategoriesSchema>
+export const pcategoriesResolver = resolve<Pcategories, HookContext>({
   properties: {}
 })
 
-// Schema for creating new data
-export const productCategoryDataSchema = {
-  $id: 'ProductCategoryData',
-  type: 'object',
-  additionalProperties: false,
-  required: ['text'],
-  properties: {
-    text: {
-      type: 'string'
-    }
-  }
-} as const
-export type ProductCategoryData = FromSchema<typeof productCategoryDataSchema>
-export const productCategoryDataValidator = getDataValidator(productCategoryDataSchema, dataValidator)
-export const productCategoryDataResolver = resolve<ProductCategoryData, HookContext>({
+export const pcategoriesExternalResolver = resolve<Pcategories, HookContext>({
+  properties: {}
+})
+
+// Schema for creating new entries
+export const pcategoriesDataSchema = Type.Pick(pcategoriesSchema, ['text'], {
+  $id: 'PcategoriesData',
+  additionalProperties: false
+})
+export type PcategoriesData = Static<typeof pcategoriesDataSchema>
+export const pcategoriesDataValidator = getDataValidator(pcategoriesDataSchema, dataValidator)
+export const pcategoriesDataResolver = resolve<Pcategories, HookContext>({
   properties: {}
 })
 
 // Schema for allowed query properties
-export const productCategoryQuerySchema = {
-  $id: 'ProductCategoryQuery',
-  type: 'object',
-  additionalProperties: false,
-  properties: {
-    ...querySyntax(productCategorySchema.properties)
-  }
-} as const
-export type ProductCategoryQuery = FromSchema<typeof productCategoryQuerySchema>
-export const productCategoryQueryValidator = getValidator(productCategoryQuerySchema, queryValidator)
-export const productCategoryQueryResolver = resolve<ProductCategoryQuery, HookContext>({
+export const pcategoriesQueryProperties = Type.Pick(pcategoriesSchema, ['id', 'text'], {
+  additionalProperties: false
+})
+export const pcategoriesQuerySchema = querySyntax(pcategoriesQueryProperties)
+export type PcategoriesQuery = Static<typeof pcategoriesQuerySchema>
+export const pcategoriesQueryValidator = getValidator(pcategoriesQuerySchema, queryValidator)
+export const pcategoriesQueryResolver = resolve<PcategoriesQuery, HookContext>({
   properties: {}
 })

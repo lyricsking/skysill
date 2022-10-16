@@ -1,60 +1,44 @@
-import { resolve, getDataValidator, getValidator, querySyntax } from '@feathersjs/schema'
-import type { FromSchema } from '@feathersjs/schema'
+import { resolve } from '@feathersjs/schema'
+import { Type, getDataValidator, getValidator, querySyntax } from '@feathersjs/typebox'
+import type { Static } from '@feathersjs/typebox'
 
 import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../schemas/validators'
 
 // Main data model schema
-export const businessSchema = {
-  $id: 'Business',
-  type: 'object',
-  additionalProperties: false,
-  required: ['id', 'text'],
-  properties: {
-    id: {
-      type: 'number'
-    },
-    text: {
-      type: 'string'
-    }
-  }
-} as const
-export type Business = FromSchema<typeof businessSchema>
+export const businessSchema = Type.Object(
+  {
+    id: Type.Number(),
+    text: Type.String()
+  },
+  { $id: 'Business', additionalProperties: false }
+)
+export type Business = Static<typeof businessSchema>
 export const businessResolver = resolve<Business, HookContext>({
   properties: {}
 })
+
 export const businessExternalResolver = resolve<Business, HookContext>({
   properties: {}
 })
 
-// Schema for creating new data
-export const businessDataSchema = {
+// Schema for creating new entries
+export const businessDataSchema = Type.Pick(businessSchema, ['text'], {
   $id: 'BusinessData',
-  type: 'object',
-  additionalProperties: false,
-  required: ['text'],
-  properties: {
-    text: {
-      type: 'string'
-    }
-  }
-} as const
-export type BusinessData = FromSchema<typeof businessDataSchema>
+  additionalProperties: false
+})
+export type BusinessData = Static<typeof businessDataSchema>
 export const businessDataValidator = getDataValidator(businessDataSchema, dataValidator)
-export const businessDataResolver = resolve<BusinessData, HookContext>({
+export const businessDataResolver = resolve<Business, HookContext>({
   properties: {}
 })
 
 // Schema for allowed query properties
-export const businessQuerySchema = {
-  $id: 'BusinessQuery',
-  type: 'object',
-  additionalProperties: false,
-  properties: {
-    ...querySyntax(businessSchema.properties)
-  }
-} as const
-export type BusinessQuery = FromSchema<typeof businessQuerySchema>
+export const businessQueryProperties = Type.Pick(businessSchema, ['id', 'text'], {
+  additionalProperties: false
+})
+export const businessQuerySchema = querySyntax(businessQueryProperties)
+export type BusinessQuery = Static<typeof businessQuerySchema>
 export const businessQueryValidator = getValidator(businessQuerySchema, queryValidator)
 export const businessQueryResolver = resolve<BusinessQuery, HookContext>({
   properties: {}
