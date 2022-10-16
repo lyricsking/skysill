@@ -25,7 +25,7 @@ export const shopsExternalResolver = resolve<Shops, HookContext>({
 })
 
 // Schema for creating new entries
-export const shopsDataSchema = Type.Pick(shopsSchema, ['text'], {
+export const shopsDataSchema = Type.Omit(shopsSchema, ['id'], {
   $id: 'ShopsData',
   additionalProperties: false
 })
@@ -36,7 +36,7 @@ export const shopsDataResolver = resolve<Shops, HookContext>({
 })
 
 // Schema for allowed query properties
-export const shopsQueryProperties = Type.Pick(shopsSchema, ['id', 'text'], { additionalProperties: false })
+export const shopsQueryProperties = Type.Omit(shopsSchema, [], { additionalProperties: false })
 export const shopsQuerySchema = querySyntax(shopsQueryProperties)
 export type ShopsQuery = Static<typeof shopsQuerySchema>
 export const shopsQueryValidator = getValidator(shopsQuerySchema, queryValidator)

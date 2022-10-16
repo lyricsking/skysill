@@ -11,7 +11,7 @@ export const poptionsSchema = Type.Object(
     id: Type.Number(),
     modifierId: Type.String(),
     name: Type.String(),
-    price: Type.Decimal(),
+    price: Type.Number(),
   },
   { $id: 'Poptions', additionalProperties: false }
 )
@@ -25,7 +25,7 @@ export const poptionsExternalResolver = resolve<Poptions, HookContext>({
 })
 
 // Schema for creating new entries
-export const poptionsDataSchema = Type.Pick(poptionsSchema, ['text'], {
+export const poptionsDataSchema = Type.Omit(poptionsSchema, ['id'], {
   $id: 'PoptionsData',
   additionalProperties: false
 })
@@ -36,9 +36,7 @@ export const poptionsDataResolver = resolve<Poptions, HookContext>({
 })
 
 // Schema for allowed query properties
-export const poptionsQueryProperties = Type.Pick(poptionsSchema, ['id', 'text'], {
-  additionalProperties: false
-})
+export const poptionsQueryProperties = poptionsSchema
 export const poptionsQuerySchema = querySyntax(poptionsQueryProperties)
 export type PoptionsQuery = Static<typeof poptionsQuerySchema>
 export const poptionsQueryValidator = getValidator(poptionsQuerySchema, queryValidator)

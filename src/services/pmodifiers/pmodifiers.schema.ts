@@ -10,10 +10,10 @@ export const pmodifiersSchema = Type.Object(
   {
     id: Type.Number(),
     businessId: Type.String(),
-    name: Type.String()
-    minSelectable: Type.Number()
-    maxSelectable: Type.Number()
-    noFree: Type.Number()
+    name: Type.String(),
+    minSelectable: Type.Integer(),
+    maxSelectable: Type.Integer(),
+    noFree: Type.Integer()
     
   },
   { $id: 'Pmodifiers', additionalProperties: false }
@@ -28,7 +28,7 @@ export const pmodifiersExternalResolver = resolve<Pmodifiers, HookContext>({
 })
 
 // Schema for creating new entries
-export const pmodifiersDataSchema = Type.Pick(pmodifiersSchema, ['text'], {
+export const pmodifiersDataSchema = Type.Omit(pmodifiersSchema, ['id'], {
   $id: 'PmodifiersData',
   additionalProperties: false
 })
@@ -39,7 +39,7 @@ export const pmodifiersDataResolver = resolve<Pmodifiers, HookContext>({
 })
 
 // Schema for allowed query properties
-export const pmodifiersQueryProperties = Type.Pick(pmodifiersSchema, ['id', 'text'], {
+export const pmodifiersQueryProperties = Type.Object(pmodifiersSchema.properties, {
   additionalProperties: false
 })
 export const pmodifiersQuerySchema = querySyntax(pmodifiersQueryProperties)

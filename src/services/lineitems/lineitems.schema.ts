@@ -28,7 +28,7 @@ export const lineitemsExternalResolver = resolve<Lineitems, HookContext>({
 })
 
 // Schema for creating new entries
-export const lineitemsDataSchema = Type.Pick(lineitemsSchema, ['text'], {
+export const lineitemsDataSchema = Type.Omit(lineitemsSchema, ['id'], {
   $id: 'LineitemsData',
   additionalProperties: false
 })
@@ -39,7 +39,7 @@ export const lineitemsDataResolver = resolve<Lineitems, HookContext>({
 })
 
 // Schema for allowed query properties
-export const lineitemsQueryProperties = Type.Pick(lineitemsSchema, ['id', 'text'], {
+export const lineitemsQueryProperties = Type.Omit(lineitemsSchema, [], {
   additionalProperties: false
 })
 export const lineitemsQuerySchema = querySyntax(lineitemsQueryProperties)

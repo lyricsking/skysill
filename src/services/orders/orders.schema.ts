@@ -28,7 +28,7 @@ export const ordersExternalResolver = resolve<Orders, HookContext>({
 })
 
 // Schema for creating new entries
-export const ordersDataSchema = Type.Pick(ordersSchema, ['text'], {
+export const ordersDataSchema = Type.Omit(ordersSchema, ['id'], {
   $id: 'OrdersData',
   additionalProperties: false
 })
@@ -39,7 +39,7 @@ export const ordersDataResolver = resolve<Orders, HookContext>({
 })
 
 // Schema for allowed query properties
-export const ordersQueryProperties = Type.Pick(ordersSchema, ['id', 'text'], { additionalProperties: false })
+export const ordersQueryProperties = Type.Omit(ordersSchema, [], { additionalProperties: false })
 export const ordersQuerySchema = querySyntax(ordersQueryProperties)
 export type OrdersQuery = Static<typeof ordersQuerySchema>
 export const ordersQueryValidator = getValidator(ordersQuerySchema, queryValidator)

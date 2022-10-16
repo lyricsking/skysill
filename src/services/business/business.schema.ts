@@ -27,7 +27,7 @@ export const businessExternalResolver = resolve<Business, HookContext>({
 })
 
 // Schema for creating new entries
-export const businessDataSchema = Type.Pick(businessSchema, ['text'], {
+export const businessDataSchema = Type.Pick(businessSchema, ['id'], {
   $id: 'BusinessData',
   additionalProperties: false
 })
@@ -38,7 +38,7 @@ export const businessDataResolver = resolve<Business, HookContext>({
 })
 
 // Schema for allowed query properties
-export const businessQueryProperties = Type.Pick(businessSchema, ['id', 'text'], {
+export const businessQueryProperties = Type.Omit(businessSchema, [], {
   additionalProperties: false
 })
 export const businessQuerySchema = querySyntax(businessQueryProperties)

@@ -13,7 +13,7 @@ export const productsSchema = Type.Object(
     name: Type.String(),
     description: Type.String(),
     details: Type.String(),
-    price: Type.Decimal(),
+    price: Type.Number(),
     discount: Type.Number(),
     discountType: Type.Enum({
     flat:'flat',
@@ -32,7 +32,7 @@ export const productsExternalResolver = resolve<Products, HookContext>({
 })
 
 // Schema for creating new entries
-export const productsDataSchema = Type.Pick(productsSchema, ['text'], {
+export const productsDataSchema = Type.Omit(productsSchema, ['id'], {
   $id: 'ProductsData',
   additionalProperties: false
 })
@@ -43,7 +43,7 @@ export const productsDataResolver = resolve<Products, HookContext>({
 })
 
 // Schema for allowed query properties
-export const productsQueryProperties = Type.Pick(productsSchema, ['id', 'text'], {
+export const productsQueryProperties = Type.Omit(productsSchema, [], {
   additionalProperties: false
 })
 export const productsQuerySchema = querySyntax(productsQueryProperties)
