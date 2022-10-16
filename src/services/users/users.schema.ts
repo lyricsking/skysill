@@ -28,10 +28,13 @@ export const userExternalResolver = resolve<User, HookContext>({
 })
 
 // Schema for the basic data model (e.g. creating new entries)
-export const userDataSchema = Type.Pick(userSchema, ['email', 'password'], {
-  $id: 'UserData',
-  additionalProperties: false
-})
+export const userDataSchema = Type.Omit(
+  userSchema,
+  ['id'], 
+  {
+    $id: 'UserData',
+    additionalProperties: false
+  })
 export type UserData = Static<typeof userDataSchema>
 export const userDataValidator = getDataValidator(userDataSchema, dataValidator)
 export const userDataResolver = resolve<User, HookContext>({
