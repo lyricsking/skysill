@@ -24,7 +24,7 @@ export const pcategoriesExternalResolver = resolve<Pcategories, HookContext>({
 })
 
 // Schema for creating new entries
-export const pcategoriesDataSchema = Type.Pick(pcategoriesSchema, ['text'], {
+export const pcategoriesDataSchema = Type.Omit(pcategoriesSchema, ['id'], {
   $id: 'PcategoriesData',
   additionalProperties: false
 })
@@ -35,7 +35,7 @@ export const pcategoriesDataResolver = resolve<Pcategories, HookContext>({
 })
 
 // Schema for allowed query properties
-export const pcategoriesQueryProperties = Type.Pick(pcategoriesSchema, ['id', 'text'], {
+export const pcategoriesQueryProperties = Type.Omit(pcategoriesSchema, [], {
   additionalProperties: false
 })
 export const pcategoriesQuerySchema = querySyntax(pcategoriesQueryProperties)
