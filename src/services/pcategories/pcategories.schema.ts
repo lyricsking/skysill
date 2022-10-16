@@ -9,7 +9,8 @@ import { dataValidator, queryValidator } from '../../schemas/validators'
 export const pcategoriesSchema = Type.Object(
   {
     id: Type.Number(),
-    text: Type.String()
+    businessId: Type.String(),
+    name: Type.String(),    
   },
   { $id: 'Pcategories', additionalProperties: false }
 )
