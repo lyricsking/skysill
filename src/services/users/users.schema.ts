@@ -10,7 +10,10 @@ import { dataValidator, queryValidator } from '../../schemas/validators'
 export const userSchema = Type.Object(
   {
     id: Type.Number(),
-    email: Type.String(),
+    firstname: Type.Optional(Type.String()),
+    lastname: Type.Optional(Type.String()),
+    phone: Type.String(),
+    email: Type.Optional(Type.String()),
     password: Type.Optional(Type.String())
   },
   { $id: 'User', additionalProperties: false }
