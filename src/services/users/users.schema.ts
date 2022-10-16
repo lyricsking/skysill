@@ -52,7 +52,7 @@ export const userDataResolver = resolve<User, HookContext>({
 })
 
 // Schema for allowed query properties
-export const userQueryProperties = Type.Pick(userSchema, ['id', 'email'])
+export const userQueryProperties = Type.Omit(userSchema, ['password'])
 export const userQuerySchema = querySyntax(userQueryProperties)
 export type UserQuery = Static<typeof userQuerySchema>
 export const userQueryValidator = getValidator(userQuerySchema, queryValidator)
