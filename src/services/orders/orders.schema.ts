@@ -9,7 +9,12 @@ import { dataValidator, queryValidator } from '../../schemas/validators'
 export const ordersSchema = Type.Object(
   {
     id: Type.Number(),
-    text: Type.String()
+    shopId: Type.String(),
+    shopperId: Type.String(),
+    subtotal: Type.Number(),
+    deliveryFee: Type.Number(),
+    deliveryAddress: Type.String(),
+    deliveryGeopoint: Type.String()
   },
   { $id: 'Orders', additionalProperties: false }
 )
