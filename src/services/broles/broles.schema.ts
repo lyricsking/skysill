@@ -9,7 +9,9 @@ import { dataValidator, queryValidator } from '../../schemas/validators'
 export const brolesSchema = Type.Object(
   {
     id: Type.Number(),
-    text: Type.String()
+    businesId: Type.String(),
+    shopId: Type.String(),
+    role: Type.Enum()
   },
   { $id: 'Broles', additionalProperties: false }
 )
