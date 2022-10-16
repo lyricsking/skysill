@@ -9,7 +9,12 @@ import { dataValidator, queryValidator } from '../../schemas/validators'
 export const lineitemsSchema = Type.Object(
   {
     id: Type.Number(),
-    text: Type.String()
+    productId: Type.String(),
+    price: Type.Number(),
+    discount: Type.Number(),
+    finalItemPrice: Type.Number(),
+    quantity: Type.Number(),
+    finalPrice: Type.Number()
   },
   { $id: 'Lineitems', additionalProperties: false }
 )

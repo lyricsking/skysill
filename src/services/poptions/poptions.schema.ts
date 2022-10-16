@@ -9,7 +9,9 @@ import { dataValidator, queryValidator } from '../../schemas/validators'
 export const poptionsSchema = Type.Object(
   {
     id: Type.Number(),
-    text: Type.String()
+    modifierId: Type.String(),
+    name: Type.String(),
+    price: Type.Decimal(),
   },
   { $id: 'Poptions', additionalProperties: false }
 )

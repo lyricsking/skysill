@@ -9,7 +9,12 @@ import { dataValidator, queryValidator } from '../../schemas/validators'
 export const pmodifiersSchema = Type.Object(
   {
     id: Type.Number(),
-    text: Type.String()
+    businessId: Type.String(),
+    name: Type.String()
+    minSelectable: Type.Number()
+    maxSelectable: Type.Number()
+    noFree: Type.Number()
+    
   },
   { $id: 'Pmodifiers', additionalProperties: false }
 )
