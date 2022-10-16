@@ -7,7 +7,7 @@ export async function up(knex: Knex): Promise<void> {
     table.string('name').notNullable()
     table.string('contactName').notNullable()
     table.string('contactPhone').notNullable()
-    table.string('contactMail')
+    table.string('contactEmail')
   })
 }
 

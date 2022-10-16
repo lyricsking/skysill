@@ -4,7 +4,7 @@ export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable('shops', (table) => {
     table.string('id').primary()
     table.string('businessId').references('business.id')
-    table.string('description')
+    table.string('description').comment('Address description of coordinate')
     table.point('coordinate')
   })
 }
