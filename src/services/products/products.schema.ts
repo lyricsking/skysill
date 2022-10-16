@@ -9,7 +9,16 @@ import { dataValidator, queryValidator } from '../../schemas/validators'
 export const productsSchema = Type.Object(
   {
     id: Type.Number(),
-    text: Type.String()
+    shopId: Type.String(),
+    name: Type.String(),
+    description: Type.String(),
+    details: Type.String(),
+    price: Type.Decimal(),
+    discount: Type.Number(),
+    discountType: Type.Enum({
+    flat:'flat',
+    percentage: 'percentage'
+    })
   },
   { $id: 'Products', additionalProperties: false }
 )
