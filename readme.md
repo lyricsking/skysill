@@ -1,6 +1,6 @@
-# skysill-api
+# skysill
 
-> Skysill baae api
+> 
 
 ## About
 
@@ -12,13 +12,15 @@ This project uses [Feathers](http://feathersjs.com). An open source framework fo
 2. Install your dependencies
 
     ```
-    cd path/to/skysill-api
+    cd path/to/skysill
     npm install
     ```
 
 3. Start your app
 
     ```
+    npm run compile # Compile TypeScript source
+    npm run migrate # Run migrations to set up the database
     npm start
     ```
 
@@ -28,13 +30,11 @@ Run `npm test` and all your tests in the `test/` directory will be run.
 
 ## Scaffolding
 
-Feathers has a powerful command line interface. Here are a few things it can do:
+This app comes with a powerful command line interface for Feathers. Here are a few things it can do:
 
 ```
-$ npm install -g @feathersjs/cli          # Install Feathers CLI
-
-$ feathers generate service               # Generate a new Service
-$ feathers help                           # Show all commands
+$ npx feathers help                           # Show all commands
+$ npx feathers generate service               # Generate a new Service
 ```
 
 ## Help

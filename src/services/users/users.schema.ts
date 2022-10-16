@@ -1,63 +1,59 @@
-import { schema, querySyntax } from '@feathersjs/schema'
-import type { Infer } from '@feathersjs/schema'
+import { resolve } from '@feathersjs/schema'
+import { Type, getDataValidator, getValidator, querySyntax } from '@feathersjs/typebox'
+import type { Static } from '@feathersjs/typebox'
+import { passwordHash } from '@feathersjs/authentication-local'
+
+import type { HookContext } from '../../declarations'
+import { dataValidator, queryValidator } from '../../schemas/validators'
+
+// Main data model schema
+export const userSchema = Type.Object(
+  {
+    id: Type.Number(),
+    email: Type.String(),
+    password: Type.Optional(Type.String())
+  },
+  { $id: 'User', additionalProperties: false }
+)
+export type User = Static<typeof userSchema>
+export const userResolver = resolve<User, HookContext>({
+  properties: {}
+})
+
+export const userExternalResolver = resolve<User, HookContext>({
+  properties: {
+    // The password should never be visible externally
+    password: async () => undefined
+  }
+})
 
 // Schema for the basic data model (e.g. creating new entries)
-export const usersDataSchema = schema({
-  $id: 'UsersData',
-  type: 'object',
-  additionalProperties: false,
-  required: ['firstname','lastname','phone'],
+export const userDataSchema = Type.Pick(userSchema, ['email', 'password'], {
+  $id: 'UserData',
+  additionalProperties: false
+})
+export type UserData = Static<typeof userDataSchema>
+export const userDataValidator = getDataValidator(userDataSchema, dataValidator)
+export const userDataResolver = resolve<User, HookContext>({
   properties: {
-    firstname: {type: 'string'},
-    lastname: {type:'string'},
-    phone: {type: 'string'},
-    email: { type: 'string' },
-    password: { type: 'string' }
+    password: passwordHash({ strategy: 'local' })
   }
-} as const)
-
-export type UsersData = Infer<typeof usersDataSchema>
-
-// Schema for making partial updates
-export const usersPatchSchema = schema({
-  $id: 'UsersPatch',
-  type: 'object',
-  additionalProperties: false,
-  required: [],
-  properties: {
-    ...usersDataSchema.properties
-  }
-} as const)
-
-export type UsersPatch = Infer<typeof usersPatchSchema>
-
-// Schema for the data that is being returned
-export const usersResultSchema = schema({
-  $id: 'UsersResult',
-  type: 'object',
-  additionalProperties: false,
-  required: ['id'],
-  properties: {
-    ...usersDataSchema.properties,
-    id: {
-      type: 'number'
-    },
-  }
-} as const)
-
-export type UsersResult = Infer<typeof usersResultSchema>
-
-// Queries shouldn't allow doing anything with the password
-const { password, ...usersQueryProperties } = usersResultSchema.properties
+})
 
 // Schema for allowed query properties
-export const usersQuerySchema = schema({
-  $id: 'UsersQuery',
-  type: 'object',
-  additionalProperties: false,
+export const userQueryProperties = Type.Pick(userSchema, ['id', 'email'])
+export const userQuerySchema = querySyntax(userQueryProperties)
+export type UserQuery = Static<typeof userQuerySchema>
+export const userQueryValidator = getValidator(userQuerySchema, queryValidator)
+export const userQueryResolver = resolve<UserQuery, HookContext>({
   properties: {
-    ...querySyntax(usersQueryProperties)
-  }
-} as const)
+    // If there is a user (e.g. with authentication), they are only allowed to see their own data
+    id: async (value, user, context) => {
+      if (context.params.user) {
+        return context.params.user.id
+      }
 
-export type UsersQuery = Infer<typeof usersQuerySchema>
+      return value
+    }
+  }
+})

@@ -5,7 +5,7 @@ import { koa, rest, bodyParser, errorHandler, parseAuthentication, cors } from '
 import socketio from '@feathersjs/socketio'
 
 import type { Application } from './declarations'
-import { configurationSchema } from './configuration'
+import { configurationValidator } from './schemas/configuration'
 import { logErrorHook } from './logger'
 import { sqlite } from './sqlite'
 import { authentication } from './authentication'
@@ -15,12 +15,12 @@ import { channels } from './channels'
 const app: Application = koa(feathers())
 
 // Load our app configuration (see config/ folder)
-app.configure(configuration(configurationSchema))
+app.configure(configuration(configurationValidator))
 
 // Set up Koa middleware
+app.use(cors())
 app.use(serveStatic(app.get('public')))
 app.use(errorHandler())
-app.use(cors())
 app.use(parseAuthentication())
 app.use(bodyParser())
 

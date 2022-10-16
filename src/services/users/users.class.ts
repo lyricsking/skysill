@@ -1,26 +1,23 @@
+import type { Params } from '@feathersjs/feathers'
 import { KnexService } from '@feathersjs/knex'
-import type { KnexAdapterParams } from '@feathersjs/knex'
-import { resolveAll } from '@feathersjs/schema'
-import { authenticate } from '@feathersjs/authentication'
-import type { UsersData, UsersResult, UsersQuery } from './users.schema'
-import { usersResolvers } from './users.resolver'
+import type { KnexAdapterParams, KnexAdapterOptions } from '@feathersjs/knex'
 
-export const usersHooks = {
-  around: {
-    all: [],
-    get: [authenticate('jwt'), resolveAll(usersResolvers)],
-    find: [authenticate('jwt'), resolveAll(usersResolvers)],
-    create: [resolveAll(usersResolvers)],
-    patch: [authenticate('jwt'), resolveAll(usersResolvers)],
-    update: [authenticate('jwt'), resolveAll(usersResolvers)],
-    remove: [authenticate('jwt'), resolveAll(usersResolvers)]
-  },
-  before: {},
-  after: {},
-  error: {}
-}
+import type { Application } from '../../declarations'
+import type { User, UserData, UserQuery } from './users.schema'
 
-export interface UsersParams extends KnexAdapterParams<UsersQuery> {}
+export interface UserParams extends KnexAdapterParams<UserQuery> {}
 
 // By default calls the standard Knex adapter service methods but can be customized with your own functionality.
-export class UsersService extends KnexService<UsersResult, UsersData, UsersParams> {}
+export class UserService<ServiceParams extends Params = UserParams> extends KnexService<
+  User,
+  UserData,
+  ServiceParams
+> {}
+
+export const getOptions = (app: Application): KnexAdapterOptions => {
+  return {
+    paginate: app.get('paginate'),
+    Model: app.get('sqliteClient'),
+    name: 'users'
+  }
+}
