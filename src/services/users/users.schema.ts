@@ -31,9 +31,14 @@ export const userExternalResolver = resolve<User, HookContext>({
 })
 
 // Schema for the basic data model (e.g. creating new entries)
-export const userDataSchema = Type.Omit(
-  userSchema,
-  ['id'], 
+export const userDataSchema = Type.Object(
+  {
+    firstname: Type.Optional(Type.String()),
+    lastname: Type.Optional(Type.String()),
+    phone: Type.String(),
+    email: Type.Optional(Type.String()),
+    password: Type.String()
+  },
   {
     $id: 'UserData',
     additionalProperties: false
