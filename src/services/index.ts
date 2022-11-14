@@ -1,3 +1,4 @@
+import { drivers } from './drivers/drivers'
 import { transactions } from './transactions/transactions'
 import { wallets } from './wallets/wallets'
 import { shops } from './shops/shops'
@@ -13,6 +14,7 @@ import { user } from './users/users'
 import type { Application } from '../declarations'
 
 export const services = (app: Application) => {
+  app.configure(drivers)
   app.configure(transactions)
   app.configure(wallets)
   app.configure(shops)

@@ -5,7 +5,7 @@ export async function up(knex: Knex): Promise<void> {
     table.increments('id')
     table.string('walletableId')
     table.string('walletableType')
-    table.decimal('balance', 9, 4)
+    table.decimal('balance', 19, 4)
   })
 }
 

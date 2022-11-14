@@ -9,6 +9,7 @@ export async function up(knex: Knex): Promise<void> {
     table.decimal('deliveryFee', 19, 4)
     table.string('deliveryAddress')
     table.point('deliveryGeopoint')
+    table.enum('preferredMedium', ['bike', 'tricycle', 'car'])
   })
 }
 

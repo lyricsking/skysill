@@ -1,4 +1,7 @@
 import { feathers } from '@feathersjs/feathers'
+import type { Drivers, DriversData, DriversQuery, DriversService } from './services/drivers/drivers'
+export type { Drivers, DriversData, DriversQuery }
+
 import type {
   Transactions,
   TransactionsData,
@@ -103,8 +106,11 @@ type TransactionsClientService = Pick<
   TransactionsService<Params<TransactionsQuery>>,
   typeof transactionsServiceMethods[number]
 >
+const driversServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
+type DriversClientService = Pick<DriversService<Params<DriversQuery>>, typeof driversServiceMethods[number]>
 
 export interface ServiceTypes {
+  drivers: DriversClientService
   transactions: TransactionsClientService
   wallets: WalletsClientService
   shops: ShopsClientService
@@ -161,6 +167,9 @@ export const createClient = <Configuration = any>(connection: TransportConnectio
   })
   client.use('transactions', connection.service('transactions'), {
     methods: transactionsServiceMethods
+  })
+  client.use('drivers', connection.service('drivers'), {
+    methods: driversServiceMethods
   })
   return client
 }
