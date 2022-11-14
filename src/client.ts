@@ -1,4 +1,15 @@
 import { feathers } from '@feathersjs/feathers'
+import type {
+  Transactions,
+  TransactionsData,
+  TransactionsQuery,
+  TransactionsService
+} from './services/transactions/transactions'
+export type { Transactions, TransactionsData, TransactionsQuery }
+
+import type { Wallets, WalletsData, WalletsQuery, WalletsService } from './services/wallets/wallets'
+export type { Wallets, WalletsData, WalletsQuery }
+
 import type { Shops, ShopsData, ShopsQuery, ShopsService } from './services/shops/shops'
 export type { Shops, ShopsData, ShopsQuery }
 
@@ -85,8 +96,17 @@ type ProductsClientService = Pick<
 >
 const shopsServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
 type ShopsClientService = Pick<ShopsService<Params<ShopsQuery>>, typeof shopsServiceMethods[number]>
+const walletsServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
+type WalletsClientService = Pick<WalletsService<Params<WalletsQuery>>, typeof walletsServiceMethods[number]>
+const transactionsServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
+type TransactionsClientService = Pick<
+  TransactionsService<Params<TransactionsQuery>>,
+  typeof transactionsServiceMethods[number]
+>
 
 export interface ServiceTypes {
+  transactions: TransactionsClientService
+  wallets: WalletsClientService
   shops: ShopsClientService
   products: ProductsClientService
   poptions: PoptionsClientService
@@ -135,6 +155,12 @@ export const createClient = <Configuration = any>(connection: TransportConnectio
   })
   client.use('shops', connection.service('shops'), {
     methods: shopsServiceMethods
+  })
+  client.use('wallets', connection.service('wallets'), {
+    methods: walletsServiceMethods
+  })
+  client.use('transactions', connection.service('transactions'), {
+    methods: transactionsServiceMethods
   })
   return client
 }
