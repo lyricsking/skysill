@@ -2,9 +2,9 @@ import type { Params } from '@feathersjs/feathers';
 import { KnexService } from '@feathersjs/knex';
 import type { KnexAdapterParams, KnexAdapterOptions } from '@feathersjs/knex';
 import type { Application } from '../../declarations';
-import type { User, UserData, UserQuery } from './users.schema';
-export interface UserParams extends KnexAdapterParams<UserQuery> {
+import type { Shops, ShopsData, ShopsQuery } from './shops.schema';
+export interface ShopsParams extends KnexAdapterParams<ShopsQuery> {
 }
-export declare class UserService<ServiceParams extends Params = UserParams> extends KnexService<User, UserData, ServiceParams> {
+export declare class ShopsService<ServiceParams extends Params = ShopsParams> extends KnexService<Shops, ShopsData, ServiceParams> {
 }
 export declare const getOptions: (app: Application) => KnexAdapterOptions;
