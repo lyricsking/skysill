@@ -5,7 +5,7 @@ export async function up(knex: Knex): Promise<void> {
     table.string('id')
     table.string('shopperId').references('users.id')
     table.string('shopId').references('shops.id')
-    table.decimal('subtotal',19,4)
+    table.decimal('subtotal',19, 4)
     table.decimal('deliveryFee', 19, 4)
     table.string('deliveryAddress')
     table.point('deliveryGeopoint')

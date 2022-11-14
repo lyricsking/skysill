@@ -5,6 +5,7 @@ import { passwordHash } from '@feathersjs/authentication-local'
 
 import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../schemas/validators'
+import { walletsSchema } from '../wallets/wallets.schema'
 
 // Main data model schema
 export const userSchema = Type.Object(
@@ -14,31 +15,32 @@ export const userSchema = Type.Object(
     lastname: Type.Optional(Type.String()),
     phone: Type.String(),
     email: Type.Optional(Type.String()),
-    password: Type.Optional(Type.String())
+    password: Type.Optional(Type.String()),
+    wallet: Type.Optional(Type.Ref(walletsSchema))
   },
   { $id: 'User', additionalProperties: false }
 )
 export type User = Static<typeof userSchema>
 export const userResolver = resolve<User, HookContext>({
-  properties: {}
+  properties: {
+    wallet: async (_value, user, context) => {
+      // Associate the user's wallet.
+      return context.app.service('wallets').get(user.id)
+    }
+  }
 })
 
 export const userExternalResolver = resolve<User, HookContext>({
   properties: {
     // The password should never be visible externally
-    password: async () => undefined
+    password: async () => undefined,
   }
 })
 
 // Schema for the basic data model (e.g. creating new entries)
-export const userDataSchema = Type.Object(
-  {
-    firstname: Type.Optional(Type.String()),
-    lastname: Type.Optional(Type.String()),
-    phone: Type.String(),
-    email: Type.Optional(Type.String()),
-    password: Type.String()
-  },
+export const userDataSchema = Type.Omit(
+  userSchema,
+  ['id', 'wallet'],
   {
     $id: 'UserData',
     additionalProperties: false
@@ -52,7 +54,7 @@ export const userDataResolver = resolve<User, HookContext>({
 })
 
 // Schema for allowed query properties
-export const userQueryProperties = Type.Omit(userSchema, ['password'])
+export const userQueryProperties = Type.Omit(userSchema, ['password', 'wallet'])
 export const userQuerySchema = querySyntax(userQueryProperties)
 export type UserQuery = Static<typeof userQuerySchema>
 export const userQueryValidator = getValidator(userQuerySchema, queryValidator)

@@ -13,6 +13,7 @@ import {
 
 import type { Application } from '../../declarations'
 import { UserService, getOptions } from './users.class'
+import { createWallet } from '../../hooks/create-wallet'
 
 export * from './users.class'
 export * from './users.schema'
@@ -43,6 +44,9 @@ export const user = (app: Application) => {
         schemaHooks.validateData(userDataValidator),
         schemaHooks.resolveQuery(userQueryResolver),
         schemaHooks.resolveData(userDataResolver)
+      ],
+      create: [
+        createWallet
       ]
     },
     after: {
