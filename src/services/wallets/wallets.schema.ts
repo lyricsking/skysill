@@ -9,7 +9,9 @@ import { dataValidator, queryValidator } from '../../schemas/validators'
 export const walletsSchema = Type.Object(
   {
     id: Type.Number(),
-    text: Type.String()
+    walletableId: Type.String(),
+    walletableType: Type.String(),
+    balance: Type.Number()
   },
   { $id: 'Wallets', additionalProperties: false }
 )
@@ -23,7 +25,7 @@ export const walletsExternalResolver = resolve<Wallets, HookContext>({
 })
 
 // Schema for creating new entries
-export const walletsDataSchema = Type.Pick(walletsSchema, ['text'], {
+export const walletsDataSchema = Type.Omit(walletsSchema, ['id'], {
   $id: 'WalletsData',
   additionalProperties: false
 })
@@ -34,7 +36,7 @@ export const walletsDataResolver = resolve<Wallets, HookContext>({
 })
 
 // Schema for allowed query properties
-export const walletsQueryProperties = Type.Pick(walletsSchema, ['id', 'text'], {
+export const walletsQueryProperties = Type.Omit(walletsSchema, ['balance'], {
   additionalProperties: false
 })
 export const walletsQuerySchema = querySyntax(walletsQueryProperties)

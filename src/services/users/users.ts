@@ -44,13 +44,11 @@ export const user = (app: Application) => {
         schemaHooks.validateData(userDataValidator),
         schemaHooks.resolveQuery(userQueryResolver),
         schemaHooks.resolveData(userDataResolver)
-      ],
-      create: [
-        createWallet
       ]
     },
     after: {
-      all: [schemaHooks.resolveResult(userResolver), schemaHooks.resolveExternal(userExternalResolver)]
+      all: [schemaHooks.resolveResult(userResolver), schemaHooks.resolveExternal(userExternalResolver)],
+      create: [createWallet]
     },
     error: {
       all: []
