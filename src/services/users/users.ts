@@ -14,6 +14,7 @@ import {
 import type { Application } from '../../declarations'
 import { UserService, getOptions } from './users.class'
 import { createWallet } from '../../hooks/create-wallet'
+import { generateId } from '../../hooks/generate-id'
 
 export * from './users.class'
 export * from './users.schema'
@@ -44,7 +45,8 @@ export const user = (app: Application) => {
         schemaHooks.validateData(userDataValidator),
         schemaHooks.resolveQuery(userQueryResolver),
         schemaHooks.resolveData(userDataResolver)
-      ]
+      ],
+      create: [generateId(16)]
     },
     after: {
       all: [schemaHooks.resolveResult(userResolver), schemaHooks.resolveExternal(userExternalResolver)],

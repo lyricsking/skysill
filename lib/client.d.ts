@@ -1,3 +1,9 @@
+import type { Drivers, DriversData, DriversQuery, DriversService } from './services/drivers/drivers';
+export type { Drivers, DriversData, DriversQuery };
+import type { Transactions, TransactionsData, TransactionsQuery, TransactionsService } from './services/transactions/transactions';
+export type { Transactions, TransactionsData, TransactionsQuery };
+import type { Wallets, WalletsData, WalletsQuery, WalletsService } from './services/wallets/wallets';
+export type { Wallets, WalletsData, WalletsQuery };
 import type { Shops, ShopsData, ShopsQuery, ShopsService } from './services/shops/shops';
 export type { Shops, ShopsData, ShopsQuery };
 import type { Products, ProductsData, ProductsQuery, ProductsService } from './services/products/products';
@@ -40,7 +46,16 @@ declare const productsServiceMethods: readonly ["find", "get", "create", "update
 declare type ProductsClientService = Pick<ProductsService<Params<ProductsQuery>>, typeof productsServiceMethods[number]>;
 declare const shopsServiceMethods: readonly ["find", "get", "create", "update", "patch", "remove"];
 declare type ShopsClientService = Pick<ShopsService<Params<ShopsQuery>>, typeof shopsServiceMethods[number]>;
+declare const walletsServiceMethods: readonly ["find", "get", "create", "update", "patch", "remove"];
+declare type WalletsClientService = Pick<WalletsService<Params<WalletsQuery>>, typeof walletsServiceMethods[number]>;
+declare const transactionsServiceMethods: readonly ["find", "get", "create", "update", "patch", "remove"];
+declare type TransactionsClientService = Pick<TransactionsService<Params<TransactionsQuery>>, typeof transactionsServiceMethods[number]>;
+declare const driversServiceMethods: readonly ["find", "get", "create", "update", "patch", "remove"];
+declare type DriversClientService = Pick<DriversService<Params<DriversQuery>>, typeof driversServiceMethods[number]>;
 export interface ServiceTypes {
+    drivers: DriversClientService;
+    transactions: TransactionsClientService;
+    wallets: WalletsClientService;
     shops: ShopsClientService;
     products: ProductsClientService;
     poptions: PoptionsClientService;

@@ -10,7 +10,7 @@ import { walletsSchema } from '../wallets/wallets.schema'
 // Main data model schema
 export const userSchema = Type.Object(
   {
-    id: Type.Number(),
+    id: Type.String(),
     firstname: Type.Optional(Type.String()),
     lastname: Type.Optional(Type.String()),
     phone: Type.String(),
@@ -25,7 +25,15 @@ export const userResolver = resolve<User, HookContext>({
   properties: {
     wallet: async (_value, user, context) => {
       // Associate the user's wallet.
-      return context.app.service('wallets').get(user.id)
+      const wallet = await context.app.service('wallets').find({
+        query: { 
+          $limit: 1,
+          walletableId: user.id,
+          walletableType: "users",
+        }
+      });
+
+      return wallet.data[0];
     }
   }
 })

@@ -9,7 +9,7 @@ export async function up(knex: Knex): Promise<void> {
     table.string('details')
     table.decimal('price',19,4)
     table.decimal('discount',19,4)
-    table.enum('discountType',[
+    table.enum('discountType', [
       'flat',
       'percentage'
     ])
