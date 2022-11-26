@@ -13,6 +13,7 @@ import {
 
 import type { Application } from '../../declarations'
 import { TransactionsService, getOptions } from './transactions.class'
+import { patchWalletBalance } from '../../hooks/patch-wallet-balance'
 
 export * from './transactions.class'
 export * from './transactions.schema'
@@ -43,7 +44,8 @@ export const transactions = (app: Application) => {
       all: [
         schemaHooks.resolveResult(transactionsResolver),
         schemaHooks.resolveExternal(transactionsExternalResolver)
-      ]
+      ],
+      create: [patchWalletBalance],
     },
     error: {
       all: []

@@ -37,7 +37,7 @@ export const configurationSchema = schema(
       }
     }
   } as const,
-  new Ajv()
+  new Ajv({ coerceTypes: true})
 )
 
 export type ConfigurationSchema = Infer<typeof configurationSchema>

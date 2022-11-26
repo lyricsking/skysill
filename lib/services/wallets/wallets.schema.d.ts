@@ -2,41 +2,41 @@ import type { Static } from '@feathersjs/typebox';
 import type { HookContext } from '../../declarations';
 export declare const walletsSchema: import("@sinclair/typebox").TObject<{
     id: import("@sinclair/typebox").TNumber;
-    walletableId: import("@sinclair/typebox").TString<string>;
-    walletableType: import("@sinclair/typebox").TString<string>;
+    owner: import("@sinclair/typebox").TString<string>;
+    ownerId: import("@sinclair/typebox").TString<string>;
     balance: import("@sinclair/typebox").TNumber;
 }>;
 export declare type Wallets = Static<typeof walletsSchema>;
 export declare const walletsResolver: import("@feathersjs/schema").Resolver<{
     id: number;
-    walletableId: string;
-    walletableType: string;
+    owner: string;
+    ownerId: string;
     balance: number;
 }, HookContext<any>>;
 export declare const walletsExternalResolver: import("@feathersjs/schema").Resolver<{
     id: number;
-    walletableId: string;
-    walletableType: string;
+    owner: string;
+    ownerId: string;
     balance: number;
 }, HookContext<any>>;
 export declare const walletsDataSchema: import("@sinclair/typebox").TOmit<import("@sinclair/typebox").TObject<{
     id: import("@sinclair/typebox").TNumber;
-    walletableId: import("@sinclair/typebox").TString<string>;
-    walletableType: import("@sinclair/typebox").TString<string>;
+    owner: import("@sinclair/typebox").TString<string>;
+    ownerId: import("@sinclair/typebox").TString<string>;
     balance: import("@sinclair/typebox").TNumber;
 }>, ["id"]>;
 export declare type WalletsData = Static<typeof walletsDataSchema>;
 export declare const walletsDataValidator: import("@feathersjs/schema").DataValidatorMap;
 export declare const walletsDataResolver: import("@feathersjs/schema").Resolver<{
     id: number;
-    walletableId: string;
-    walletableType: string;
+    owner: string;
+    ownerId: string;
     balance: number;
 }, HookContext<any>>;
 export declare const walletsQueryProperties: import("@sinclair/typebox").TOmit<import("@sinclair/typebox").TObject<{
     id: import("@sinclair/typebox").TNumber;
-    walletableId: import("@sinclair/typebox").TString<string>;
-    walletableType: import("@sinclair/typebox").TString<string>;
+    owner: import("@sinclair/typebox").TString<string>;
+    ownerId: import("@sinclair/typebox").TString<string>;
     balance: import("@sinclair/typebox").TNumber;
 }>, ["balance"]>;
 export declare const walletsQuerySchema: import("@sinclair/typebox").TIntersect<[import("@sinclair/typebox").TObject<{
@@ -44,10 +44,10 @@ export declare const walletsQuerySchema: import("@sinclair/typebox").TIntersect<
     $skip: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TNumber>;
     $sort: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TObject<{
         id: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
-        walletableId: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
-        walletableType: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
+        owner: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
+        ownerId: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
     }>>;
-    $select: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnsafe<("id" | "walletableId" | "walletableType")[]>>;
+    $select: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnsafe<("id" | "owner" | "ownerId")[]>>;
 }>, import("@sinclair/typebox").TObject<{
     id: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TNumber, import("@sinclair/typebox").TObject<{
         $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TNumber>;
@@ -58,7 +58,7 @@ export declare const walletsQuerySchema: import("@sinclair/typebox").TIntersect<
         $in: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TNumber>>;
         $nin: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TNumber>>;
     }>]>>;
-    walletableId: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TString<string>, import("@sinclair/typebox").TObject<{
+    owner: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TString<string>, import("@sinclair/typebox").TObject<{
         $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
         $gte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
         $lt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
@@ -67,7 +67,7 @@ export declare const walletsQuerySchema: import("@sinclair/typebox").TIntersect<
         $in: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>>;
         $nin: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>>;
     }>]>>;
-    walletableType: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TString<string>, import("@sinclair/typebox").TObject<{
+    ownerId: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TString<string>, import("@sinclair/typebox").TObject<{
         $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
         $gte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
         $lt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
@@ -84,10 +84,10 @@ export declare const walletsQueryResolver: import("@feathersjs/schema").Resolver
     $skip?: number | undefined;
     $sort?: {
         id?: number | undefined;
-        walletableId?: number | undefined;
-        walletableType?: number | undefined;
+        owner?: number | undefined;
+        ownerId?: number | undefined;
     } | undefined;
-    $select?: ("id" | "walletableId" | "walletableType")[] | undefined;
+    $select?: ("id" | "owner" | "ownerId")[] | undefined;
 } & {
     id?: number | {
         $gt?: number | undefined;
@@ -98,7 +98,7 @@ export declare const walletsQueryResolver: import("@feathersjs/schema").Resolver
         $in?: number[] | undefined;
         $nin?: number[] | undefined;
     } | undefined;
-    walletableId?: string | {
+    owner?: string | {
         $gt?: string | undefined;
         $gte?: string | undefined;
         $lt?: string | undefined;
@@ -107,7 +107,7 @@ export declare const walletsQueryResolver: import("@feathersjs/schema").Resolver
         $in?: string[] | undefined;
         $nin?: string[] | undefined;
     } | undefined;
-    walletableType?: string | {
+    ownerId?: string | {
         $gt?: string | undefined;
         $gte?: string | undefined;
         $lt?: string | undefined;

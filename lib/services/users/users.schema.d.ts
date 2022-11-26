@@ -9,8 +9,8 @@ export declare const userSchema: import("@sinclair/typebox").TObject<{
     password: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
     wallet: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TRef<import("@sinclair/typebox").TObject<{
         id: import("@sinclair/typebox").TNumber;
-        walletableId: import("@sinclair/typebox").TString<string>;
-        walletableType: import("@sinclair/typebox").TString<string>;
+        owner: import("@sinclair/typebox").TString<string>;
+        ownerId: import("@sinclair/typebox").TString<string>;
         balance: import("@sinclair/typebox").TNumber;
     }>>>;
 }>;
@@ -22,8 +22,8 @@ export declare const userResolver: import("@feathersjs/schema").Resolver<{
     email?: string | undefined;
     wallet?: {
         id: number;
-        walletableId: string;
-        walletableType: string;
+        owner: string;
+        ownerId: string;
         balance: number;
     } | undefined;
     id: string;
@@ -36,8 +36,8 @@ export declare const userExternalResolver: import("@feathersjs/schema").Resolver
     email?: string | undefined;
     wallet?: {
         id: number;
-        walletableId: string;
-        walletableType: string;
+        owner: string;
+        ownerId: string;
         balance: number;
     } | undefined;
     id: string;
@@ -52,8 +52,8 @@ export declare const userDataSchema: import("@sinclair/typebox").TOmit<import("@
     password: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
     wallet: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TRef<import("@sinclair/typebox").TObject<{
         id: import("@sinclair/typebox").TNumber;
-        walletableId: import("@sinclair/typebox").TString<string>;
-        walletableType: import("@sinclair/typebox").TString<string>;
+        owner: import("@sinclair/typebox").TString<string>;
+        ownerId: import("@sinclair/typebox").TString<string>;
         balance: import("@sinclair/typebox").TNumber;
     }>>>;
 }>, ["id", "wallet"]>;
@@ -66,8 +66,8 @@ export declare const userDataResolver: import("@feathersjs/schema").Resolver<{
     email?: string | undefined;
     wallet?: {
         id: number;
-        walletableId: string;
-        walletableType: string;
+        owner: string;
+        ownerId: string;
         balance: number;
     } | undefined;
     id: string;
@@ -82,8 +82,8 @@ export declare const userQueryProperties: import("@sinclair/typebox").TOmit<impo
     password: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
     wallet: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TRef<import("@sinclair/typebox").TObject<{
         id: import("@sinclair/typebox").TNumber;
-        walletableId: import("@sinclair/typebox").TString<string>;
-        walletableType: import("@sinclair/typebox").TString<string>;
+        owner: import("@sinclair/typebox").TString<string>;
+        ownerId: import("@sinclair/typebox").TString<string>;
         balance: import("@sinclair/typebox").TNumber;
     }>>>;
 }>, ["password", "wallet"]>;

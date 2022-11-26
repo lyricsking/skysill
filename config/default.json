@@ -28,10 +28,10 @@
       },
       "audience": "https://yourdomain.com",
       "algorithm": "HS256",
-      "expiresIn": "1d"
+      "expiresIn": "60d"
     },
     "local": {
-      "usernameField": "email",
+      "usernameField": "phone",
       "passwordField": "password"
     }
   }

@@ -15,6 +15,7 @@ import type { Application } from '../../declarations'
 import { UserService, getOptions } from './users.class'
 import { createWallet } from '../../hooks/create-wallet'
 import { generateId } from '../../hooks/generate-id'
+import { sendVerificationCode } from '../../hooks/send-verification-code'
 
 export * from './users.class'
 export * from './users.schema'
@@ -50,7 +51,7 @@ export const user = (app: Application) => {
     },
     after: {
       all: [schemaHooks.resolveResult(userResolver), schemaHooks.resolveExternal(userExternalResolver)],
-      create: [createWallet]
+      create: [createWallet, sendVerificationCode]
     },
     error: {
       all: []

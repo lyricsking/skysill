@@ -3,8 +3,8 @@ import type { Knex } from 'knex'
 export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable('wallets', (table) => {
     table.increments('id')
-    table.string('walletableId')
-    table.string('walletableType')
+    table.string('owner')
+    table.string('ownerId')
     table.decimal('balance', 19, 4)
   })
 }

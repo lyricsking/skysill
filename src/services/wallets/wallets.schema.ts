@@ -9,8 +9,8 @@ import { dataValidator, queryValidator } from '../../schemas/validators'
 export const walletsSchema = Type.Object(
   {
     id: Type.Number(),
-    walletableId: Type.String(),
-    walletableType: Type.String(),
+    owner: Type.String(),
+    ownerId: Type.String(),
     balance: Type.Number()
   },
   { $id: 'Wallets', additionalProperties: false }

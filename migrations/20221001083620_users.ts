@@ -6,7 +6,9 @@ export async function up(knex: Knex): Promise<void> {
     table.string('firstname').nullable()
     table.string('lastname').nullable()
     table.string('phone').unique()
+    table.datetime('mobileVerifiedAt')
     table.string('email').unique()
+    table.dateTime('emailVerifiedAt')
     table.string('password')
   })
 }

@@ -5,12 +5,10 @@ export const createWallet = async (context: HookContext) => {
 
   const wallet = await context.app.service('wallets').create(
     {
-      walletableId: context.data.id,
-      walletableType: context.path,
+      owner: context.path,
+      ownerId: context.data.id,
       balance: 0,
     })
-
-  console.log(context.path)
 
   context.result.wallet = wallet;
 }
