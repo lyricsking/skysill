@@ -29,7 +29,7 @@ export const wallets = (app: Application) => {
   // Initialize hooks
   app.service('wallets').hooks({
     around: {
-      all: [authenticate('jwt')]
+      all: []
     },
     before: {
       all: [
