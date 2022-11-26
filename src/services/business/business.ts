@@ -11,6 +11,8 @@ import {
 
 import type { Application } from '../../declarations'
 import { BusinessService, getOptions } from './business.class'
+import { generateId } from '../../hooks/generate-id'
+import { generateBusinessId } from '../../hooks/generate-business-id'
 
 export * from './business.class'
 export * from './business.schema'
@@ -35,7 +37,8 @@ export const business = (app: Application) => {
         schemaHooks.validateData(businessDataValidator),
         schemaHooks.resolveQuery(businessQueryResolver),
         schemaHooks.resolveData(businessDataResolver)
-      ]
+      ],
+      create: [generateBusinessId]
     },
     after: {
       all: [

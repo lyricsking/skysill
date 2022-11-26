@@ -25,7 +25,7 @@ export const transactionsExternalResolver = resolve<Transactions, HookContext>({
 })
 
 // Schema for creating new entries
-export const transactionsDataSchema = Type.Omit(transactionsSchema, ['id', 'walletId'], {
+export const transactionsDataSchema = Type.Omit(transactionsSchema, ['id'], {
   $id: 'TransactionsData',
   additionalProperties: false
 })

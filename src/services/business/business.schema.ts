@@ -8,7 +8,7 @@ import { dataValidator, queryValidator } from '../../schemas/validators'
 // Main data model schema
 export const businessSchema = Type.Object(
   {
-    id: Type.Number(),
+    id: Type.String(),
     ownerId: Type.String(),
     name: Type.String(),
     contactName: Type.String(),
@@ -27,7 +27,7 @@ export const businessExternalResolver = resolve<Business, HookContext>({
 })
 
 // Schema for creating new entries
-export const businessDataSchema = Type.Pick(businessSchema, ['id'], {
+export const businessDataSchema = Type.Omit(businessSchema, ['id'], {
   $id: 'BusinessData',
   additionalProperties: false
 })

@@ -14,6 +14,7 @@ import {
 import type { Application } from '../../declarations'
 import { TransactionsService, getOptions } from './transactions.class'
 import { patchWalletBalance } from '../../hooks/patch-wallet-balance'
+import { generateId } from '../../hooks/generate-id'
 
 export * from './transactions.class'
 export * from './transactions.schema'
@@ -38,7 +39,7 @@ export const transactions = (app: Application) => {
         schemaHooks.validateData(transactionsDataValidator),
         schemaHooks.resolveQuery(transactionsQueryResolver),
         schemaHooks.resolveData(transactionsDataResolver)
-      ]
+      ],
     },
     after: {
       all: [

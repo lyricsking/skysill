@@ -47,7 +47,7 @@ export const user = (app: Application) => {
         schemaHooks.resolveQuery(userQueryResolver),
         schemaHooks.resolveData(userDataResolver)
       ],
-      create: [generateId(16)]
+      create: [generateId(10)]
     },
     after: {
       all: [schemaHooks.resolveResult(userResolver), schemaHooks.resolveExternal(userExternalResolver)],
