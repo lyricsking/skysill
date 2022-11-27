@@ -9,10 +9,10 @@ import {
   businessExternalResolver
 } from './business.schema'
 
-import type { Application } from '../../declarations'
+import type { Application, HookContext } from '../../declarations'
 import { BusinessService, getOptions } from './business.class'
 import { generateId } from '../../hooks/generate-id'
-import { generateBusinessId } from '../../hooks/generate-business-id'
+import { numberOfLength } from '../../utils/number-gen'
 
 export * from './business.class'
 export * from './business.schema'
@@ -38,7 +38,14 @@ export const business = (app: Application) => {
         schemaHooks.resolveQuery(businessQueryResolver),
         schemaHooks.resolveData(businessDataResolver)
       ],
-      create: [generateBusinessId]
+      create: [
+        async (context: HookContext) => {
+          console.log(`Running hook generateBusinessId on ${context.path}.${context.method}`)
+          
+          const prefix: string = context.data.name;
+          context.data.id = prefix + '-' + numberOfLength(5)
+        }
+      ]
     },
     after: {
       all: [

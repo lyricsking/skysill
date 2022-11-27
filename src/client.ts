@@ -1,4 +1,13 @@
 import { feathers } from '@feathersjs/feathers'
+import type { Twilio, TwilioData, TwilioQuery, TwilioService } from './services/twilio/twilio'
+export type { Twilio, TwilioData, TwilioQuery }
+
+import type { Twilio, TwilioData, TwilioQuery, TwilioService } from './services/twilio/twilio'
+export type { Twilio, TwilioData, TwilioQuery }
+
+import type { Twilio, TwilioData, TwilioQuery, TwilioService } from './services/twilio/twilio'
+export type { Twilio, TwilioData, TwilioQuery }
+
 import type { Drivers, DriversData, DriversQuery, DriversService } from './services/drivers/drivers'
 export type { Drivers, DriversData, DriversQuery }
 
@@ -108,8 +117,17 @@ type TransactionsClientService = Pick<
 >
 const driversServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
 type DriversClientService = Pick<DriversService<Params<DriversQuery>>, typeof driversServiceMethods[number]>
+const twilioServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
+type TwilioClientService = Pick<TwilioService, typeof twilioServiceMethods[number]>
+const twilioServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
+type TwilioClientService = Pick<TwilioService, typeof twilioServiceMethods[number]>
+const twilioServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
+type TwilioClientService = Pick<TwilioService, typeof twilioServiceMethods[number]>
 
 export interface ServiceTypes {
+  twilio: TwilioClientService
+  twilio: TwilioClientService
+  twilio: TwilioClientService
   drivers: DriversClientService
   transactions: TransactionsClientService
   wallets: WalletsClientService
@@ -170,6 +188,15 @@ export const createClient = <Configuration = any>(connection: TransportConnectio
   })
   client.use('drivers', connection.service('drivers'), {
     methods: driversServiceMethods
+  })
+  client.use('twilio', connection.service('twilio'), {
+    methods: twilioServiceMethods
+  })
+  client.use('twilio', connection.service('twilio'), {
+    methods: twilioServiceMethods
+  })
+  client.use('twilio', connection.service('twilio'), {
+    methods: twilioServiceMethods
   })
   return client
 }

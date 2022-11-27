@@ -9,8 +9,9 @@ import {
   shopsExternalResolver
 } from './shops.schema'
 
-import type { Application } from '../../declarations'
+import type { Application, HookContext } from '../../declarations'
 import { ShopsService, getOptions } from './shops.class'
+import { numberOfLength } from '../../utils/number-gen'
 
 export * from './shops.class'
 export * from './shops.schema'
@@ -35,6 +36,15 @@ export const shops = (app: Application) => {
         schemaHooks.validateData(shopsDataValidator),
         schemaHooks.resolveQuery(shopsQueryResolver),
         schemaHooks.resolveData(shopsDataResolver)
+      ],
+      create: [
+        async (context: HookContext) => {
+          console.log(`Running hook generateShopId on ${context.path}.${context.method}`)
+        
+          let shopName:string = context.data.shopName;
+          shopName += '-' + numberOfLength(6)
+          context.data.shopName = shopName;
+        }        
       ]
     },
     after: {

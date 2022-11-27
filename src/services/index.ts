@@ -1,3 +1,4 @@
+import { twilio } from './twilio/twilio'
 import { drivers } from './drivers/drivers'
 import { transactions } from './transactions/transactions'
 import { wallets } from './wallets/wallets'
@@ -14,6 +15,7 @@ import { user } from './users/users'
 import type { Application } from '../declarations'
 
 export const services = (app: Application) => {
+  app.configure(twilio)
   app.configure(drivers)
   app.configure(transactions)
   app.configure(wallets)

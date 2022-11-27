@@ -4,7 +4,7 @@ export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable('drivers', (table) => {
     table.increments('id')
     table.string('userId').references('users.id')
-    table.enum('vehicleType', ['bike', 'tricycle', 'car'])
+    table.enum('vehicleType', ['bike', 'tricycle', 'car', 'walking'])
   })
 }
 
