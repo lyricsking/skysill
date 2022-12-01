@@ -23,7 +23,7 @@ export const userSchema = Type.Object(
 export type User = Static<typeof userSchema>
 export const userResolver = resolve<User, HookContext>({
   properties: {
-        wallet: async (_value, user, context) => {
+    wallet: async (_value, user, context) => {
       // Associate the user's wallet.
       const wallet = await context.app.service('wallets').find({
         query: { 
