@@ -36,7 +36,7 @@ export class TwilioService {
   }
 
   async verify(mobile: string, otp: string): Promise<any> {
-    const user = await this.options.app.service('users')._get(0);
+    const user = await this.options.app.service('user')._get(0);
 
     // Initiate user mobile verification here
     const verification = await this.client.verify.services(this.sid)

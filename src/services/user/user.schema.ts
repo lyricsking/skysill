@@ -5,7 +5,7 @@ import { passwordHash } from '@feathersjs/authentication-local'
 
 import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../schemas/validators'
-import { walletsSchema } from '../wallet/wallet.schema'
+import { walletSchema } from '../wallet/wallet.schema'
 
 // Main data model schema
 export const userSchema = Type.Object(
@@ -16,7 +16,7 @@ export const userSchema = Type.Object(
     phone: Type.String(),
     email: Type.Optional(Type.String()),
     password: Type.Optional(Type.String()),
-    wallet: Type.Optional(Type.Ref(walletsSchema))
+    wallet: Type.Optional(Type.Ref(walletSchema))
   },
   { $id: 'User', additionalProperties: false }
 )
@@ -25,7 +25,7 @@ export const userResolver = resolve<User, HookContext>({
   properties: {
     wallet: async (_value, user, context) => {
       // Associate the user's wallet.
-      const wallet = await context.app.service('wallets').find({
+      const wallet = await context.app.service('wallet').find({
         query: { 
           $limit: 1,
           owner: "user",
