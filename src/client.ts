@@ -8,7 +8,7 @@ export type { Twilio, TwilioData, TwilioQuery }
 import type { Twilio, TwilioData, TwilioQuery, TwilioService } from './services/twilio/twilio'
 export type { Twilio, TwilioData, TwilioQuery }
 
-import type { Drivers, DriversData, DriversQuery, DriversService } from './services/drivers/drivers'
+import type { Drivers, DriversData, DriversQuery, DriversService } from './services/driver/driver'
 export type { Drivers, DriversData, DriversQuery }
 
 import type {
@@ -16,19 +16,19 @@ import type {
   TransactionsData,
   TransactionsQuery,
   TransactionsService
-} from './services/transactions/transactions'
+} from './services/transaction/transaction'
 export type { Transactions, TransactionsData, TransactionsQuery }
 
-import type { Wallets, WalletsData, WalletsQuery, WalletsService } from './services/wallets/wallets'
+import type { Wallets, WalletsData, WalletsQuery, WalletsService } from './services/wallet/wallet'
 export type { Wallets, WalletsData, WalletsQuery }
 
-import type { Shops, ShopsData, ShopsQuery, ShopsService } from './services/shops/shops'
+import type { Shops, ShopsData, ShopsQuery, ShopsService } from './services/shop/shop'
 export type { Shops, ShopsData, ShopsQuery }
 
-import type { Products, ProductsData, ProductsQuery, ProductsService } from './services/products/products'
+import type { Products, ProductsData, ProductsQuery, ProductsService } from './services/product/product'
 export type { Products, ProductsData, ProductsQuery }
 
-import type { Poptions, PoptionsData, PoptionsQuery, PoptionsService } from './services/poptions/poptions'
+import type { Poptions, PoptionsData, PoptionsQuery, PoptionsService } from './services/modifier_option/modifier_option'
 export type { Poptions, PoptionsData, PoptionsQuery }
 
 import type {
@@ -36,7 +36,7 @@ import type {
   PmodifiersData,
   PmodifiersQuery,
   PmodifiersService
-} from './services/pmodifiers/pmodifiers'
+} from './services/modifier/modifier'
 export type { Pmodifiers, PmodifiersData, PmodifiersQuery }
 
 import type {
@@ -44,10 +44,10 @@ import type {
   PcategoriesData,
   PcategoriesQuery,
   PcategoriesService
-} from './services/pcategories/pcategories'
+} from './services/product_category/product_category'
 export type { Pcategories, PcategoriesData, PcategoriesQuery }
 
-import type { Orders, OrdersData, OrdersQuery, OrdersService } from './services/orders/orders'
+import type { Orders, OrdersData, OrdersQuery, OrdersService } from './services/order/order'
 export type { Orders, OrdersData, OrdersQuery }
 
 import type {
@@ -55,18 +55,18 @@ import type {
   LineitemsData,
   LineitemsQuery,
   LineitemsService
-} from './services/lineitems/lineitems'
+} from './services/lineitem/lineitem'
 export type { Lineitems, LineitemsData, LineitemsQuery }
 
 import type { Business, BusinessData, BusinessQuery, BusinessService } from './services/business/business'
 export type { Business, BusinessData, BusinessQuery }
 
-import type { Broles, BrolesData, BrolesQuery, BrolesService } from './services/broles/broles'
+import type { Broles, BrolesData, BrolesQuery, BrolesService } from './services/employee_role/employee_role'
 export type { Broles, BrolesData, BrolesQuery }
 
 import type { AuthenticationService } from '@feathersjs/authentication'
 
-import type { User, UserData, UserQuery, UserService } from './services/users/users'
+import type { User, UserData, UserQuery, UserService } from './services/user/user'
 export type { User, UserData, UserQuery }
 
 import type { TransportConnection, Params } from '@feathersjs/feathers'
