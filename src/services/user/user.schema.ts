@@ -28,7 +28,7 @@ export const userResolver = resolve<User, HookContext>({
       const wallet = await context.app.service('wallets').find({
         query: { 
           $limit: 1,
-          owner: "users",
+          owner: "user",
           ownerId: user.id,
         }
       });

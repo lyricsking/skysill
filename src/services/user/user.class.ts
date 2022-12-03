@@ -18,6 +18,6 @@ export const getOptions = (app: Application): KnexAdapterOptions => {
   return {
     paginate: app.get('paginate'),
     Model: app.get('sqliteClient'),
-    name: 'users'
+    name: 'user'
   }
 }

@@ -6,40 +6,40 @@ import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../schemas/validators'
 
 // Main data model schema
-export const shopsSchema = Type.Object(
+export const shopSchema = Type.Object(
   {
     id: Type.Number(),
     businessId: Type.String(),
     description: Type.String(),
     coordinate: Type.String()
   },
-  { $id: 'Shops', additionalProperties: false }
+  { $id: 'Shop', additionalProperties: false }
 )
-export type Shops = Static<typeof shopsSchema>
-export const shopsResolver = resolve<Shops, HookContext>({
+export type Shop = Static<typeof shopSchema>
+export const shopResolver = resolve<Shop, HookContext>({
   properties: {}
 })
 
-export const shopsExternalResolver = resolve<Shops, HookContext>({
+export const shopExternalResolver = resolve<Shop, HookContext>({
   properties: {}
 })
 
 // Schema for creating new entries
-export const shopsDataSchema = Type.Omit(shopsSchema, ['id'], {
-  $id: 'ShopsData',
+export const shopDataSchema = Type.Omit(shopSchema, ['id'], {
+  $id: 'ShopData',
   additionalProperties: false
 })
-export type ShopsData = Static<typeof shopsDataSchema>
-export const shopsDataValidator = getDataValidator(shopsDataSchema, dataValidator)
-export const shopsDataResolver = resolve<Shops, HookContext>({
+export type ShopData = Static<typeof shopDataSchema>
+export const shopDataValidator = getDataValidator(shopDataSchema, dataValidator)
+export const shopDataResolver = resolve<Shop, HookContext>({
   properties: {}
 })
 
 // Schema for allowed query properties
-export const shopsQueryProperties = Type.Omit(shopsSchema, [], { additionalProperties: false })
-export const shopsQuerySchema = querySyntax(shopsQueryProperties)
-export type ShopsQuery = Static<typeof shopsQuerySchema>
-export const shopsQueryValidator = getValidator(shopsQuerySchema, queryValidator)
-export const shopsQueryResolver = resolve<ShopsQuery, HookContext>({
+export const shopQueryProperties = Type.Omit(shopSchema, [], { additionalProperties: false })
+export const shopQuerySchema = querySyntax(shopQueryProperties)
+export type ShopQuery = Static<typeof shopQuerySchema>
+export const shopQueryValidator = getValidator(shopQuerySchema, queryValidator)
+export const shopQueryResolver = resolve<ShopQuery, HookContext>({
   properties: {}
 })

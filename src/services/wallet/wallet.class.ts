@@ -3,14 +3,14 @@ import { KnexService } from '@feathersjs/knex'
 import type { KnexAdapterParams, KnexAdapterOptions } from '@feathersjs/knex'
 
 import type { Application } from '../../declarations'
-import type { Wallets, WalletsData, WalletsQuery } from './wallet.schema'
+import type { Wallet, WalletData, WalletQuery } from './wallet.schema'
 
-export interface WalletsParams extends KnexAdapterParams<WalletsQuery> {}
+export interface WalletParams extends KnexAdapterParams<WalletQuery> {}
 
 // By default calls the standard Knex adapter service methods but can be customized with your own functionality.
-export class WalletsService<ServiceParams extends Params = WalletsParams> extends KnexService<
-  Wallets,
-  WalletsData,
+export class WalletService<ServiceParams extends Params = WalletParams> extends KnexService<
+  Wallet,
+  WalletData,
   ServiceParams
 > {}
 

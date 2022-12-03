@@ -6,44 +6,44 @@ import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../schemas/validators'
 
 // Main data model schema
-export const transactionsSchema = Type.Object(
+export const transactionSchema = Type.Object(
   {
     id: Type.Number(),
     walletId: Type.String(),
     amount: Type.String(),
     narrations: Type.String()
   },
-  { $id: 'Transactions', additionalProperties: false }
+  { $id: 'Transaction', additionalProperties: false }
 )
-export type Transactions = Static<typeof transactionsSchema>
-export const transactionsResolver = resolve<Transactions, HookContext>({
+export type Transaction = Static<typeof transactionSchema>
+export const transactionResolver = resolve<Transaction, HookContext>({
   properties: {}
 })
 
-export const transactionsExternalResolver = resolve<Transactions, HookContext>({
+export const transactionExternalResolver = resolve<Transaction, HookContext>({
   properties: {}
 })
 
 // Schema for creating new entries
-export const transactionsDataSchema = Type.Omit(transactionsSchema, ['id'], {
-  $id: 'TransactionsData',
+export const transactionDataSchema = Type.Omit(transactionSchema, ['id'], {
+  $id: 'TransactionData',
   additionalProperties: false
 })
-export type TransactionsData = Static<typeof transactionsDataSchema>
-export const transactionsDataValidator = getDataValidator(transactionsDataSchema, dataValidator)
-export const transactionsDataResolver = resolve<Transactions, HookContext>({
+export type TransactionData = Static<typeof transactionDataSchema>
+export const transactionDataValidator = getDataValidator(transactionDataSchema, dataValidator)
+export const transactionDataResolver = resolve<Transaction, HookContext>({
   properties: {}
 })
 
 // Schema for allowed query properties
-export const transactionsQueryProperties = Type.Object(
-  transactionsSchema.properties,
+export const transactionQueryProperties = Type.Object(
+  transactionSchema.properties,
  {  
    additionalProperties: false
   })
-export const transactionsQuerySchema = querySyntax(transactionsQueryProperties)
-export type TransactionsQuery = Static<typeof transactionsQuerySchema>
-export const transactionsQueryValidator = getValidator(transactionsQuerySchema, queryValidator)
-export const transactionsQueryResolver = resolve<TransactionsQuery, HookContext>({
+export const transactionQuerySchema = querySyntax(transactionQueryProperties)
+export type TransactionQuery = Static<typeof transactionQuerySchema>
+export const transactionQueryValidator = getValidator(transactionQuerySchema, queryValidator)
+export const transactionQueryResolver = resolve<TransactionQuery, HookContext>({
   properties: {}
 })

@@ -3,14 +3,14 @@ import { KnexService } from '@feathersjs/knex'
 import type { KnexAdapterParams, KnexAdapterOptions } from '@feathersjs/knex'
 
 import type { Application } from '../../declarations'
-import type { Transactions, TransactionsData, TransactionsQuery } from './transaction.schema'
+import type { Transaction, TransactionData, TransactionQuery } from './transaction.schema'
 
-export interface TransactionsParams extends KnexAdapterParams<TransactionsQuery> {}
+export interface TransactionParams extends KnexAdapterParams<TransactionQuery> {}
 
 // By default calls the standard Knex adapter service methods but can be customized with your own functionality.
-export class TransactionsService<ServiceParams extends Params = TransactionsParams> extends KnexService<
-  Transactions,
-  TransactionsData,
+export class TransactionService<ServiceParams extends Params = TransactionParams> extends KnexService<
+  Transaction,
+  TransactionData,
   ServiceParams
 > {}
 
@@ -18,6 +18,6 @@ export const getOptions = (app: Application): KnexAdapterOptions => {
   return {
     paginate: app.get('paginate'),
     Model: app.get('sqliteClient'),
-    name: 'transactions'
+    name: 'transaction'
   }
 }

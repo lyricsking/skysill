@@ -3,14 +3,14 @@ import { KnexService } from '@feathersjs/knex'
 import type { KnexAdapterParams, KnexAdapterOptions } from '@feathersjs/knex'
 
 import type { Application } from '../../declarations'
-import type { Pcategories, PcategoriesData, PcategoriesQuery } from './product_category.schema'
+import type { ProductCategory, ProductCategoryData, ProductCategoryQuery } from './product_category.schema'
 
-export interface PcategoriesParams extends KnexAdapterParams<PcategoriesQuery> {}
+export interface ProductCategoryParams extends KnexAdapterParams<ProductCategoryQuery> {}
 
 // By default calls the standard Knex adapter service methods but can be customized with your own functionality.
-export class PcategoriesService<ServiceParams extends Params = PcategoriesParams> extends KnexService<
-  Pcategories,
-  PcategoriesData,
+export class ProductCategoryService<ServiceParams extends Params = ProductCategoryParams> extends KnexService<
+  ProductCategory,
+  ProductCategoryData,
   ServiceParams
 > {}
 
@@ -18,6 +18,6 @@ export const getOptions = (app: Application): KnexAdapterOptions => {
   return {
     paginate: app.get('paginate'),
     Model: app.get('sqliteClient'),
-    name: 'pcategories'
+    name: 'product_category'
   }
 }

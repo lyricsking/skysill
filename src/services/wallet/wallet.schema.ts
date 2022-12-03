@@ -6,42 +6,42 @@ import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../schemas/validators'
 
 // Main data model schema
-export const walletsSchema = Type.Object(
+export const walletSchema = Type.Object(
   {
     id: Type.Number(),
     owner: Type.String(),
     ownerId: Type.String(),
     balance: Type.Number()
   },
-  { $id: 'Wallets', additionalProperties: false }
+  { $id: 'Wallet', additionalProperties: false }
 )
-export type Wallets = Static<typeof walletsSchema>
-export const walletsResolver = resolve<Wallets, HookContext>({
+export type Wallet = Static<typeof walletSchema>
+export const walletResolver = resolve<Wallet, HookContext>({
   properties: {}
 })
 
-export const walletsExternalResolver = resolve<Wallets, HookContext>({
+export const walletExternalResolver = resolve<Wallet, HookContext>({
   properties: {}
 })
 
 // Schema for creating new entries
-export const walletsDataSchema = Type.Omit(walletsSchema, ['id'], {
-  $id: 'WalletsData',
+export const walletDataSchema = Type.Omit(walletSchema, ['id'], {
+  $id: 'WalletData',
   additionalProperties: false
 })
-export type WalletsData = Static<typeof walletsDataSchema>
-export const walletsDataValidator = getDataValidator(walletsDataSchema, dataValidator)
-export const walletsDataResolver = resolve<Wallets, HookContext>({
+export type WalletData = Static<typeof walletDataSchema>
+export const walletDataValidator = getDataValidator(walletDataSchema, dataValidator)
+export const walletDataResolver = resolve<Wallet, HookContext>({
   properties: {}
 })
 
 // Schema for allowed query properties
-export const walletsQueryProperties = Type.Omit(walletsSchema, ['balance'], {
+export const walletQueryProperties = Type.Omit(walletSchema, ['balance'], {
   additionalProperties: false
 })
-export const walletsQuerySchema = querySyntax(walletsQueryProperties)
-export type WalletsQuery = Static<typeof walletsQuerySchema>
-export const walletsQueryValidator = getValidator(walletsQuerySchema, queryValidator)
-export const walletsQueryResolver = resolve<WalletsQuery, HookContext>({
+export const walletQuerySchema = querySyntax(walletQueryProperties)
+export type WalletQuery = Static<typeof walletQuerySchema>
+export const walletQueryValidator = getValidator(walletQuerySchema, queryValidator)
+export const walletQueryResolver = resolve<WalletQuery, HookContext>({
   properties: {}
 })

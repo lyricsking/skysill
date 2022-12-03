@@ -3,16 +3,16 @@ import { authenticate } from '@feathersjs/authentication'
 import { hooks as schemaHooks } from '@feathersjs/schema'
 
 import {
-  transactionsDataValidator,
-  transactionsQueryValidator,
-  transactionsResolver,
-  transactionsDataResolver,
-  transactionsQueryResolver,
-  transactionsExternalResolver
+  transactionDataValidator,
+  transactionQueryValidator,
+  transactionResolver,
+  transactionDataResolver,
+  transactionQueryResolver,
+  transactionExternalResolver
 } from './transaction.schema'
 
 import type { Application } from '../../declarations'
-import { TransactionsService, getOptions } from './transaction.class'
+import { TransactionService, getOptions } from './transaction.class'
 import { patchWalletBalance } from '../../hooks/patch-wallet-balance'
 import { generateId } from '../../hooks/generate-id'
 
@@ -20,31 +20,31 @@ export * from './transaction.class'
 export * from './transaction.schema'
 
 // A configure function that registers the service and its hooks via `app.configure`
-export const transactions = (app: Application) => {
+export const transaction = (app: Application) => {
   // Register our service on the Feathers application
-  app.use('transactions', new TransactionsService(getOptions(app)), {
+  app.use('transaction', new TransactionService(getOptions(app)), {
     // A list of all methods this service exposes externally
     methods: ['find', 'get', 'create', 'update', 'patch', 'remove'],
     // You can add additional custom events to be sent to clients here
     events: []
   })
   // Initialize hooks
-  app.service('transactions').hooks({
+  app.service('transaction').hooks({
     around: {
       all: [authenticate('jwt')]
     },
     before: {
       all: [
-        schemaHooks.validateQuery(transactionsQueryValidator),
-        schemaHooks.validateData(transactionsDataValidator),
-        schemaHooks.resolveQuery(transactionsQueryResolver),
-        schemaHooks.resolveData(transactionsDataResolver)
+        schemaHooks.validateQuery(transactionQueryValidator),
+        schemaHooks.validateData(transactionDataValidator),
+        schemaHooks.resolveQuery(transactionQueryResolver),
+        schemaHooks.resolveData(transactionDataResolver)
       ],
     },
     after: {
       all: [
-        schemaHooks.resolveResult(transactionsResolver),
-        schemaHooks.resolveExternal(transactionsExternalResolver)
+        schemaHooks.resolveResult(transactionResolver),
+        schemaHooks.resolveExternal(transactionExternalResolver)
       ],
       create: [patchWalletBalance],
     },
@@ -57,6 +57,6 @@ export const transactions = (app: Application) => {
 // Add this service to the service type index
 declare module '../../declarations' {
   interface ServiceTypes {
-    transactions: TransactionsService
+    transaction: TransactionService
   }
 }

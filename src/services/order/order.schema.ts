@@ -6,7 +6,7 @@ import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../schemas/validators'
 
 // Main data model schema
-export const ordersSchema = Type.Object(
+export const orderSchema = Type.Object(
   {
     id: Type.Number(),
     shopId: Type.String(),
@@ -16,33 +16,33 @@ export const ordersSchema = Type.Object(
     deliveryAddress: Type.String(),
     deliveryGeopoint: Type.String()
   },
-  { $id: 'Orders', additionalProperties: false }
+  { $id: 'Order', additionalProperties: false }
 )
-export type Orders = Static<typeof ordersSchema>
-export const ordersResolver = resolve<Orders, HookContext>({
+export type Order = Static<typeof orderSchema>
+export const orderResolver = resolve<Order, HookContext>({
   properties: {}
 })
 
-export const ordersExternalResolver = resolve<Orders, HookContext>({
+export const orderExternalResolver = resolve<Order, HookContext>({
   properties: {}
 })
 
 // Schema for creating new entries
-export const ordersDataSchema = Type.Omit(ordersSchema, ['id'], {
-  $id: 'OrdersData',
+export const orderDataSchema = Type.Omit(orderSchema, ['id'], {
+  $id: 'OrderData',
   additionalProperties: false
 })
-export type OrdersData = Static<typeof ordersDataSchema>
-export const ordersDataValidator = getDataValidator(ordersDataSchema, dataValidator)
-export const ordersDataResolver = resolve<Orders, HookContext>({
+export type OrderData = Static<typeof orderDataSchema>
+export const orderDataValidator = getDataValidator(orderDataSchema, dataValidator)
+export const orderDataResolver = resolve<Order, HookContext>({
   properties: {}
 })
 
 // Schema for allowed query properties
-export const ordersQueryProperties = Type.Omit(ordersSchema, [], { additionalProperties: false })
-export const ordersQuerySchema = querySyntax(ordersQueryProperties)
-export type OrdersQuery = Static<typeof ordersQuerySchema>
-export const ordersQueryValidator = getValidator(ordersQuerySchema, queryValidator)
-export const ordersQueryResolver = resolve<OrdersQuery, HookContext>({
+export const orderQueryProperties = Type.Omit(orderSchema, [], { additionalProperties: false })
+export const orderQuerySchema = querySyntax(orderQueryProperties)
+export type OrderQuery = Static<typeof orderQuerySchema>
+export const orderQueryValidator = getValidator(orderQuerySchema, queryValidator)
+export const orderQueryResolver = resolve<OrderQuery, HookContext>({
   properties: {}
 })
