@@ -21,7 +21,7 @@ export const services = (app: Application) => {
   app.configure(wallets)
   app.configure(shops)
   app.configure(products)
-  app.configure(poptions)
+  app.configure(ptions)
   app.configure(pmodifiers)
   app.configure(pcategories)
   app.configure(orders)
