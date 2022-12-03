@@ -6,7 +6,7 @@ import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../schemas/validators'
 
 // Main data model schema
-export const lineitemsSchema = Type.Object(
+export const lineitemSchema = Type.Object(
   {
     id: Type.Number(),
     productId: Type.String(),
@@ -16,35 +16,35 @@ export const lineitemsSchema = Type.Object(
     quantity: Type.Number(),
     finalPrice: Type.Number()
   },
-  { $id: 'Lineitems', additionalProperties: false }
+  { $id: 'Lineitem', additionalProperties: false }
 )
-export type Lineitems = Static<typeof lineitemsSchema>
-export const lineitemsResolver = resolve<Lineitems, HookContext>({
+export type Lineitem = Static<typeof lineitemSchema>
+export const lineitemResolver = resolve<Lineitem, HookContext>({
   properties: {}
 })
 
-export const lineitemsExternalResolver = resolve<Lineitems, HookContext>({
+export const lineitemExternalResolver = resolve<Lineitem, HookContext>({
   properties: {}
 })
 
 // Schema for creating new entries
-export const lineitemsDataSchema = Type.Omit(lineitemsSchema, ['id'], {
-  $id: 'LineitemsData',
+export const lineitemDataSchema = Type.Omit(lineitemSchema, ['id'], {
+  $id: 'LineitemData',
   additionalProperties: false
 })
-export type LineitemsData = Static<typeof lineitemsDataSchema>
-export const lineitemsDataValidator = getDataValidator(lineitemsDataSchema, dataValidator)
-export const lineitemsDataResolver = resolve<Lineitems, HookContext>({
+export type LineitemData = Static<typeof lineitemDataSchema>
+export const lineitemDataValidator = getDataValidator(lineitemDataSchema, dataValidator)
+export const lineitemDataResolver = resolve<Lineitem, HookContext>({
   properties: {}
 })
 
 // Schema for allowed query properties
-export const lineitemsQueryProperties = Type.Omit(lineitemsSchema, [], {
+export const lineitemQueryProperties = Type.Omit(lineitemSchema, [], {
   additionalProperties: false
 })
-export const lineitemsQuerySchema = querySyntax(lineitemsQueryProperties)
-export type LineitemsQuery = Static<typeof lineitemsQuerySchema>
-export const lineitemsQueryValidator = getValidator(lineitemsQuerySchema, queryValidator)
-export const lineitemsQueryResolver = resolve<LineitemsQuery, HookContext>({
+export const lineitemQuerySchema = querySyntax(lineitemQueryProperties)
+export type LineitemQuery = Static<typeof lineitemQuerySchema>
+export const lineitemQueryValidator = getValidator(lineitemQuerySchema, queryValidator)
+export const lineitemQueryResolver = resolve<LineitemQuery, HookContext>({
   properties: {}
 })

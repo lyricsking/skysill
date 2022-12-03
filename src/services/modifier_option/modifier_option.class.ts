@@ -3,14 +3,14 @@ import { KnexService } from '@feathersjs/knex'
 import type { KnexAdapterParams, KnexAdapterOptions } from '@feathersjs/knex'
 
 import type { Application } from '../../declarations'
-import type { Poptions, PoptionsData, PoptionsQuery } from './modifier_option.schema'
+import type { ModifierOption, ModifierOptionData, ModifierOptionQuery } from './modifier_option.schema'
 
-export interface PoptionsParams extends KnexAdapterParams<PoptionsQuery> {}
+export interface ModifierOptionParams extends KnexAdapterParams<ModifierOptionQuery> {}
 
 // By default calls the standard Knex adapter service methods but can be customized with your own functionality.
-export class PoptionsService<ServiceParams extends Params = PoptionsParams> extends KnexService<
-  Poptions,
-  PoptionsData,
+export class ModifierOptionService<ServiceParams extends Params = ModifierOptionParams> extends KnexService<
+  ModifierOption,
+  ModifierOptionData,
   ServiceParams
 > {}
 
@@ -18,6 +18,6 @@ export const getOptions = (app: Application): KnexAdapterOptions => {
   return {
     paginate: app.get('paginate'),
     Model: app.get('sqliteClient'),
-    name: 'poptions'
+    name: 'modifier_option'
   }
 }

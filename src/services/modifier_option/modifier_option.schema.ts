@@ -6,40 +6,40 @@ import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../schemas/validators'
 
 // Main data model schema
-export const poptionsSchema = Type.Object(
+export const modifierOptionSchema = Type.Object(
   {
     id: Type.Number(),
     modifierId: Type.String(),
     name: Type.String(),
     price: Type.Number(),
   },
-  { $id: 'Poptions', additionalProperties: false }
+  { $id: 'ModifierOption', additionalProperties: false }
 )
-export type Poptions = Static<typeof poptionsSchema>
-export const poptionsResolver = resolve<Poptions, HookContext>({
+export type ModifierOption = Static<typeof modifierOptionSchema>
+export const modifierOptionResolver = resolve<ModifierOption, HookContext>({
   properties: {}
 })
 
-export const poptionsExternalResolver = resolve<Poptions, HookContext>({
+export const modifierOptionExternalResolver = resolve<ModifierOption, HookContext>({
   properties: {}
 })
 
 // Schema for creating new entries
-export const poptionsDataSchema = Type.Omit(poptionsSchema, ['id'], {
-  $id: 'PoptionsData',
+export const modifierOptionDataSchema = Type.Omit(modifierOptionSchema, ['id'], {
+  $id: 'ModifierOptionData',
   additionalProperties: false
 })
-export type PoptionsData = Static<typeof poptionsDataSchema>
-export const poptionsDataValidator = getDataValidator(poptionsDataSchema, dataValidator)
-export const poptionsDataResolver = resolve<Poptions, HookContext>({
+export type ModifierOptionData = Static<typeof modifierOptionDataSchema>
+export const modifierOptionDataValidator = getDataValidator(modifierOptionDataSchema, dataValidator)
+export const modifierOptionDataResolver = resolve<ModifierOption, HookContext>({
   properties: {}
 })
 
 // Schema for allowed query properties
-export const poptionsQueryProperties = poptionsSchema
-export const poptionsQuerySchema = querySyntax(poptionsQueryProperties)
-export type PoptionsQuery = Static<typeof poptionsQuerySchema>
-export const poptionsQueryValidator = getValidator(poptionsQuerySchema, queryValidator)
-export const poptionsQueryResolver = resolve<PoptionsQuery, HookContext>({
+export const modifierOptionQueryProperties = modifierOptionSchema
+export const modifierOptionQuerySchema = querySyntax(modifierOptionQueryProperties)
+export type ModifierOptionQuery = Static<typeof modifierOptionQuerySchema>
+export const modifierOptionQueryValidator = getValidator(modifierOptionQuerySchema, queryValidator)
+export const modifierOptionQueryResolver = resolve<ModifierOptionQuery, HookContext>({
   properties: {}
 })

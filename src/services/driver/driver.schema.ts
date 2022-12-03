@@ -6,40 +6,40 @@ import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../schemas/validators'
 
 // Main data model schema
-export const driversSchema = Type.Object(
+export const driverSchema = Type.Object(
   {
     id: Type.Number(),
     text: Type.String()
   },
-  { $id: 'Drivers', additionalProperties: false }
+  { $id: 'Driver', additionalProperties: false }
 )
-export type Drivers = Static<typeof driversSchema>
-export const driversResolver = resolve<Drivers, HookContext>({
+export type Driver = Static<typeof driverSchema>
+export const driverResolver = resolve<Driver, HookContext>({
   properties: {}
 })
 
-export const driversExternalResolver = resolve<Drivers, HookContext>({
+export const driverExternalResolver = resolve<Driver, HookContext>({
   properties: {}
 })
 
 // Schema for creating new entries
-export const driversDataSchema = Type.Pick(driversSchema, ['text'], {
-  $id: 'DriversData',
+export const driverDataSchema = Type.Pick(driverSchema, ['text'], {
+  $id: 'DriverData',
   additionalProperties: false
 })
-export type DriversData = Static<typeof driversDataSchema>
-export const driversDataValidator = getDataValidator(driversDataSchema, dataValidator)
-export const driversDataResolver = resolve<Drivers, HookContext>({
+export type DriverData = Static<typeof driverDataSchema>
+export const driverDataValidator = getDataValidator(driverDataSchema, dataValidator)
+export const driverDataResolver = resolve<Driver, HookContext>({
   properties: {}
 })
 
 // Schema for allowed query properties
-export const driversQueryProperties = Type.Pick(driversSchema, ['id', 'text'], {
+export const driverQueryProperties = Type.Pick(driverSchema, ['id', 'text'], {
   additionalProperties: false
 })
-export const driversQuerySchema = querySyntax(driversQueryProperties)
-export type DriversQuery = Static<typeof driversQuerySchema>
-export const driversQueryValidator = getValidator(driversQuerySchema, queryValidator)
-export const driversQueryResolver = resolve<DriversQuery, HookContext>({
+export const driverQuerySchema = querySyntax(driverQueryProperties)
+export type DriverQuery = Static<typeof driverQuerySchema>
+export const driverQueryValidator = getValidator(driverQuerySchema, queryValidator)
+export const driverQueryResolver = resolve<DriverQuery, HookContext>({
   properties: {}
 })

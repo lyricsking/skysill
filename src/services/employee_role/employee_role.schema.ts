@@ -6,7 +6,7 @@ import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../schemas/validators'
 
 // Main data model schema
-export const brolesSchema = Type.Object(
+export const employeeRoleSchema = Type.Object(
   {
     id: Type.Number(),
     businesId: Type.String(),
@@ -17,33 +17,33 @@ export const brolesSchema = Type.Object(
        assistance: 'assistance'
       }),
   },
-  { $id: 'Broles', additionalProperties: false }
+  { $id: 'EmployeeRole', additionalProperties: false }
 )
-export type Broles = Static<typeof brolesSchema>
-export const brolesResolver = resolve<Broles, HookContext>({
+export type EmployeeRole = Static<typeof employeeRoleSchema>
+export const employeeRoleResolver = resolve<EmployeeRole, HookContext>({
   properties: {}
 })
 
-export const brolesExternalResolver = resolve<Broles, HookContext>({
+export const employeeRoleExternalResolver = resolve<EmployeeRole, HookContext>({
   properties: {}
 })
 
 // Schema for creating new entries
-export const brolesDataSchema = Type.Omit(brolesSchema, ['id'], {
-  $id: 'BrolesData',
+export const employeeRoleDataSchema = Type.Omit(employeeRoleSchema, ['id'], {
+  $id: 'EmployeeRoleData',
   additionalProperties: false
 })
-export type BrolesData = Static<typeof brolesDataSchema>
-export const brolesDataValidator = getDataValidator(brolesDataSchema, dataValidator)
-export const brolesDataResolver = resolve<Broles, HookContext>({
+export type EmployeeRoleData = Static<typeof employeeRoleDataSchema>
+export const employeeRoleDataValidator = getDataValidator(employeeRoleDataSchema, dataValidator)
+export const employeeRoleDataResolver = resolve<EmployeeRole, HookContext>({
   properties: {}
 })
 
 // Schema for allowed query properties
-export const brolesQueryProperties = Type.Omit(brolesSchema, [], { additionalProperties: false })
-export const brolesQuerySchema = querySyntax(brolesQueryProperties)
-export type BrolesQuery = Static<typeof brolesQuerySchema>
-export const brolesQueryValidator = getValidator(brolesQuerySchema, queryValidator)
-export const brolesQueryResolver = resolve<BrolesQuery, HookContext>({
+export const employeeRoleQueryProperties = Type.Omit(employeeRoleSchema, [], { additionalProperties: false })
+export const employeeRoleQuerySchema = querySyntax(employeeRoleQueryProperties)
+export type EmployeeRoleQuery = Static<typeof employeeRoleQuerySchema>
+export const employeeRoleQueryValidator = getValidator(employeeRoleQuerySchema, queryValidator)
+export const employeeRoleQueryResolver = resolve<EmployeeRoleQuery, HookContext>({
   properties: {}
 })

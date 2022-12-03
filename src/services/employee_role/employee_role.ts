@@ -1,12 +1,12 @@
 import { hooks as schemaHooks } from '@feathersjs/schema'
 
 import {
-  brolesDataValidator,
-  brolesQueryValidator,
-  brolesResolver,
-  brolesDataResolver,
-  brolesQueryResolver,
-  brolesExternalResolver
+  employeeRoleDataValidator,
+  employeeRoleQueryValidator,
+  employeeRoleResolver,
+  employeeRoleDataResolver,
+  employeeRoleQueryResolver,
+  employeeRoleExternalResolver
 } from './employee_role.schema'
 
 import type { Application } from '../../declarations'
@@ -16,29 +16,29 @@ export * from './employee_role.class'
 export * from './employee_role.schema'
 
 // A configure function that registers the service and its hooks via `app.configure`
-export const broles = (app: Application) => {
+export const employeeRole = (app: Application) => {
   // Register our service on the Feathers application
-  app.use('broles', new BrolesService(getOptions(app)), {
+  app.use('employeeRole', new BrolesService(getOptions(app)), {
     // A list of all methods this service exposes externally
     methods: ['find', 'get', 'create', 'update', 'patch', 'remove'],
     // You can add additional custom events to be sent to clients here
     events: []
   })
   // Initialize hooks
-  app.service('broles').hooks({
+  app.service('employeeRole').hooks({
     around: {
       all: []
     },
     before: {
       all: [
-        schemaHooks.validateQuery(brolesQueryValidator),
-        schemaHooks.validateData(brolesDataValidator),
-        schemaHooks.resolveQuery(brolesQueryResolver),
-        schemaHooks.resolveData(brolesDataResolver)
+        schemaHooks.validateQuery(employeeRoleQueryValidator),
+        schemaHooks.validateData(employeeRoleDataValidator),
+        schemaHooks.resolveQuery(employeeRoleQueryResolver),
+        schemaHooks.resolveData(employeeRoleDataResolver)
       ]
     },
     after: {
-      all: [schemaHooks.resolveResult(brolesResolver), schemaHooks.resolveExternal(brolesExternalResolver)]
+      all: [schemaHooks.resolveResult(employeeRoleResolver), schemaHooks.resolveExternal(employeeRoleExternalResolver)]
     },
     error: {
       all: []
@@ -49,6 +49,6 @@ export const broles = (app: Application) => {
 // Add this service to the service type index
 declare module '../../declarations' {
   interface ServiceTypes {
-    broles: BrolesService
+    employeeRole: BrolesService
   }
 }

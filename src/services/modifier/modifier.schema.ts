@@ -6,7 +6,7 @@ import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../schemas/validators'
 
 // Main data model schema
-export const pmodifiersSchema = Type.Object(
+export const modifierSchema = Type.Object(
   {
     id: Type.Number(),
     businessId: Type.String(),
@@ -16,35 +16,35 @@ export const pmodifiersSchema = Type.Object(
     noFree: Type.Integer()
     
   },
-  { $id: 'Pmodifiers', additionalProperties: false }
+  { $id: 'Modifier', additionalProperties: false }
 )
-export type Pmodifiers = Static<typeof pmodifiersSchema>
-export const pmodifiersResolver = resolve<Pmodifiers, HookContext>({
+export type Modifier = Static<typeof modifierSchema>
+export const modifierResolver = resolve<Modifier, HookContext>({
   properties: {}
 })
 
-export const pmodifiersExternalResolver = resolve<Pmodifiers, HookContext>({
+export const modifierExternalResolver = resolve<Modifier, HookContext>({
   properties: {}
 })
 
 // Schema for creating new entries
-export const pmodifiersDataSchema = Type.Omit(pmodifiersSchema, ['id'], {
-  $id: 'PmodifiersData',
+export const modifierDataSchema = Type.Omit(modifierSchema, ['id'], {
+  $id: 'ModifierData',
   additionalProperties: false
 })
-export type PmodifiersData = Static<typeof pmodifiersDataSchema>
-export const pmodifiersDataValidator = getDataValidator(pmodifiersDataSchema, dataValidator)
-export const pmodifiersDataResolver = resolve<Pmodifiers, HookContext>({
+export type ModifierData = Static<typeof modifierDataSchema>
+export const modifierDataValidator = getDataValidator(modifierDataSchema, dataValidator)
+export const modifierDataResolver = resolve<Modifier, HookContext>({
   properties: {}
 })
 
 // Schema for allowed query properties
-export const pmodifiersQueryProperties = Type.Object(pmodifiersSchema.properties, {
+export const modifierQueryProperties = Type.Object(modifierSchema.properties, {
   additionalProperties: false
 })
-export const pmodifiersQuerySchema = querySyntax(pmodifiersQueryProperties)
-export type PmodifiersQuery = Static<typeof pmodifiersQuerySchema>
-export const pmodifiersQueryValidator = getValidator(pmodifiersQuerySchema, queryValidator)
-export const pmodifiersQueryResolver = resolve<PmodifiersQuery, HookContext>({
+export const modifierQuerySchema = querySyntax(modifierQueryProperties)
+export type ModifierQuery = Static<typeof modifierQuerySchema>
+export const modifierQueryValidator = getValidator(modifierQuerySchema, queryValidator)
+export const modifierQueryResolver = resolve<ModifierQuery, HookContext>({
   properties: {}
 })
