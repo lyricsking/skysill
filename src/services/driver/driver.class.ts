@@ -3,14 +3,14 @@ import { KnexService } from '@feathersjs/knex'
 import type { KnexAdapterParams, KnexAdapterOptions } from '@feathersjs/knex'
 
 import type { Application } from '../../declarations'
-import type { Drivers, DriversData, DriversQuery } from './driver.schema'
+import type { Driver, DriverData, DriverQuery } from './driver.schema'
 
-export interface DriversParams extends KnexAdapterParams<DriversQuery> {}
+export interface DriverParams extends KnexAdapterParams<DriverQuery> {}
 
 // By default calls the standard Knex adapter service methods but can be customized with your own functionality.
-export class DriversService<ServiceParams extends Params = DriversParams> extends KnexService<
-  Drivers,
-  DriversData,
+export class DriverService<ServiceParams extends Params = DriverParams> extends KnexService<
+  Driver,
+  DriverData,
   ServiceParams
 > {}
 
