@@ -1,6 +1,11 @@
 import { feathers } from '@feathersjs/feathers'
+import type { Sample, SampleData, SampleQuery, SampleService } from './services/sample/sample'
+export type { Sample, SampleData, SampleQuery }
+
 import type { Twilio, TwilioData, TwilioQuery, TwilioService } from './services/twilio/twilio'
 export type { Twilio, TwilioData, TwilioQuery }
+
+import type { Driver, DriverData, DriverQuery, DriverService } from './services/driver/driver'
 export type { Driver, DriverData, DriverQuery }
 
 import type {
@@ -20,15 +25,15 @@ export type { Shop, ShopData, ShopQuery }
 import type { Product, ProductData, ProductQuery, ProductService } from './services/product/product'
 export type { Product, ProductData, ProductQuery }
 
-import type { ModifierOption, ModifierOptionData, ModifierOptionQuery, ModifierOptionService } from './services/modifier_option/modifier_option'
+import type {
+  ModifierOption,
+  ModifierOptionData,
+  ModifierOptionQuery,
+  ModifierOptionService
+} from './services/modifier_option/modifier_option'
 export type { ModifierOption, ModifierOptionData, ModifierOptionQuery }
 
-import type {
-  Modifier,
-  ModifierData,
-  ModifierQuery,
-  ModifierService
-} from './services/modifier/modifier'
+import type { Modifier, ModifierData, ModifierQuery, ModifierService } from './services/modifier/modifier'
 export type { Modifier, ModifierData, ModifierQuery }
 
 import type {
@@ -42,18 +47,18 @@ export type { ProductCategory, ProductCategoryData, ProductCategoryQuery }
 import type { Order, OrderData, OrderQuery, OrderService } from './services/order/order'
 export type { Order, OrderData, OrderQuery }
 
-import type {
-  Lineitem,
-  LineitemData,
-  LineitemQuery,
-  LineitemService
-} from './services/lineitem/lineitem'
+import type { Lineitem, LineitemData, LineitemQuery, LineitemService } from './services/lineitem/lineitem'
 export type { Lineitem, LineitemData, LineitemQuery }
 
 import type { Business, BusinessData, BusinessQuery, BusinessService } from './services/business/business'
 export type { Business, BusinessData, BusinessQuery }
 
-import type { EmployeeRole, EmployeeRoleData, EmployeeRoleQuery, EmployeeRoleService } from './services/employee_role/employee_role'
+import type {
+  EmployeeRole,
+  EmployeeRoleData,
+  EmployeeRoleQuery,
+  EmployeeRoleService
+} from './services/employee_role/employee_role'
 export type { EmployeeRole, EmployeeRoleData, EmployeeRoleQuery }
 
 import type { AuthenticationService } from '@feathersjs/authentication'
@@ -62,10 +67,14 @@ import type { User, UserData, UserQuery, UserService } from './services/user/use
 export type { User, UserData, UserQuery }
 
 import type { TransportConnection, Params } from '@feathersjs/feathers'
+
 const userServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
 type UserClientService = Pick<UserService<Params<UserQuery>>, typeof userServiceMethods[number]>
 const employeeRoleServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
-type EmployeeRoleClientService = Pick<EmployeeRoleService<Params<EmployeeRoleQuery>>, typeof employeeRoleServiceMethods[number]>
+type EmployeeRoleClientService = Pick<
+  EmployeeRoleService<Params<EmployeeRoleQuery>>,
+  typeof employeeRoleServiceMethods[number]
+>
 const businessServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
 type BusinessClientService = Pick<
   BusinessService<Params<BusinessQuery>>,
@@ -94,10 +103,7 @@ type ModifierOptionClientService = Pick<
   typeof modifierOptionServiceMethods[number]
 >
 const productServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
-type ProductClientService = Pick<
-  ProductService<Params<ProductQuery>>,
-  typeof productServiceMethods[number]
->
+type ProductClientService = Pick<ProductService<Params<ProductQuery>>, typeof productServiceMethods[number]>
 const shopServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
 type ShopClientService = Pick<ShopService<Params<ShopQuery>>, typeof shopServiceMethods[number]>
 const walletServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
@@ -109,7 +115,7 @@ type TransactionClientService = Pick<
 >
 const driverServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
 type DriverClientService = Pick<DriverService<Params<DriverQuery>>, typeof driverServiceMethods[number]>
-const twilioServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
+const twilioServiceMethods = ['sendVerification', 'verify'] as const
 type TwilioClientService = Pick<TwilioService, typeof twilioServiceMethods[number]>
 
 export interface ServiceTypes {
@@ -145,7 +151,7 @@ export const createClient = <Configuration = any>(connection: TransportConnectio
   client.use('business', connection.service('business'), {
     methods: businessServiceMethods
   })
-  client.use('lineItem', connection.service('lineItem'), {
+  client.use('lineitem', connection.service('lineitem'), {
     methods: lineItemServiceMethods
   })
   client.use('order', connection.service('order'), {
