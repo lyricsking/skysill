@@ -1,7 +1,6 @@
 import { feathers } from '@feathersjs/feathers'
 import type { Twilio, TwilioData, TwilioQuery, TwilioService } from './services/twilio/twilio'
 export type { Twilio, TwilioData, TwilioQuery }
-import type {Driver, DriverData, DriverQuery, DriverService } from './services/driver/driver'
 export type { Driver, DriverData, DriverQuery }
 
 import type {
@@ -73,7 +72,7 @@ type BusinessClientService = Pick<
   typeof businessServiceMethods[number]
 >
 const lineItemServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
-type LineItemClientService = Pick<
+type LineitemClientService = Pick<
   LineitemService<Params<LineitemQuery>>,
   typeof lineItemServiceMethods[number]
 >
@@ -112,25 +111,19 @@ const driverServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remov
 type DriverClientService = Pick<DriverService<Params<DriverQuery>>, typeof driverServiceMethods[number]>
 const twilioServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
 type TwilioClientService = Pick<TwilioService, typeof twilioServiceMethods[number]>
-const twilioServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
-type TwilioClientService = Pick<TwilioService, typeof twilioServiceMethods[number]>
-const twilioServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
-type TwilioClientService = Pick<TwilioService, typeof twilioServiceMethods[number]>
 
 export interface ServiceTypes {
-  twilio: TwilioClientService
-  twilio: TwilioClientService
   twilio: TwilioClientService
   driver: DriverClientService
   transaction: TransactionClientService
   wallet: WalletClientService
-  shop: shopClientService
+  shop: ShopClientService
   product: ProductClientService
   modifierOption: ModifierOptionClientService
   modifier: ModifierClientService
   productCategory: ProductCategoryClientService
   order: OrderClientService
-  lineItem: LineItemClientService
+  lineitem: LineitemClientService
   business: BusinessClientService
   employeeRole: EmployeeRoleClientService
   authentication: Pick<AuthenticationService, 'create' | 'remove'>
