@@ -13,6 +13,7 @@ import type { Application, HookContext } from '../../declarations'
 import { BusinessService, getOptions } from './business.class'
 import { generateId } from '../../hooks/generate-id'
 import { numberOfLength } from '../../utils/number-gen'
+import percentEncode from '@stdlib/string-percent-encode'
 
 export * from './business.class'
 export * from './business.schema'
@@ -42,7 +43,8 @@ export const business = (app: Application) => {
         async (context: HookContext) => {
           console.log(`Running hook generateBusinessId on ${context.path}.${context.method}`)
           
-          const prefix: string = context.data.name;
+          const prefix: string = percentEncode(context.data.name);
+          
           context.data.id = prefix + '-' + numberOfLength(5)
         }
       ]

@@ -5,5 +5,5 @@ export function numberInRange(min: number=0, max: number=0) :number  {
 }
 
 export function numberOfLength(length: number=0) :string {
-    return Math.random().toString().substring(2, length+2);
+    return Math.random().toString().substring(2, length + 2);
 }

@@ -1,23 +1,15 @@
 import { feathers } from '@feathersjs/feathers'
 import type { Twilio, TwilioData, TwilioQuery, TwilioService } from './services/twilio/twilio'
 export type { Twilio, TwilioData, TwilioQuery }
-
-import type { Twilio, TwilioData, TwilioQuery, TwilioService } from './services/twilio/twilio'
-export type { Twilio, TwilioData, TwilioQuery }
-
-import type { Twilio, TwilioData, TwilioQuery, TwilioService } from './services/twilio/twilio'
-export type { Twilio, TwilioData, TwilioQuery }
-
-import type { Drivers, DriversData, DriversQuery, DriversService } from './services/driver/driver'
 export type { Drivers, DriversData, DriversQuery }
 
 import type {
-  Transactions,
-  TransactionsData,
-  TransactionsQuery,
-  TransactionsService
+  Transaction,
+  TransactionData,
+  TransactionQuery,
+  TransactionService
 } from './services/transaction/transaction'
-export type { Transactions, TransactionsData, TransactionsQuery }
+export type { Transaction, TransactionsData, TransactionsQuery }
 
 import type { Wallets, WalletsData, WalletsQuery, WalletsService } from './services/wallet/wallet'
 export type { Wallets, WalletsData, WalletsQuery }

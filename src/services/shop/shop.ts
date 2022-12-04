@@ -40,10 +40,16 @@ export const shop = (app: Application) => {
       create: [
         async (context: HookContext) => {
           console.log(`Running hook generateShopId on ${context.path}.${context.method}`)
-        
-          let shopName:string = context.data.shopName;
-          shopName += '-' + numberOfLength(6)
-          context.data.shopName = shopName;
+          
+          //const biz = await context.app.service('business')._get(context.data.businessId, {
+           // query: { 
+          //    $select: ['name']
+         //   }
+        //  });
+
+          const shopName:string = context.data.shopName;
+          const shopId = shopName + '-' + numberOfLength(6)
+          context.data.id = shopId;
         }        
       ]
     },

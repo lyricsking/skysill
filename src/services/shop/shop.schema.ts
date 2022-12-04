@@ -4,28 +4,40 @@ import type { Static } from '@feathersjs/typebox'
 
 import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../schemas/validators'
+import { businessSchema } from '../business/business.schema'
 
 // Main data model schema
 export const shopSchema = Type.Object(
   {
     id: Type.Number(),
-    businessId: Type.String(),
+    //businessId: Type.String(),
+    shopName: Type.String(),
     description: Type.String(),
-    coordinate: Type.String()
+    coordinate: Type.String(),
+    business: Type.Optional(Type.Ref(businessSchema))
   },
   { $id: 'Shop', additionalProperties: false }
 )
 export type Shop = Static<typeof shopSchema>
 export const shopResolver = resolve<Shop, HookContext>({
-  properties: {}
+  properties: {
+    
+  }
 })
 
 export const shopExternalResolver = resolve<Shop, HookContext>({
-  properties: {}
+  properties: {
+    business: async (_value, user, context) => {
+      console.log(user)
+      // Associate the shop's business.
+      const wallet = await context.app.service('business').get(user.id);
+      return wallet;
+    }
+  }
 })
 
 // Schema for creating new entries
-export const shopDataSchema = Type.Omit(shopSchema, ['id'], {
+export const shopDataSchema = Type.Omit(shopSchema, ['id', 'business'], {
   $id: 'ShopData',
   additionalProperties: false
 })
