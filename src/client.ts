@@ -1,7 +1,7 @@
 import { feathers } from '@feathersjs/feathers'
 import type { Twilio, TwilioData, TwilioQuery, TwilioService } from './services/twilio/twilio'
 export type { Twilio, TwilioData, TwilioQuery }
-export type { Drivers, DriversData, DriversQuery }
+export type { Driver, DriverData, DriverQuery }
 
 import type {
   Transaction,
@@ -9,52 +9,52 @@ import type {
   TransactionQuery,
   TransactionService
 } from './services/transaction/transaction'
-export type { Transaction, TransactionsData, TransactionsQuery }
+export type { Transaction, TransactionData, TransactionQuery }
 
-import type { Wallets, WalletsData, WalletsQuery, WalletsService } from './services/wallet/wallet'
-export type { Wallets, WalletsData, WalletsQuery }
+import type { Wallet, WalletData, WalletQuery, WalletService } from './services/wallet/wallet'
+export type { Wallet, WalletData, WalletQuery }
 
-import type { Shops, ShopsData, ShopsQuery, ShopsService } from './services/shop/shop'
-export type { Shops, ShopsData, ShopsQuery }
+import type { Shop, ShopData, ShopQuery, ShopService } from './services/shop/shop'
+export type { Shop, ShopData, ShopQuery }
 
-import type { Products, ProductsData, ProductsQuery, ProductsService } from './services/product/product'
-export type { Products, ProductsData, ProductsQuery }
+import type { Product, ProductData, ProductQuery, ProductService } from './services/product/product'
+export type { Product, ProductData, ProductQuery }
 
-import type { Poptions, PoptionsData, PoptionsQuery, PoptionsService } from './services/modifier_option/modifier_option'
-export type { Poptions, PoptionsData, PoptionsQuery }
+import type { ModifierOption, ModifierOptionData, ModifierOptionQuery, ModifierOptionService } from './services/modifier_option/modifier_option'
+export type { ModifierOption, ModifierOptionData, ModifierOptionQuery }
 
 import type {
-  Pmodifiers,
-  PmodifiersData,
-  PmodifiersQuery,
-  PmodifiersService
+  Modifier,
+  ModifierData,
+  ModifierQuery,
+  ModifierService
 } from './services/modifier/modifier'
-export type { Pmodifiers, PmodifiersData, PmodifiersQuery }
+export type { Modifier, ModifierData, ModifierQuery }
 
 import type {
-  Pcategories,
-  PcategoriesData,
-  PcategoriesQuery,
-  PcategoriesService
+  ProductCategory,
+  ProductCategoryData,
+  ProductCategoryQuery,
+  ProductCategoryService
 } from './services/product_category/product_category'
-export type { Pcategories, PcategoriesData, PcategoriesQuery }
+export type { ProductCategory, ProductCategoryData, ProductCategoryQuery }
 
-import type { Orders, OrdersData, OrdersQuery, OrdersService } from './services/order/order'
-export type { Orders, OrdersData, OrdersQuery }
+import type { Order, OrderData, OrderQuery, OrderService } from './services/order/order'
+export type { Order, OrderData, OrderQuery }
 
 import type {
-  Lineitems,
-  LineitemsData,
-  LineitemsQuery,
-  LineitemsService
+  LineItem,
+  LineItemData,
+  LineItemQuery,
+  LineItemService
 } from './services/lineitem/lineitem'
-export type { Lineitems, LineitemsData, LineitemsQuery }
+export type { LineItem, LineItemData, LineItemQuery }
 
 import type { Business, BusinessData, BusinessQuery, BusinessService } from './services/business/business'
 export type { Business, BusinessData, BusinessQuery }
 
-import type { Broles, BrolesData, BrolesQuery, BrolesService } from './services/employee_role/employee_role'
-export type { Broles, BrolesData, BrolesQuery }
+import type { EmployeeRole, EmployeeRoleData, EmployeeRoleQuery, EmployeeRoleService } from './services/employee_role/employee_role'
+export type { EmployeeRole, EmployeeRoleData, EmployeeRoleQuery }
 
 import type { AuthenticationService } from '@feathersjs/authentication'
 
@@ -64,51 +64,51 @@ export type { User, UserData, UserQuery }
 import type { TransportConnection, Params } from '@feathersjs/feathers'
 const userServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
 type UserClientService = Pick<UserService<Params<UserQuery>>, typeof userServiceMethods[number]>
-const brolesServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
-type BrolesClientService = Pick<BrolesService<Params<BrolesQuery>>, typeof brolesServiceMethods[number]>
+const employeeRoleServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
+type EmployeeRoleClientService = Pick<EmployeeRoleService<Params<EmployeeRoleQuery>>, typeof employeeRoleServiceMethods[number]>
 const businessServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
 type BusinessClientService = Pick<
   BusinessService<Params<BusinessQuery>>,
   typeof businessServiceMethods[number]
 >
-const lineitemsServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
-type LineitemsClientService = Pick<
-  LineitemsService<Params<LineitemsQuery>>,
-  typeof lineitemsServiceMethods[number]
+const lineItemServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
+type LineItemClientService = Pick<
+  LineItemService<Params<LineItemQuery>>,
+  typeof lineItemServiceMethods[number]
 >
-const ordersServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
-type OrdersClientService = Pick<OrdersService<Params<OrdersQuery>>, typeof ordersServiceMethods[number]>
-const pcategoriesServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
-type PcategoriesClientService = Pick<
-  PcategoriesService<Params<PcategoriesQuery>>,
-  typeof pcategoriesServiceMethods[number]
+const orderServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
+type OrderClientService = Pick<OrderService<Params<OrderQuery>>, typeof orderServiceMethods[number]>
+const productCategoryServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
+type ProductCategoryClientService = Pick<
+  ProductCategoryService<Params<ProductCategoryQuery>>,
+  typeof productCategoryServiceMethods[number]
 >
-const pmodifiersServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
-type PmodifiersClientService = Pick<
-  PmodifiersService<Params<PmodifiersQuery>>,
-  typeof pmodifiersServiceMethods[number]
+const modifierServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
+type ModifierClientService = Pick<
+  ModifierService<Params<ModifierQuery>>,
+  typeof modifierServiceMethods[number]
 >
-const poptionsServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
-type PoptionsClientService = Pick<
-  PoptionsService<Params<PoptionsQuery>>,
-  typeof poptionsServiceMethods[number]
+const modifierOptionServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
+type ModifierOptionClientService = Pick<
+  ModifierOptionService<Params<ModifierOptionQuery>>,
+  typeof modifierOptionServiceMethods[number]
 >
-const productsServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
-type ProductsClientService = Pick<
-  ProductsService<Params<ProductsQuery>>,
-  typeof productsServiceMethods[number]
+const productServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
+type ProductClientService = Pick<
+  ProductService<Params<ProductQuery>>,
+  typeof productServiceMethods[number]
 >
-const shopsServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
-type ShopsClientService = Pick<ShopsService<Params<ShopsQuery>>, typeof shopsServiceMethods[number]>
-const walletsServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
-type WalletsClientService = Pick<WalletsService<Params<WalletsQuery>>, typeof walletsServiceMethods[number]>
+const shopServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
+type ShopClientService = Pick<ShopService<Params<ShopQuery>>, typeof shopServiceMethods[number]>
+const walletServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
+type WalletClientService = Pick<WalletService<Params<WalletQuery>>, typeof walletServiceMethods[number]>
 const transactionsServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
-type TransactionsClientService = Pick<
-  TransactionsService<Params<TransactionsQuery>>,
+type TransactionClientService = Pick<
+  TransactionService<Params<TransactionQuery>>,
   typeof transactionsServiceMethods[number]
 >
-const driversServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
-type DriversClientService = Pick<DriversService<Params<DriversQuery>>, typeof driversServiceMethods[number]>
+const driverServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
+type DriverClientService = Pick<DriverService<Params<DriverQuery>>, typeof driverServiceMethods[number]>
 const twilioServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
 type TwilioClientService = Pick<TwilioService, typeof twilioServiceMethods[number]>
 const twilioServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
@@ -120,20 +120,20 @@ export interface ServiceTypes {
   twilio: TwilioClientService
   twilio: TwilioClientService
   twilio: TwilioClientService
-  drivers: DriversClientService
-  transactions: TransactionsClientService
-  wallets: WalletsClientService
-  shops: ShopsClientService
-  products: ProductsClientService
-  poptions: PoptionsClientService
-  pmodifiers: PmodifiersClientService
-  pcategories: PcategoriesClientService
-  orders: OrdersClientService
-  lineitems: LineitemsClientService
+  driver: DriverClientService
+  transaction: TransactionClientService
+  wallet: WalletClientService
+  shop: shopClientService
+  product: ProductClientService
+  modifierOption: ModifierOptionClientService
+  modifier: ModifierClientService
+  productCategory: ProductCategoryClientService
+  order: OrderClientService
+  lineItem: LineItemClientService
   business: BusinessClientService
-  broles: BrolesClientService
+  employeeRole: EmployeeRoleClientService
   authentication: Pick<AuthenticationService, 'create' | 'remove'>
-  users: UserClientService
+  user: UserClientService
   //
 }
 
@@ -142,50 +142,44 @@ export const createClient = <Configuration = any>(connection: TransportConnectio
 
   client.configure(connection)
 
-  client.use('users', connection.service('users'), {
+  client.use('user', connection.service('user'), {
     methods: userServiceMethods
   })
-  client.use('broles', connection.service('broles'), {
-    methods: brolesServiceMethods
+  client.use('employeeRole', connection.service('employeeRole'), {
+    methods: employeeRoleServiceMethods
   })
   client.use('business', connection.service('business'), {
     methods: businessServiceMethods
   })
-  client.use('lineitems', connection.service('lineitems'), {
-    methods: lineitemsServiceMethods
+  client.use('lineItem', connection.service('lineItem'), {
+    methods: lineItemServiceMethods
   })
-  client.use('orders', connection.service('orders'), {
-    methods: ordersServiceMethods
+  client.use('order', connection.service('order'), {
+    methods: orderServiceMethods
   })
-  client.use('pcategories', connection.service('pcategories'), {
-    methods: pcategoriesServiceMethods
+  client.use('productCategory', connection.service('productCategory'), {
+    methods: productCategoryServiceMethods
   })
-  client.use('pmodifiers', connection.service('pmodifiers'), {
-    methods: pmodifiersServiceMethods
+  client.use('modifier', connection.service('modifier'), {
+    methods: modifierServiceMethods
   })
-  client.use('poptions', connection.service('poptions'), {
-    methods: poptionsServiceMethods
+  client.use('modifierOption', connection.service('modifierOption'), {
+    methods: modifierOptionServiceMethods
   })
-  client.use('products', connection.service('products'), {
-    methods: productsServiceMethods
+  client.use('product', connection.service('product'), {
+    methods: productServiceMethods
   })
-  client.use('shops', connection.service('shops'), {
-    methods: shopsServiceMethods
+  client.use('shop', connection.service('shop'), {
+    methods: shopServiceMethods
   })
-  client.use('wallets', connection.service('wallets'), {
-    methods: walletsServiceMethods
+  client.use('wallet', connection.service('wallet'), {
+    methods: walletServiceMethods
   })
-  client.use('transactions', connection.service('transactions'), {
+  client.use('transaction', connection.service('transaction'), {
     methods: transactionsServiceMethods
   })
-  client.use('drivers', connection.service('drivers'), {
-    methods: driversServiceMethods
-  })
-  client.use('twilio', connection.service('twilio'), {
-    methods: twilioServiceMethods
-  })
-  client.use('twilio', connection.service('twilio'), {
-    methods: twilioServiceMethods
+  client.use('driver', connection.service('driver'), {
+    methods: driverServiceMethods
   })
   client.use('twilio', connection.service('twilio'), {
     methods: twilioServiceMethods
