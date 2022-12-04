@@ -5,6 +5,8 @@ export async function up(knex: Knex): Promise<void> {
     table.string('id').primary()
     table.string('businessId').references('business.id')
     table.string('name')
+    table.dateTime('availableAt').nullable()
+    table.dateTime('unAvailableAt').nullable()
   })
 }
 

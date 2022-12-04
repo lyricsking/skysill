@@ -8,6 +8,8 @@ export async function up(knex: Knex): Promise<void> {
     table.string('contactName').notNullable()
     table.string('contactPhone').notNullable()
     table.string('contactEmail')
+    table.string('categories')
+    table.string('tags')
   })
 }
 
