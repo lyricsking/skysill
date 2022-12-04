@@ -1,4 +1,11 @@
 import { feathers } from '@feathersjs/feathers'
+import type {
+  ProductModifier,
+  ProductModifierData,
+  ProductModifierQuery,
+  ProductModifierService
+} from './services/product_modifier/product_modifier'
+export type { ProductModifier, ProductModifierData, ProductModifierQuery }
 
 import type { Twilio, TwilioData, TwilioQuery, TwilioService } from './services/twilio/twilio'
 export type { Twilio, TwilioData, TwilioQuery }
@@ -115,8 +122,14 @@ const driverServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remov
 type DriverClientService = Pick<DriverService<Params<DriverQuery>>, typeof driverServiceMethods[number]>
 const twilioServiceMethods = ['sendVerification', 'verify'] as const
 type TwilioClientService = Pick<TwilioService, typeof twilioServiceMethods[number]>
+const productModifierServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
+type ProductModifierClientService = Pick<
+  ProductModifierService<Params<ProductModifierQuery>>,
+  typeof productModifierServiceMethods[number]
+>
 
 export interface ServiceTypes {
+  productModifier: ProductModifierClientService
   twilio: TwilioClientService
   driver: DriverClientService
   transaction: TransactionClientService
@@ -181,6 +194,9 @@ export const createClient = <Configuration = any>(connection: TransportConnectio
   })
   client.use('twilio', connection.service('twilio'), {
     methods: twilioServiceMethods
+  })
+  client.use('productModifier', connection.service('productModifier'), {
+    methods: productModifierServiceMethods
   })
   return client
 }

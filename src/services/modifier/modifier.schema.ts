@@ -13,8 +13,7 @@ export const modifierSchema = Type.Object(
     name: Type.String(),
     minSelectable: Type.Integer(),
     maxSelectable: Type.Integer(),
-    noFree: Type.Integer()
-    
+    noFree: Type.Integer(),  
   },
   { $id: 'Modifier', additionalProperties: false }
 )
