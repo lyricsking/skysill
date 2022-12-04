@@ -4,13 +4,14 @@ import type { Static } from '@feathersjs/typebox'
 
 import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../schemas/validators'
-import { businessSchema } from '../business/business.schema'
+import { businessDataSchema, businessSchema } from '../business/business.schema'
+import { walletSchema } from '../wallet/wallet.schema'
 
 // Main data model schema
 export const shopSchema = Type.Object(
   {
     id: Type.Number(),
-    //businessId: Type.String(),
+    businessId: Type.String(),
     shopName: Type.String(),
     description: Type.String(),
     coordinate: Type.String(),
@@ -21,18 +22,18 @@ export const shopSchema = Type.Object(
 export type Shop = Static<typeof shopSchema>
 export const shopResolver = resolve<Shop, HookContext>({
   properties: {
-    
+    business: async (_value, user, context) => {
+      console.log(user)
+      // Associate the shop's business.
+      const wallet = await context.app.service('business').get(user.businessId);
+      return wallet;
+    }
   }
 })
 
 export const shopExternalResolver = resolve<Shop, HookContext>({
   properties: {
-    business: async (_value, user, context) => {
-      console.log(user)
-      // Associate the shop's business.
-      const wallet = await context.app.service('business').get(user.id);
-      return wallet;
-    }
+    
   }
 })
 
@@ -48,7 +49,7 @@ export const shopDataResolver = resolve<Shop, HookContext>({
 })
 
 // Schema for allowed query properties
-export const shopQueryProperties = Type.Omit(shopSchema, [], { additionalProperties: false })
+export const shopQueryProperties = Type.Omit(shopSchema, ['business'], { additionalProperties: false })
 export const shopQuerySchema = querySyntax(shopQueryProperties)
 export type ShopQuery = Static<typeof shopQuerySchema>
 export const shopQueryValidator = getValidator(shopQuerySchema, queryValidator)

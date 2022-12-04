@@ -6,6 +6,7 @@ import { passwordHash } from '@feathersjs/authentication-local'
 import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../schemas/validators'
 import { walletSchema } from '../wallet/wallet.schema'
+import { businessSchema } from '../business/business.schema'
 
 // Main data model schema
 export const userSchema = Type.Object(
@@ -16,7 +17,7 @@ export const userSchema = Type.Object(
     phone: Type.String(),
     email: Type.Optional(Type.String()),
     password: Type.Optional(Type.String()),
-    wallet: Type.Optional(Type.Ref(walletSchema))
+    wallet: Type.Optional(Type.Ref(walletSchema)),
   },
   { $id: 'User', additionalProperties: false }
 )

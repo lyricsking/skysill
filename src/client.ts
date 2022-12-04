@@ -1,6 +1,4 @@
 import { feathers } from '@feathersjs/feathers'
-import type { Sample, SampleData, SampleQuery, SampleService } from './services/sample/sample'
-export type { Sample, SampleData, SampleQuery }
 
 import type { Twilio, TwilioData, TwilioQuery, TwilioService } from './services/twilio/twilio'
 export type { Twilio, TwilioData, TwilioQuery }
