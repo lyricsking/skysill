@@ -1,6 +1,7 @@
 import { feathers } from '@feathersjs/feathers'
 import type { Twilio, TwilioData, TwilioQuery, TwilioService } from './services/twilio/twilio'
 export type { Twilio, TwilioData, TwilioQuery }
+import type {Driver, DriverData, DriverQuery, DriverService } from './services/driver/driver'
 export type { Driver, DriverData, DriverQuery }
 
 import type {
@@ -43,12 +44,12 @@ import type { Order, OrderData, OrderQuery, OrderService } from './services/orde
 export type { Order, OrderData, OrderQuery }
 
 import type {
-  LineItem,
-  LineItemData,
-  LineItemQuery,
-  LineItemService
+  Lineitem,
+  LineitemData,
+  LineitemQuery,
+  LineitemService
 } from './services/lineitem/lineitem'
-export type { LineItem, LineItemData, LineItemQuery }
+export type { Lineitem, LineitemData, LineitemQuery }
 
 import type { Business, BusinessData, BusinessQuery, BusinessService } from './services/business/business'
 export type { Business, BusinessData, BusinessQuery }
@@ -73,7 +74,7 @@ type BusinessClientService = Pick<
 >
 const lineItemServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
 type LineItemClientService = Pick<
-  LineItemService<Params<LineItemQuery>>,
+  LineitemService<Params<LineitemQuery>>,
   typeof lineItemServiceMethods[number]
 >
 const orderServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
