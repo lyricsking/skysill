@@ -7,6 +7,7 @@ export async function up(knex: Knex): Promise<void> {
     table.string('name')
     table.dateTime('availableAt').nullable()
     table.dateTime('unAvailableAt').nullable()
+    
   })
 }
 
