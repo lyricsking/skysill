@@ -10,14 +10,14 @@ export declare type ModifierOption = Static<typeof modifierOptionSchema>;
 export declare const modifierOptionResolver: import("@feathersjs/schema").Resolver<{
     id: number;
     name: string;
-    price: number;
     modifierId: string;
+    price: number;
 }, HookContext<any>>;
 export declare const modifierOptionExternalResolver: import("@feathersjs/schema").Resolver<{
     id: number;
     name: string;
-    price: number;
     modifierId: string;
+    price: number;
 }, HookContext<any>>;
 export declare const modifierOptionDataSchema: import("@sinclair/typebox").TOmit<import("@sinclair/typebox").TObject<{
     id: import("@sinclair/typebox").TNumber;
@@ -30,8 +30,8 @@ export declare const modifierOptionDataValidator: import("@feathersjs/schema").D
 export declare const modifierOptionDataResolver: import("@feathersjs/schema").Resolver<{
     id: number;
     name: string;
-    price: number;
     modifierId: string;
+    price: number;
 }, HookContext<any>>;
 export declare const modifierOptionQueryProperties: import("@sinclair/typebox").TObject<{
     id: import("@sinclair/typebox").TNumber;
@@ -48,7 +48,7 @@ export declare const modifierOptionQuerySchema: import("@sinclair/typebox").TInt
         name: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
         price: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
     }>>;
-    $select: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnsafe<("id" | "name" | "price" | "modifierId")[]>>;
+    $select: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnsafe<("id" | "name" | "modifierId" | "price")[]>>;
 }>, import("@sinclair/typebox").TObject<{
     id: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TNumber, import("@sinclair/typebox").TObject<{
         $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TNumber>;
@@ -95,10 +95,10 @@ export declare const modifierOptionQueryResolver: import("@feathersjs/schema").R
     $sort?: {
         id?: number | undefined;
         name?: number | undefined;
-        price?: number | undefined;
         modifierId?: number | undefined;
+        price?: number | undefined;
     } | undefined;
-    $select?: ("id" | "name" | "price" | "modifierId")[] | undefined;
+    $select?: ("id" | "name" | "modifierId" | "price")[] | undefined;
 } & {
     id?: number | {
         $gt?: number | undefined;
@@ -118,15 +118,6 @@ export declare const modifierOptionQueryResolver: import("@feathersjs/schema").R
         $in?: string[] | undefined;
         $nin?: string[] | undefined;
     } | undefined;
-    price?: number | {
-        $gt?: number | undefined;
-        $gte?: number | undefined;
-        $lt?: number | undefined;
-        $lte?: number | undefined;
-        $ne?: number | undefined;
-        $in?: number[] | undefined;
-        $nin?: number[] | undefined;
-    } | undefined;
     modifierId?: string | {
         $gt?: string | undefined;
         $gte?: string | undefined;
@@ -135,5 +126,14 @@ export declare const modifierOptionQueryResolver: import("@feathersjs/schema").R
         $ne?: string | undefined;
         $in?: string[] | undefined;
         $nin?: string[] | undefined;
+    } | undefined;
+    price?: number | {
+        $gt?: number | undefined;
+        $gte?: number | undefined;
+        $lt?: number | undefined;
+        $lte?: number | undefined;
+        $ne?: number | undefined;
+        $in?: number[] | undefined;
+        $nin?: number[] | undefined;
     } | undefined;
 }, HookContext<any>>;

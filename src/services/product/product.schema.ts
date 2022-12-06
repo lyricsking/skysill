@@ -12,6 +12,7 @@ export const productSchema = Type.Object(
   {
     id: Type.String(),
     shopId: Type.String(),
+    categoryId: Type.String(),
     name: Type.String(),
     description: Type.String(),
     details: Type.String(),

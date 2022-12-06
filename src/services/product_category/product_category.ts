@@ -9,7 +9,7 @@ import {
   productCategoryExternalResolver
 } from './product_category.schema'
 
-import type { Application } from '../../declarations'
+import type { Application, HookContext } from '../../declarations'
 import { ProductCategoryService, getOptions } from './product_category.class'
 
 export * from './product_category.class'
@@ -35,6 +35,13 @@ export const productCategory = (app: Application) => {
         schemaHooks.validateData(productCategoryDataValidator),
         schemaHooks.resolveQuery(productCategoryQueryResolver),
         schemaHooks.resolveData(productCategoryDataResolver)
+      ],
+      create: [
+        async (context: HookContext) => {
+          console.log(`Running hook on ${context.path}.${context.method}`)
+
+          context.data.id = context.data.businessId + '-' + context.data.name;
+        }
       ]
     },
     after: {

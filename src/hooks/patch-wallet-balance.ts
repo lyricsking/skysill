@@ -5,7 +5,7 @@ export const patchWalletBalance = async (context: HookContext) => {
 
   const transaction = context.result;
 
-  const sumWallet = (await context.service.Model.sum({balance: 'amount'}).from('transactions'))[0].balance;
+  const sumWallet = (await context.service.Model.sum({balance: 'amount'}).from('transaction'))[0].balance;
   
   await context.app.service('wallet').patch(
     transaction.walletId,

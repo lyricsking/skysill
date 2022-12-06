@@ -1,7 +1,7 @@
 import type { Static } from '@feathersjs/typebox';
 import type { HookContext } from '../../declarations';
 export declare const productSchema: import("@sinclair/typebox").TObject<{
-    id: import("@sinclair/typebox").TNumber;
+    id: import("@sinclair/typebox").TString<string>;
     shopId: import("@sinclair/typebox").TString<string>;
     name: import("@sinclair/typebox").TString<string>;
     description: import("@sinclair/typebox").TString<string>;
@@ -12,10 +12,18 @@ export declare const productSchema: import("@sinclair/typebox").TObject<{
         flat: string;
         percentage: string;
     }>;
+    productModifiers: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TObject<{
+        productId: import("@sinclair/typebox").TString<string>;
+        modifierId: import("@sinclair/typebox").TString<string>;
+    }>>>;
 }>;
 export declare type Product = Static<typeof productSchema>;
 export declare const productResolver: import("@feathersjs/schema").Resolver<{
-    id: number;
+    productModifiers?: {
+        productId: string;
+        modifierId: string;
+    }[] | undefined;
+    id: string;
     name: string;
     details: string;
     description: string;
@@ -25,7 +33,11 @@ export declare const productResolver: import("@feathersjs/schema").Resolver<{
     discountType: string;
 }, HookContext<any>>;
 export declare const productExternalResolver: import("@feathersjs/schema").Resolver<{
-    id: number;
+    productModifiers?: {
+        productId: string;
+        modifierId: string;
+    }[] | undefined;
+    id: string;
     name: string;
     details: string;
     description: string;
@@ -35,7 +47,7 @@ export declare const productExternalResolver: import("@feathersjs/schema").Resol
     discountType: string;
 }, HookContext<any>>;
 export declare const productDataSchema: import("@sinclair/typebox").TOmit<import("@sinclair/typebox").TObject<{
-    id: import("@sinclair/typebox").TNumber;
+    id: import("@sinclair/typebox").TString<string>;
     shopId: import("@sinclair/typebox").TString<string>;
     name: import("@sinclair/typebox").TString<string>;
     description: import("@sinclair/typebox").TString<string>;
@@ -46,11 +58,19 @@ export declare const productDataSchema: import("@sinclair/typebox").TOmit<import
         flat: string;
         percentage: string;
     }>;
-}>, ["id"]>;
+    productModifiers: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TObject<{
+        productId: import("@sinclair/typebox").TString<string>;
+        modifierId: import("@sinclair/typebox").TString<string>;
+    }>>>;
+}>, ["id", "productModifiers"]>;
 export declare type ProductData = Static<typeof productDataSchema>;
 export declare const productDataValidator: import("@feathersjs/schema").DataValidatorMap;
 export declare const productDataResolver: import("@feathersjs/schema").Resolver<{
-    id: number;
+    productModifiers?: {
+        productId: string;
+        modifierId: string;
+    }[] | undefined;
+    id: string;
     name: string;
     details: string;
     description: string;
@@ -60,7 +80,7 @@ export declare const productDataResolver: import("@feathersjs/schema").Resolver<
     discountType: string;
 }, HookContext<any>>;
 export declare const productQueryProperties: import("@sinclair/typebox").TOmit<import("@sinclair/typebox").TObject<{
-    id: import("@sinclair/typebox").TNumber;
+    id: import("@sinclair/typebox").TString<string>;
     shopId: import("@sinclair/typebox").TString<string>;
     name: import("@sinclair/typebox").TString<string>;
     description: import("@sinclair/typebox").TString<string>;
@@ -71,7 +91,11 @@ export declare const productQueryProperties: import("@sinclair/typebox").TOmit<i
         flat: string;
         percentage: string;
     }>;
-}>, []>;
+    productModifiers: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TObject<{
+        productId: import("@sinclair/typebox").TString<string>;
+        modifierId: import("@sinclair/typebox").TString<string>;
+    }>>>;
+}>, ["productModifiers"]>;
 export declare const productQuerySchema: import("@sinclair/typebox").TIntersect<[import("@sinclair/typebox").TObject<{
     $limit: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TNumber>;
     $skip: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TNumber>;
@@ -87,14 +111,14 @@ export declare const productQuerySchema: import("@sinclair/typebox").TIntersect<
     }>>;
     $select: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnsafe<("id" | "name" | "details" | "description" | "shopId" | "price" | "discount" | "discountType")[]>>;
 }>, import("@sinclair/typebox").TObject<{
-    id: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TNumber, import("@sinclair/typebox").TObject<{
-        $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TNumber>;
-        $gte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TNumber>;
-        $lt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TNumber>;
-        $lte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TNumber>;
-        $ne: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TNumber>;
-        $in: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TNumber>>;
-        $nin: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TNumber>>;
+    id: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TString<string>, import("@sinclair/typebox").TObject<{
+        $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+        $gte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+        $lt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+        $lte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+        $ne: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+        $in: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>>;
+        $nin: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>>;
     }>]>>;
     name: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TString<string>, import("@sinclair/typebox").TObject<{
         $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
@@ -201,14 +225,14 @@ export declare const productQueryResolver: import("@feathersjs/schema").Resolver
     } | undefined;
     $select?: ("id" | "name" | "details" | "description" | "shopId" | "price" | "discount" | "discountType")[] | undefined;
 } & {
-    id?: number | {
-        $gt?: number | undefined;
-        $gte?: number | undefined;
-        $lt?: number | undefined;
-        $lte?: number | undefined;
-        $ne?: number | undefined;
-        $in?: number[] | undefined;
-        $nin?: number[] | undefined;
+    id?: string | {
+        $gt?: string | undefined;
+        $gte?: string | undefined;
+        $lt?: string | undefined;
+        $lte?: string | undefined;
+        $ne?: string | undefined;
+        $in?: string[] | undefined;
+        $nin?: string[] | undefined;
     } | undefined;
     name?: string | {
         $gt?: string | undefined;

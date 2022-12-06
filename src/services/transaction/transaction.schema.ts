@@ -4,13 +4,14 @@ import type { Static } from '@feathersjs/typebox'
 
 import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../schemas/validators'
+import { isNumber } from 'util'
 
 // Main data model schema
 export const transactionSchema = Type.Object(
   {
     id: Type.Number(),
     walletId: Type.String(),
-    amount: Type.String(),
+    amount: Type.Number(),
     narrations: Type.String()
   },
   { $id: 'Transaction', additionalProperties: false }
@@ -32,7 +33,7 @@ export const transactionDataSchema = Type.Omit(transactionSchema, ['id'], {
 export type TransactionData = Static<typeof transactionDataSchema>
 export const transactionDataValidator = getDataValidator(transactionDataSchema, dataValidator)
 export const transactionDataResolver = resolve<Transaction, HookContext>({
-  properties: {}
+  properties: { }
 })
 
 // Schema for allowed query properties

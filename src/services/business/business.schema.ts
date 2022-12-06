@@ -13,7 +13,9 @@ export const businessSchema = Type.Object(
     name: Type.String(),
     contactName: Type.String(),
     contactPhone: Type.String(),
-    contactEmail: Type.String()
+    contactEmail: Type.String(), 
+    categories: Type.String(),
+    tags: Type.String()
   },
   { $id: 'Business', additionalProperties: false }
 )

@@ -2,6 +2,7 @@ import type { Static } from '@feathersjs/typebox';
 import type { HookContext } from '../../declarations';
 export declare const shopSchema: import("@sinclair/typebox").TObject<{
     id: import("@sinclair/typebox").TNumber;
+    businessId: import("@sinclair/typebox").TString<string>;
     shopName: import("@sinclair/typebox").TString<string>;
     description: import("@sinclair/typebox").TString<string>;
     coordinate: import("@sinclair/typebox").TString<string>;
@@ -26,6 +27,7 @@ export declare const shopResolver: import("@feathersjs/schema").Resolver<{
     } | undefined;
     id: number;
     description: string;
+    businessId: string;
     shopName: string;
     coordinate: string;
 }, HookContext<any>>;
@@ -40,11 +42,13 @@ export declare const shopExternalResolver: import("@feathersjs/schema").Resolver
     } | undefined;
     id: number;
     description: string;
+    businessId: string;
     shopName: string;
     coordinate: string;
 }, HookContext<any>>;
 export declare const shopDataSchema: import("@sinclair/typebox").TOmit<import("@sinclair/typebox").TObject<{
     id: import("@sinclair/typebox").TNumber;
+    businessId: import("@sinclair/typebox").TString<string>;
     shopName: import("@sinclair/typebox").TString<string>;
     description: import("@sinclair/typebox").TString<string>;
     coordinate: import("@sinclair/typebox").TString<string>;
@@ -70,11 +74,13 @@ export declare const shopDataResolver: import("@feathersjs/schema").Resolver<{
     } | undefined;
     id: number;
     description: string;
+    businessId: string;
     shopName: string;
     coordinate: string;
 }, HookContext<any>>;
 export declare const shopQueryProperties: import("@sinclair/typebox").TOmit<import("@sinclair/typebox").TObject<{
     id: import("@sinclair/typebox").TNumber;
+    businessId: import("@sinclair/typebox").TString<string>;
     shopName: import("@sinclair/typebox").TString<string>;
     description: import("@sinclair/typebox").TString<string>;
     coordinate: import("@sinclair/typebox").TString<string>;
@@ -86,18 +92,18 @@ export declare const shopQueryProperties: import("@sinclair/typebox").TOmit<impo
         contactPhone: import("@sinclair/typebox").TString<string>;
         contactEmail: import("@sinclair/typebox").TString<string>;
     }>>>;
-}>, []>;
+}>, ["business"]>;
 export declare const shopQuerySchema: import("@sinclair/typebox").TIntersect<[import("@sinclair/typebox").TObject<{
     $limit: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TNumber>;
     $skip: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TNumber>;
     $sort: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TObject<{
         id: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
         description: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
-        business: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
+        businessId: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
         shopName: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
         coordinate: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
     }>>;
-    $select: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnsafe<("id" | "description" | "business" | "shopName" | "coordinate")[]>>;
+    $select: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnsafe<("id" | "description" | "businessId" | "shopName" | "coordinate")[]>>;
 }>, import("@sinclair/typebox").TObject<{
     id: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TNumber, import("@sinclair/typebox").TObject<{
         $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TNumber>;
@@ -117,70 +123,14 @@ export declare const shopQuerySchema: import("@sinclair/typebox").TIntersect<[im
         $in: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>>;
         $nin: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>>;
     }>]>>;
-    business: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TRef<import("@sinclair/typebox").TObject<{
-        id: import("@sinclair/typebox").TString<string>;
-        ownerId: import("@sinclair/typebox").TString<string>;
-        name: import("@sinclair/typebox").TString<string>;
-        contactName: import("@sinclair/typebox").TString<string>;
-        contactPhone: import("@sinclair/typebox").TString<string>;
-        contactEmail: import("@sinclair/typebox").TString<string>;
-    }>>>, import("@sinclair/typebox").TObject<{
-        $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TRef<import("@sinclair/typebox").TObject<{
-            id: import("@sinclair/typebox").TString<string>;
-            ownerId: import("@sinclair/typebox").TString<string>;
-            name: import("@sinclair/typebox").TString<string>;
-            contactName: import("@sinclair/typebox").TString<string>;
-            contactPhone: import("@sinclair/typebox").TString<string>;
-            contactEmail: import("@sinclair/typebox").TString<string>;
-        }>>>>;
-        $gte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TRef<import("@sinclair/typebox").TObject<{
-            id: import("@sinclair/typebox").TString<string>;
-            ownerId: import("@sinclair/typebox").TString<string>;
-            name: import("@sinclair/typebox").TString<string>;
-            contactName: import("@sinclair/typebox").TString<string>;
-            contactPhone: import("@sinclair/typebox").TString<string>;
-            contactEmail: import("@sinclair/typebox").TString<string>;
-        }>>>>;
-        $lt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TRef<import("@sinclair/typebox").TObject<{
-            id: import("@sinclair/typebox").TString<string>;
-            ownerId: import("@sinclair/typebox").TString<string>;
-            name: import("@sinclair/typebox").TString<string>;
-            contactName: import("@sinclair/typebox").TString<string>;
-            contactPhone: import("@sinclair/typebox").TString<string>;
-            contactEmail: import("@sinclair/typebox").TString<string>;
-        }>>>>;
-        $lte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TRef<import("@sinclair/typebox").TObject<{
-            id: import("@sinclair/typebox").TString<string>;
-            ownerId: import("@sinclair/typebox").TString<string>;
-            name: import("@sinclair/typebox").TString<string>;
-            contactName: import("@sinclair/typebox").TString<string>;
-            contactPhone: import("@sinclair/typebox").TString<string>;
-            contactEmail: import("@sinclair/typebox").TString<string>;
-        }>>>>;
-        $ne: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TRef<import("@sinclair/typebox").TObject<{
-            id: import("@sinclair/typebox").TString<string>;
-            ownerId: import("@sinclair/typebox").TString<string>;
-            name: import("@sinclair/typebox").TString<string>;
-            contactName: import("@sinclair/typebox").TString<string>;
-            contactPhone: import("@sinclair/typebox").TString<string>;
-            contactEmail: import("@sinclair/typebox").TString<string>;
-        }>>>>;
-        $in: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TRef<import("@sinclair/typebox").TObject<{
-            id: import("@sinclair/typebox").TString<string>;
-            ownerId: import("@sinclair/typebox").TString<string>;
-            name: import("@sinclair/typebox").TString<string>;
-            contactName: import("@sinclair/typebox").TString<string>;
-            contactPhone: import("@sinclair/typebox").TString<string>;
-            contactEmail: import("@sinclair/typebox").TString<string>;
-        }>>>>>;
-        $nin: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TRef<import("@sinclair/typebox").TObject<{
-            id: import("@sinclair/typebox").TString<string>;
-            ownerId: import("@sinclair/typebox").TString<string>;
-            name: import("@sinclair/typebox").TString<string>;
-            contactName: import("@sinclair/typebox").TString<string>;
-            contactPhone: import("@sinclair/typebox").TString<string>;
-            contactEmail: import("@sinclair/typebox").TString<string>;
-        }>>>>>;
+    businessId: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TString<string>, import("@sinclair/typebox").TObject<{
+        $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+        $gte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+        $lt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+        $lte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+        $ne: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+        $in: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>>;
+        $nin: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>>;
     }>]>>;
     shopName: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TString<string>, import("@sinclair/typebox").TObject<{
         $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
@@ -209,11 +159,11 @@ export declare const shopQueryResolver: import("@feathersjs/schema").Resolver<{
     $sort?: {
         id?: number | undefined;
         description?: number | undefined;
-        business?: number | undefined;
+        businessId?: number | undefined;
         shopName?: number | undefined;
         coordinate?: number | undefined;
     } | undefined;
-    $select?: ("id" | "description" | "business" | "shopName" | "coordinate")[] | undefined;
+    $select?: ("id" | "description" | "businessId" | "shopName" | "coordinate")[] | undefined;
 } & {
     id?: number | {
         $gt?: number | undefined;
@@ -233,70 +183,14 @@ export declare const shopQueryResolver: import("@feathersjs/schema").Resolver<{
         $in?: string[] | undefined;
         $nin?: string[] | undefined;
     } | undefined;
-    business?: {
-        id: string;
-        name: string;
-        ownerId: string;
-        contactName: string;
-        contactPhone: string;
-        contactEmail: string;
-    } | {
-        $gt?: {
-            id: string;
-            name: string;
-            ownerId: string;
-            contactName: string;
-            contactPhone: string;
-            contactEmail: string;
-        } | undefined;
-        $gte?: {
-            id: string;
-            name: string;
-            ownerId: string;
-            contactName: string;
-            contactPhone: string;
-            contactEmail: string;
-        } | undefined;
-        $lt?: {
-            id: string;
-            name: string;
-            ownerId: string;
-            contactName: string;
-            contactPhone: string;
-            contactEmail: string;
-        } | undefined;
-        $lte?: {
-            id: string;
-            name: string;
-            ownerId: string;
-            contactName: string;
-            contactPhone: string;
-            contactEmail: string;
-        } | undefined;
-        $ne?: {
-            id: string;
-            name: string;
-            ownerId: string;
-            contactName: string;
-            contactPhone: string;
-            contactEmail: string;
-        } | undefined;
-        $in?: {
-            id: string;
-            name: string;
-            ownerId: string;
-            contactName: string;
-            contactPhone: string;
-            contactEmail: string;
-        }[] | undefined;
-        $nin?: {
-            id: string;
-            name: string;
-            ownerId: string;
-            contactName: string;
-            contactPhone: string;
-            contactEmail: string;
-        }[] | undefined;
+    businessId?: string | {
+        $gt?: string | undefined;
+        $gte?: string | undefined;
+        $lt?: string | undefined;
+        $lte?: string | undefined;
+        $ne?: string | undefined;
+        $in?: string[] | undefined;
+        $nin?: string[] | undefined;
     } | undefined;
     shopName?: string | {
         $gt?: string | undefined;

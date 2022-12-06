@@ -15,6 +15,8 @@ export const shopSchema = Type.Object(
     shopName: Type.String(),
     description: Type.String(),
     coordinate: Type.String(),
+    category: Type.String(),
+    tags: Type.String(),
     business: Type.Optional(Type.Ref(businessSchema))
   },
   { $id: 'Shop', additionalProperties: false }

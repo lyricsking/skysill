@@ -10,7 +10,9 @@ export const productCategorySchema = Type.Object(
   {
     id: Type.Number(),
     businessId: Type.String(),
-    name: Type.String(),    
+    name: Type.String(),
+    availableAt: Type.Optional(Type.String()),
+    unavailableAt: Type.Optional(Type.String())  
   },
   { $id: 'ProductCategory', additionalProperties: false }
 )

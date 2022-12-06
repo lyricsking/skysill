@@ -11,10 +11,11 @@ import {
   transactionExternalResolver
 } from './transaction.schema'
 
-import type { Application } from '../../declarations'
+import type { Application, HookContext } from '../../declarations'
 import { TransactionService, getOptions } from './transaction.class'
 import { patchWalletBalance } from '../../hooks/patch-wallet-balance'
 import { generateId } from '../../hooks/generate-id'
+import { resolveToNumber } from '../../hooks/resolve-to-number'
 
 export * from './transaction.class'
 export * from './transaction.schema'
@@ -36,10 +37,11 @@ export const transaction = (app: Application) => {
     before: {
       all: [
         schemaHooks.validateQuery(transactionQueryValidator),
+        resolveToNumber('amount'),
         schemaHooks.validateData(transactionDataValidator),
         schemaHooks.resolveQuery(transactionQueryResolver),
         schemaHooks.resolveData(transactionDataResolver)
-      ],
+      ]
     },
     after: {
       all: [

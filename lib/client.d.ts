@@ -1,5 +1,5 @@
-import type { Sample, SampleData, SampleQuery } from './services/sample/sample';
-export type { Sample, SampleData, SampleQuery };
+import type { ProductModifier, ProductModifierData, ProductModifierQuery, ProductModifierService } from './services/product_modifier/product_modifier';
+export type { ProductModifier, ProductModifierData, ProductModifierQuery };
 import type { Twilio, TwilioData, TwilioQuery, TwilioService } from './services/twilio/twilio';
 export type { Twilio, TwilioData, TwilioQuery };
 import type { Driver, DriverData, DriverQuery, DriverService } from './services/driver/driver';
@@ -58,7 +58,10 @@ declare const driverServiceMethods: readonly ["find", "get", "create", "update",
 declare type DriverClientService = Pick<DriverService<Params<DriverQuery>>, typeof driverServiceMethods[number]>;
 declare const twilioServiceMethods: readonly ["sendVerification", "verify"];
 declare type TwilioClientService = Pick<TwilioService, typeof twilioServiceMethods[number]>;
+declare const productModifierServiceMethods: readonly ["find", "get", "create", "update", "patch", "remove"];
+declare type ProductModifierClientService = Pick<ProductModifierService<Params<ProductModifierQuery>>, typeof productModifierServiceMethods[number]>;
 export interface ServiceTypes {
+    productModifier: ProductModifierClientService;
     twilio: TwilioClientService;
     driver: DriverClientService;
     transaction: TransactionClientService;
