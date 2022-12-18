@@ -11,6 +11,7 @@ import {
 
 import type { Application } from '../../declarations'
 import { ProductService, getOptions } from './product.class'
+import { resolveToNumber } from '../../hooks/resolve-to-number'
 
 export * from './product.class'
 export * from './product.schema'
@@ -32,6 +33,7 @@ export const product = (app: Application) => {
     before: {
       all: [
         schemaHooks.validateQuery(productQueryValidator),
+        resolveToNumber('price'), resolveToNumber('discount'),
         schemaHooks.validateData(productDataValidator),
         schemaHooks.resolveQuery(productQueryResolver),
         schemaHooks.resolveData(productDataResolver)
