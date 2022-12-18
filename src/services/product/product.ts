@@ -9,9 +9,10 @@ import {
   productExternalResolver
 } from './product.schema'
 
-import type { Application } from '../../declarations'
+import type { Application, HookContext } from '../../declarations'
 import { ProductService, getOptions } from './product.class'
 import { resolveToNumber } from '../../hooks/resolve-to-number'
+import percentEncode from '@stdlib/string-percent-encode'
 
 export * from './product.class'
 export * from './product.schema'
@@ -33,10 +34,19 @@ export const product = (app: Application) => {
     before: {
       all: [
         schemaHooks.validateQuery(productQueryValidator),
-        resolveToNumber('price'), resolveToNumber('discount'),
+        resolveToNumber(['price', 'discount']),
         schemaHooks.validateData(productDataValidator),
         schemaHooks.resolveQuery(productQueryResolver),
         schemaHooks.resolveData(productDataResolver)
+      ],
+      create: [
+        async (context: HookContext) => {
+          console.log(`Running hook generateBusinessId on ${context.path}.${context.method}`)
+          
+          const prefix: string = percentEncode(context.data.shopId);
+          const name = percentEncode(context.data.name);
+          context.data.id = prefix + '-' + name;
+        }
       ]
     },
     after: {

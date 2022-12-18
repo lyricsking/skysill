@@ -28,7 +28,7 @@ export const lineitemExternalResolver = resolve<Lineitem, HookContext>({
 })
 
 // Schema for creating new entries
-export const lineitemDataSchema = Type.Omit(lineitemSchema, ['id'], {
+export const lineitemDataSchema = Type.Pick(lineitemSchema, ['productId', 'quantity'], {
   $id: 'LineitemData',
   additionalProperties: false
 })

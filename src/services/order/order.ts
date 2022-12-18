@@ -9,8 +9,9 @@ import {
   orderExternalResolver
 } from './order.schema'
 
-import type { Application } from '../../declarations'
+import type { Application, HookContext } from '../../declarations'
 import { OrderService, getOptions } from './order.class'
+import { resolveToNumber } from '../../hooks/resolve-to-number'
 
 export * from './order.class'
 export * from './order.schema'
@@ -32,6 +33,7 @@ export const order = (app: Application) => {
     before: {
       all: [
         schemaHooks.validateQuery(orderQueryValidator),
+        resolveToNumber(['subtotal', 'deliveryFee']),
         schemaHooks.validateData(orderDataValidator),
         schemaHooks.resolveQuery(orderQueryResolver),
         schemaHooks.resolveData(orderDataResolver)

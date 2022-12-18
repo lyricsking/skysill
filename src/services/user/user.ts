@@ -8,14 +8,14 @@ import {
   userResolver,
   userDataResolver,
   userQueryResolver,
-  userExternalResolver
+  userExternalResolver,
+  User
 } from './user.schema'
 
-import type { Application } from '../../declarations'
+import type { Application, HookContext } from '../../declarations'
 import { UserService, getOptions } from './user.class'
 import { createWallet } from '../../hooks/create-wallet'
 import { generateId } from '../../hooks/generate-id'
-import { sendVerificationCode } from '../../hooks/send-verification-code'
 
 export * from './user.class'
 export * from './user.schema'
@@ -29,8 +29,10 @@ export const user = (app: Application) => {
     // You can add additional custom events to be sent to clients here
     events: []
   })
+  
+  const user = app.service('user')
   // Initialize hooks
-  app.service('user').hooks({
+  user.hooks({
     around: {
       all: [],
       find: [authenticate('jwt')],
@@ -51,12 +53,18 @@ export const user = (app: Application) => {
     },
     after: {
       all: [schemaHooks.resolveResult(userResolver), schemaHooks.resolveExternal(userExternalResolver)],
-      create: [createWallet, sendVerificationCode]
+      create: [createWallet]
     },
     error: {
       all: []
     }
   })
+
+  user.on('created', (user: User, context: HookContext) => {
+    console.log(`Running created event on ${context.path}.${context.method}`)
+    
+    context.app.service('twilio').sendVerification(user.phone)
+  });
 }
 
 // Add this service to the service type index

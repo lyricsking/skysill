@@ -16,6 +16,7 @@ export class ProductModifierService<ServiceParams extends Params = ProductModifi
 
 export const getOptions = (app: Application): KnexAdapterOptions => {
   return {
+    id: 'productId',
     paginate: app.get('paginate'),
     Model: app.get('sqliteClient'),
     name: 'product_modifier'

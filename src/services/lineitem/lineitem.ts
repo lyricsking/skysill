@@ -11,6 +11,9 @@ import {
 
 import type { Application } from '../../declarations'
 import { LineitemService, getOptions } from './lineitem.class'
+import { resolveToNumber } from '../../hooks/resolve-to-number'
+import { maybeCreateOrder } from '../../hooks/maybe-create-order'
+import { createLineItem } from '../../hooks/create-line-item'
 
 export * from './lineitem.class'
 export * from './lineitem.schema'
@@ -32,10 +35,12 @@ export const lineitem = (app: Application) => {
     before: {
       all: [
         schemaHooks.validateQuery(lineitemQueryValidator),
+        resolveToNumber('quantity'),
         schemaHooks.validateData(lineitemDataValidator),
         schemaHooks.resolveQuery(lineitemQueryResolver),
         schemaHooks.resolveData(lineitemDataResolver)
-      ]
+      ],
+      create: [maybeCreateOrder, createLineItem]
     },
     after: {
       all: [

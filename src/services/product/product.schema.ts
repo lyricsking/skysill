@@ -32,6 +32,10 @@ export const productResolver = resolve<Product, HookContext>({
     productModifiers: async (_value, product, context) => {
       const pmod = await context.app.service('productModifier').find({
         query: {
+          $sort:{
+            productId: 1,
+            modifierId: 1
+          },
           productId: product.id
         }
       })      
@@ -53,7 +57,7 @@ export const productDataSchema = Type.Omit(productSchema, ['id', 'productModifie
 export type ProductData = Static<typeof productDataSchema>
 export const productDataValidator = getDataValidator(productDataSchema, dataValidator)
 export const productDataResolver = resolve<Product, HookContext>({
-  properties: {}
+  properties: {  }
 })
 
 // Schema for allowed query properties
