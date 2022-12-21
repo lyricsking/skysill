@@ -10,6 +10,7 @@ export const lineitemSchema = Type.Object(
   {
     id: Type.Number(),
     productId: Type.String(),
+    optionsId: Type.String(),
     price: Type.Number(),
     discount: Type.Number(),
     finalItemPrice: Type.Number(),
@@ -28,7 +29,7 @@ export const lineitemExternalResolver = resolve<Lineitem, HookContext>({
 })
 
 // Schema for creating new entries
-export const lineitemDataSchema = Type.Pick(lineitemSchema, ['productId', 'quantity'], {
+export const lineitemDataSchema = Type.Pick(lineitemSchema, ['productId', 'optionsId', 'quantity'], {
   $id: 'LineitemData',
   additionalProperties: false
 })

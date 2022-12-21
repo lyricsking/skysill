@@ -11,10 +11,11 @@ export const orderSchema = Type.Object(
     id: Type.Number(),
     shopId: Type.String(),
     shopperId: Type.String(),
-    subtotal: Type.Number(),
-    deliveryFee: Type.Number(),
-    deliveryAddress: Type.String(),
-    deliveryGeopoint: Type.String()
+    subtotal: Type.Optional(Type.Number()),
+    deliveryFee: Type.Optional(Type.Number()),
+    deliveryAddress: Type.Optional(Type.String()),
+    deliveryGeopoint: Type.Optional(Type.String()),
+    isCart: Type.Optional(Type.Boolean())
   },
   { $id: 'Order', additionalProperties: false }
 )
@@ -28,7 +29,7 @@ export const orderExternalResolver = resolve<Order, HookContext>({
 })
 
 // Schema for creating new entries
-export const orderDataSchema = Type.Omit(orderSchema, ['id'], {
+export const orderDataSchema = Type.Pick(orderSchema, ['shopId', 'shopperId', 'isCart'], {
   $id: 'OrderData',
   additionalProperties: false
 })

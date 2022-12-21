@@ -70,3 +70,9 @@ export const productQueryValidator = getValidator(productQuerySchema, queryValid
 export const productQueryResolver = resolve<ProductQuery, HookContext>({
   properties: {}
 })
+
+export const DiscountType = {
+  flat: 'flat',
+  percent: 'percent'
+}
+export type DiscountType = typeof DiscountType;

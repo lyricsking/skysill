@@ -12,6 +12,7 @@ import {
 import type { Application, HookContext } from '../../declarations'
 import { OrderService, getOptions } from './order.class'
 import { resolveToNumber } from '../../hooks/resolve-to-number'
+import { generateId } from '../../hooks/generate-id'
 
 export * from './order.class'
 export * from './order.schema'
@@ -37,6 +38,9 @@ export const order = (app: Application) => {
         schemaHooks.validateData(orderDataValidator),
         schemaHooks.resolveQuery(orderQueryResolver),
         schemaHooks.resolveData(orderDataResolver)
+      ],
+      create: [
+        generateId(11)
       ]
     },
     after: {
