@@ -3,8 +3,8 @@ import type { Knex } from 'knex'
 export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable('order', (table) => {
     table.string('id').primary()
-    table.string('shopperId').references('users.id')
-    table.string('shopId').references('shops.id')
+    table.string('shopperId').references('user.id')
+    table.string('shopId').references('shop.id')
     table.decimal('subtotal',19, 4).defaultTo(0)
     table.decimal('deliveryFee', 19, 4).defaultTo(0)
     table.string('deliveryAddress').nullable()

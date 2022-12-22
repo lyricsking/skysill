@@ -4,6 +4,7 @@ export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable('lineitem', (table) => {
     table.increments('id')
     table.string('productId').references('proructs.id')
+    table.string('orderId').references('order.id').comment('The order to which this line item belongs')
     table.string('optionsId').comment('Comma separated list of selected product options')
     table.decimal('price',19,4)
     table.decimal('discount', 19, 4)

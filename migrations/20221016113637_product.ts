@@ -1,5 +1,4 @@
 import type { Knex } from 'knex'
-import { DiscountType } from '../src/services/product/product.schema';
 
 export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable('product', (table) => {
@@ -11,8 +10,7 @@ export async function up(knex: Knex): Promise<void> {
     table.string('details')
     table.decimal('price',19,4)
     table.decimal('discount',19,4)
-    table.enum('discountType', [])
-
+    table.enum('discountType', [ 'flat', 'percent' ])
   })
 }
 

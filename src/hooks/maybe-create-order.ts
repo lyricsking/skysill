@@ -23,9 +23,9 @@ export const maybeCreateOrder = async (context: HookContext) => {
         isCart: true,
       })
     }
-
-    context.data.order = order;
-  })
-
-  
+    
+    delete context.data.shopId;
+    delete context.data.shopperId;
+    context.data.orderId = order.id;
+  })  
 }
