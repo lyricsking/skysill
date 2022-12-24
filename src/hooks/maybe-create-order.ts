@@ -1,5 +1,6 @@
 import { Order } from '../client';
 import type { HookContext } from '../declarations'
+import { OrderStatus } from '../services/order/order.schema';
 
 export const maybeCreateOrder = async (context: HookContext) => {
   console.log(`Running hook maybeCreateOrder on ${context.path}.${context.method}`)
@@ -11,7 +12,7 @@ export const maybeCreateOrder = async (context: HookContext) => {
       $limit: 1,
       shopId: context.data.shopId,
       shopperId: context.data.shopperId,
-      isCart: true, 
+      orderStatus: OrderStatus.cart, 
     }
   }).then(async (value) => {
     let order: Order = value.data[0];
@@ -20,7 +21,6 @@ export const maybeCreateOrder = async (context: HookContext) => {
       order = await orderService.create({
         shopId: context.data.shopId,
         shopperId: context.data.shopperId,
-        isCart: true,
       })
     }
     

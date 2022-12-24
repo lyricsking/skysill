@@ -7,6 +7,7 @@ import { dataValidator, queryValidator } from '../../schemas/validators'
 import { lineitem, Lineitem, lineitemSchema } from '../lineitem/lineitem'
 
 export const OrderStatus = {
+  cart: 'cart',
   pending : "pending",
   accepted : "accepted",
   confirmed : "confirmed",
@@ -28,7 +29,6 @@ export const orderSchema = Type.Object(
     deliveryFee: Type.Optional(Type.Number()),
     deliveryAddress: Type.Optional(Type.String()),
     deliveryGeopoint: Type.Optional(Type.String()),
-    isCart: Type.Optional(Type.Boolean()),
     orderStatus: StringEnum(Object.values(OrderStatus)),
     lineItems: Type.Array(Type.Ref(lineitemSchema))
   },
@@ -53,7 +53,7 @@ export const orderExternalResolver = resolve<Order, HookContext>({
 })
 
 // Schema for creating new entries
-export const orderDataSchema = Type.Pick(orderSchema, ['shopId', 'shopperId', 'isCart'], {
+export const orderDataSchema = Type.Pick(orderSchema, ['shopId', 'shopperId'], {
   $id: 'OrderData',
   additionalProperties: false
 })
