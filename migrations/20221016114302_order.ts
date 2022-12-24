@@ -11,7 +11,7 @@ export async function up(knex: Knex): Promise<void> {
     table.point('deliveryGeopoint').nullable()
     table.enum('preferredMedium', ['bike', 'tricycle', 'car', 'walking']).nullable()
     table.boolean('isCart').comment('If this order is still in cart')
-    table.enum('deliveryStatus', ['pending', 'accepted', 'confirmed', 'assigned', 'awaitingPickup', 'inTransit', 'delivered', 'cancelled']).defaultTo('pending')
+    table.enum('orderStatus', ['pending', 'accepted', 'confirmed', 'assigned', 'awaitingPickup', 'inTransit', 'delivered', 'cancelled']).defaultTo('pending')
   })
 }
 

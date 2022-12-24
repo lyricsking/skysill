@@ -14,12 +14,12 @@ export declare const userSchema: import("@sinclair/typebox").TObject<{
         balance: import("@sinclair/typebox").TNumber;
     }>>>;
 }>;
-export declare type User = Static<typeof userSchema>;
+export type User = Static<typeof userSchema>;
 export declare const userResolver: import("@feathersjs/schema").Resolver<{
-    password?: string | undefined;
     firstname?: string | undefined;
     lastname?: string | undefined;
     email?: string | undefined;
+    password?: string | undefined;
     wallet?: {
         id: number;
         owner: string;
@@ -30,10 +30,10 @@ export declare const userResolver: import("@feathersjs/schema").Resolver<{
     phone: string;
 }, HookContext<any>>;
 export declare const userExternalResolver: import("@feathersjs/schema").Resolver<{
-    password?: string | undefined;
     firstname?: string | undefined;
     lastname?: string | undefined;
     email?: string | undefined;
+    password?: string | undefined;
     wallet?: {
         id: number;
         owner: string;
@@ -57,13 +57,13 @@ export declare const userDataSchema: import("@sinclair/typebox").TOmit<import("@
         balance: import("@sinclair/typebox").TNumber;
     }>>>;
 }>, ["id", "wallet"]>;
-export declare type UserData = Static<typeof userDataSchema>;
+export type UserData = Static<typeof userDataSchema>;
 export declare const userDataValidator: import("@feathersjs/schema").DataValidatorMap;
 export declare const userDataResolver: import("@feathersjs/schema").Resolver<{
-    password?: string | undefined;
     firstname?: string | undefined;
     lastname?: string | undefined;
     email?: string | undefined;
+    password?: string | undefined;
     wallet?: {
         id: number;
         owner: string;
@@ -87,121 +87,309 @@ export declare const userQueryProperties: import("@sinclair/typebox").TOmit<impo
         balance: import("@sinclair/typebox").TNumber;
     }>>>;
 }>, ["password", "wallet"]>;
-export declare const userQuerySchema: import("@sinclair/typebox").TIntersect<[import("@sinclair/typebox").TObject<{
-    $limit: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TNumber>;
-    $skip: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TNumber>;
-    $sort: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TObject<{
+export declare const userQuerySchema: import("@sinclair/typebox").TIntersect<[import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
+    $limit: import("@sinclair/typebox").TNumber;
+    $skip: import("@sinclair/typebox").TNumber;
+    $sort: import("@sinclair/typebox").TObject<{
         id: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
         firstname: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
         lastname: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
         phone: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
         email: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
-    }>>;
-    $select: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnsafe<("id" | "firstname" | "lastname" | "phone" | "email")[]>>;
-}>, import("@sinclair/typebox").TObject<{
-    id: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TString<string>, import("@sinclair/typebox").TObject<{
+    }>;
+    $select: import("@sinclair/typebox").TUnsafe<("id" | "firstname" | "lastname" | "phone" | "email")[]>;
+    $or: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TObject<{
+        id: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TString<string>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
+            $gt: import("@sinclair/typebox").TString<string>;
+            $gte: import("@sinclair/typebox").TString<string>;
+            $lt: import("@sinclair/typebox").TString<string>;
+            $lte: import("@sinclair/typebox").TString<string>;
+            $ne: import("@sinclair/typebox").TString<string>;
+            $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
+            $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
+        }>>]>>;
+        firstname: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
+            $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $gte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $lt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $lte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $ne: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
+            $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
+        }>>]>>;
+        lastname: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
+            $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $gte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $lt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $lte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $ne: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
+            $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
+        }>>]>>;
+        phone: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TString<string>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
+            $gt: import("@sinclair/typebox").TString<string>;
+            $gte: import("@sinclair/typebox").TString<string>;
+            $lt: import("@sinclair/typebox").TString<string>;
+            $lte: import("@sinclair/typebox").TString<string>;
+            $ne: import("@sinclair/typebox").TString<string>;
+            $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
+            $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
+        }>>]>>;
+        email: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
+            $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $gte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $lt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $lte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $ne: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
+            $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
+        }>>]>>;
+    }>>>;
+    $and: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TObject<{
+        id: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TString<string>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
+            $gt: import("@sinclair/typebox").TString<string>;
+            $gte: import("@sinclair/typebox").TString<string>;
+            $lt: import("@sinclair/typebox").TString<string>;
+            $lte: import("@sinclair/typebox").TString<string>;
+            $ne: import("@sinclair/typebox").TString<string>;
+            $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
+            $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
+        }>>]>>;
+        firstname: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
+            $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $gte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $lt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $lte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $ne: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
+            $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
+        }>>]>>;
+        lastname: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
+            $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $gte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $lt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $lte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $ne: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
+            $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
+        }>>]>>;
+        phone: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TString<string>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
+            $gt: import("@sinclair/typebox").TString<string>;
+            $gte: import("@sinclair/typebox").TString<string>;
+            $lt: import("@sinclair/typebox").TString<string>;
+            $lte: import("@sinclair/typebox").TString<string>;
+            $ne: import("@sinclair/typebox").TString<string>;
+            $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
+            $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
+        }>>]>>;
+        email: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
+            $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $gte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $lt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $lte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $ne: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+            $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
+            $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
+        }>>]>>;
+    }>>>;
+}>>, import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TObject<{
+    id: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TString<string>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
+        $gt: import("@sinclair/typebox").TString<string>;
+        $gte: import("@sinclair/typebox").TString<string>;
+        $lt: import("@sinclair/typebox").TString<string>;
+        $lte: import("@sinclair/typebox").TString<string>;
+        $ne: import("@sinclair/typebox").TString<string>;
+        $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
+        $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
+    }>>]>>;
+    firstname: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
         $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
         $gte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
         $lt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
         $lte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
         $ne: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
-        $in: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>>;
-        $nin: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>>;
-    }>]>>;
-    firstname: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>, import("@sinclair/typebox").TObject<{
-        $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
-        $gte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
-        $lt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
-        $lte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
-        $ne: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
-        $in: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>>;
-        $nin: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>>;
-    }>]>>;
-    lastname: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>, import("@sinclair/typebox").TObject<{
-        $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
-        $gte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
-        $lt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
-        $lte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
-        $ne: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
-        $in: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>>;
-        $nin: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>>;
-    }>]>>;
-    phone: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TString<string>, import("@sinclair/typebox").TObject<{
+        $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
+        $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
+    }>>]>>;
+    lastname: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
         $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
         $gte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
         $lt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
         $lte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
         $ne: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
-        $in: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>>;
-        $nin: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>>;
-    }>]>>;
-    email: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>, import("@sinclair/typebox").TObject<{
-        $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
-        $gte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
-        $lt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
-        $lte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
-        $ne: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
-        $in: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>>;
-        $nin: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>>;
-    }>]>>;
-}>]>;
-export declare type UserQuery = Static<typeof userQuerySchema>;
+        $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
+        $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
+    }>>]>>;
+    phone: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TString<string>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
+        $gt: import("@sinclair/typebox").TString<string>;
+        $gte: import("@sinclair/typebox").TString<string>;
+        $lt: import("@sinclair/typebox").TString<string>;
+        $lte: import("@sinclair/typebox").TString<string>;
+        $ne: import("@sinclair/typebox").TString<string>;
+        $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
+        $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
+    }>>]>>;
+    email: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
+        $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+        $gte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+        $lt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+        $lte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+        $ne: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+        $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
+        $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
+    }>>]>>;
+}>>]>;
+export type UserQuery = Static<typeof userQuerySchema>;
 export declare const userQueryValidator: import("@feathersjs/schema").Validator<any, any>;
-export declare const userQueryResolver: import("@feathersjs/schema").Resolver<{
-    $limit?: number | undefined;
-    $skip?: number | undefined;
-    $sort?: {
+export declare const userQueryResolver: import("@feathersjs/schema").Resolver<Partial<{
+    $limit: number;
+    $skip: number;
+    $sort: {
         id?: number | undefined;
         firstname?: number | undefined;
         lastname?: number | undefined;
         phone?: number | undefined;
         email?: number | undefined;
-    } | undefined;
-    $select?: ("id" | "firstname" | "lastname" | "phone" | "email")[] | undefined;
-} & {
-    id?: string | {
+    };
+    $select: ("id" | "firstname" | "lastname" | "phone" | "email")[];
+    $or: {
+        id?: string | Partial<{
+            $gt: string;
+            $gte: string;
+            $lt: string;
+            $lte: string;
+            $ne: string;
+            $in: string[];
+            $nin: string[];
+        }> | undefined;
+        firstname?: string | Partial<{
+            $gt?: string | undefined;
+            $gte?: string | undefined;
+            $lt?: string | undefined;
+            $lte?: string | undefined;
+            $ne?: string | undefined;
+            $in: string[];
+            $nin: string[];
+        }> | undefined;
+        lastname?: string | Partial<{
+            $gt?: string | undefined;
+            $gte?: string | undefined;
+            $lt?: string | undefined;
+            $lte?: string | undefined;
+            $ne?: string | undefined;
+            $in: string[];
+            $nin: string[];
+        }> | undefined;
+        phone?: string | Partial<{
+            $gt: string;
+            $gte: string;
+            $lt: string;
+            $lte: string;
+            $ne: string;
+            $in: string[];
+            $nin: string[];
+        }> | undefined;
+        email?: string | Partial<{
+            $gt?: string | undefined;
+            $gte?: string | undefined;
+            $lt?: string | undefined;
+            $lte?: string | undefined;
+            $ne?: string | undefined;
+            $in: string[];
+            $nin: string[];
+        }> | undefined;
+    }[];
+    $and: {
+        id?: string | Partial<{
+            $gt: string;
+            $gte: string;
+            $lt: string;
+            $lte: string;
+            $ne: string;
+            $in: string[];
+            $nin: string[];
+        }> | undefined;
+        firstname?: string | Partial<{
+            $gt?: string | undefined;
+            $gte?: string | undefined;
+            $lt?: string | undefined;
+            $lte?: string | undefined;
+            $ne?: string | undefined;
+            $in: string[];
+            $nin: string[];
+        }> | undefined;
+        lastname?: string | Partial<{
+            $gt?: string | undefined;
+            $gte?: string | undefined;
+            $lt?: string | undefined;
+            $lte?: string | undefined;
+            $ne?: string | undefined;
+            $in: string[];
+            $nin: string[];
+        }> | undefined;
+        phone?: string | Partial<{
+            $gt: string;
+            $gte: string;
+            $lt: string;
+            $lte: string;
+            $ne: string;
+            $in: string[];
+            $nin: string[];
+        }> | undefined;
+        email?: string | Partial<{
+            $gt?: string | undefined;
+            $gte?: string | undefined;
+            $lt?: string | undefined;
+            $lte?: string | undefined;
+            $ne?: string | undefined;
+            $in: string[];
+            $nin: string[];
+        }> | undefined;
+    }[];
+}> & {
+    id?: string | Partial<{
+        $gt: string;
+        $gte: string;
+        $lt: string;
+        $lte: string;
+        $ne: string;
+        $in: string[];
+        $nin: string[];
+    }> | undefined;
+    firstname?: string | Partial<{
         $gt?: string | undefined;
         $gte?: string | undefined;
         $lt?: string | undefined;
         $lte?: string | undefined;
         $ne?: string | undefined;
-        $in?: string[] | undefined;
-        $nin?: string[] | undefined;
-    } | undefined;
-    firstname?: string | {
+        $in: string[];
+        $nin: string[];
+    }> | undefined;
+    lastname?: string | Partial<{
         $gt?: string | undefined;
         $gte?: string | undefined;
         $lt?: string | undefined;
         $lte?: string | undefined;
         $ne?: string | undefined;
-        $in?: string[] | undefined;
-        $nin?: string[] | undefined;
-    } | undefined;
-    lastname?: string | {
+        $in: string[];
+        $nin: string[];
+    }> | undefined;
+    phone?: string | Partial<{
+        $gt: string;
+        $gte: string;
+        $lt: string;
+        $lte: string;
+        $ne: string;
+        $in: string[];
+        $nin: string[];
+    }> | undefined;
+    email?: string | Partial<{
         $gt?: string | undefined;
         $gte?: string | undefined;
         $lt?: string | undefined;
         $lte?: string | undefined;
         $ne?: string | undefined;
-        $in?: string[] | undefined;
-        $nin?: string[] | undefined;
-    } | undefined;
-    phone?: string | {
-        $gt?: string | undefined;
-        $gte?: string | undefined;
-        $lt?: string | undefined;
-        $lte?: string | undefined;
-        $ne?: string | undefined;
-        $in?: string[] | undefined;
-        $nin?: string[] | undefined;
-    } | undefined;
-    email?: string | {
-        $gt?: string | undefined;
-        $gte?: string | undefined;
-        $lt?: string | undefined;
-        $lte?: string | undefined;
-        $ne?: string | undefined;
-        $in?: string[] | undefined;
-        $nin?: string[] | undefined;
-    } | undefined;
+        $in: string[];
+        $nin: string[];
+    }> | undefined;
 }, HookContext<any>>;

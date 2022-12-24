@@ -1,11 +1,16 @@
 import { resolve } from '@feathersjs/schema'
-import { Type, getDataValidator, getValidator, querySyntax } from '@feathersjs/typebox'
+import { Type, getDataValidator, getValidator, querySyntax, StringEnum } from '@feathersjs/typebox'
 import type { Static } from '@feathersjs/typebox'
 
 import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../schemas/validators'
-import { modifierSchema } from '../modifier/modifier.schema'
 import { productModifierSchema } from '../product_modifier/product_modifier.schema'
+
+export const DiscountType = {
+  flat : 'flat',
+  percent :'percent'
+}
+export type DiscountType = typeof DiscountType;
 
 // Main data model schema
 export const productSchema = Type.Object(
@@ -18,10 +23,7 @@ export const productSchema = Type.Object(
     details: Type.String(),
     price: Type.Number(),
     discount: Type.Number(),
-    discountType: Type.Enum({
-    flat:'flat',
-    percentage: 'percentage'
-    }),
+    discountType: StringEnum(Object.values(DiscountType)),
     productModifiers: Type.Optional(Type.Array(productModifierSchema))  
   },
   { $id: 'Product', additionalProperties: false }
@@ -61,7 +63,7 @@ export const productDataResolver = resolve<Product, HookContext>({
 })
 
 // Schema for allowed query properties
-export const productQueryProperties = Type.Omit(productSchema, ['productModifiers'], {
+export const productQueryProperties = Type.Omit(productSchema, ['productModifiers', 'discountType'], {
   additionalProperties: false
 })
 export const productQuerySchema = querySyntax(productQueryProperties)
@@ -70,9 +72,3 @@ export const productQueryValidator = getValidator(productQuerySchema, queryValid
 export const productQueryResolver = resolve<ProductQuery, HookContext>({
   properties: {}
 })
-
-export const DiscountType = {
-  flat: 'flat',
-  percent: 'percent'
-}
-export type DiscountType = typeof DiscountType;

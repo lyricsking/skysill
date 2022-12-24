@@ -22,7 +22,7 @@ export const createLineItem = async (context: HookContext) => {
 
 function calculateDiscount(discountType: string, discount: number, price: number): number {
   switch (discountType) {
-    case DiscountType.percent: return ((discount / 100) * price);
+    case DiscountType.flat: return ((discount / 100) * price);
     default: return discount;
   }
 }

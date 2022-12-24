@@ -56,5 +56,5 @@ export declare const configurationSchema: import("@sinclair/typebox").TIntersect
     port: import("@sinclair/typebox").TNumber;
     public: import("@sinclair/typebox").TString<string>;
 }>]>;
-export declare type ApplicationConfiguration = Static<typeof configurationSchema>;
+export type ApplicationConfiguration = Static<typeof configurationSchema>;
 export declare const configurationValidator: import("@feathersjs/schema/lib").Validator<any, any>;

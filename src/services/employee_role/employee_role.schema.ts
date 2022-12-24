@@ -1,9 +1,15 @@
 import { resolve } from '@feathersjs/schema'
-import { Type, getDataValidator, getValidator, querySyntax } from '@feathersjs/typebox'
+import { Type, getDataValidator, getValidator, querySyntax, StringEnum } from '@feathersjs/typebox'
 import type { Static } from '@feathersjs/typebox'
 
 import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../schemas/validators'
+
+export const Role = {
+  manager: 'manager',
+  assistance: 'assistance'
+}
+export type Role = typeof Role;
 
 // Main data model schema
 export const employeeRoleSchema = Type.Object(
@@ -11,11 +17,7 @@ export const employeeRoleSchema = Type.Object(
     id: Type.Number(),
     businesId: Type.String(),
     shopId: Type.String(),
-    role: Type.Enum(
-      {
-       manager: 'manager',
-       assistance: 'assistance'
-      }),
+    role: StringEnum(Object.values(Role)),
   },
   { $id: 'EmployeeRole', additionalProperties: false }
 )

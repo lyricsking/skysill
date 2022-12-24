@@ -1,10 +1,22 @@
 import { resolve } from '@feathersjs/schema'
-import { Type, getDataValidator, getValidator, querySyntax } from '@feathersjs/typebox'
+import { Type, getDataValidator, getValidator, querySyntax, StringEnum } from '@feathersjs/typebox'
 import type { Static } from '@feathersjs/typebox'
 
 import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../schemas/validators'
 import { lineitem, Lineitem, lineitemSchema } from '../lineitem/lineitem'
+
+export const OrderStatus = {
+  pending : "pending",
+  accepted : "accepted",
+  confirmed : "confirmed",
+  assigned : "assigned",
+  awaitingPickup : "awaitingPickup",
+  inTransit : "inTransit",
+  delivered : "delivered",
+  cancelled : "cancelled"
+}
+export type OrderStatus = typeof OrderStatus;
 
 // Main data model schema
 export const orderSchema = Type.Object(
@@ -17,6 +29,7 @@ export const orderSchema = Type.Object(
     deliveryAddress: Type.Optional(Type.String()),
     deliveryGeopoint: Type.Optional(Type.String()),
     isCart: Type.Optional(Type.Boolean()),
+    orderStatus: StringEnum(Object.values(OrderStatus)),
     lineItems: Type.Array(Type.Ref(lineitemSchema))
   },
   { $id: 'Order', additionalProperties: false }
@@ -40,7 +53,7 @@ export const orderExternalResolver = resolve<Order, HookContext>({
 })
 
 // Schema for creating new entries
-export const orderDataSchema = Type.Omit(orderSchema, ['id', 'subtotal', 'deliveryFee', 'deliveryAddress', 'deliveryGeopoint', 'lineItems'], {
+export const orderDataSchema = Type.Pick(orderSchema, ['shopId', 'shopperId', 'isCart'], {
   $id: 'OrderData',
   additionalProperties: false
 })

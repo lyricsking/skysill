@@ -7,8 +7,8 @@ export interface Configuration extends ApplicationConfiguration {
 }
 export interface ServiceTypes {
 }
-export declare type Application = FeathersApplication<ServiceTypes, Configuration>;
-export declare type HookContext<S = any> = FeathersHookContext<Application, S>;
+export type Application = FeathersApplication<ServiceTypes, Configuration>;
+export type HookContext<S = any> = FeathersHookContext<Application, S>;
 declare module '@feathersjs/feathers' {
     interface Params {
         user?: User;

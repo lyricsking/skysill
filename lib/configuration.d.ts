@@ -162,4 +162,4 @@ export declare const configurationSchema: import("@feathersjs/schema").SchemaWra
         };
     };
 }>;
-export declare type ConfigurationSchema = Infer<typeof configurationSchema>;
+export type ConfigurationSchema = Infer<typeof configurationSchema>;

@@ -48,7 +48,7 @@ export const lineitemDataResolver = resolve<Lineitem, HookContext>({
 })
 
 // Schema for allowed query properties
-export const lineitemQueryProperties = Type.Omit(lineitemSchema, [], {
+export const lineitemQueryProperties = Type.Omit(lineitemSchema, ['optionsId'], {
   additionalProperties: false
 })
 export const lineitemQuerySchema = querySyntax(lineitemQueryProperties)

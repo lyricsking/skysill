@@ -16,7 +16,7 @@ import type { Application, HookContext } from '../../declarations'
 import { UserService, getOptions } from './user.class'
 import { createWallet } from '../../hooks/create-wallet'
 import { generateId } from '../../hooks/generate-id'
-
+import { resolveToNumber } from '../../hooks/resolve-to-number'
 export * from './user.class'
 export * from './user.schema'
 
