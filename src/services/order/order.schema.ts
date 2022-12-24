@@ -65,6 +65,18 @@ export const orderDataResolver = resolve<Order, HookContext>({
   }
 })
 
+export const orderPatchSchema = Type.Partial(orderSchema, {
+  $id: 'OrderPatch',
+})
+export type OrderPatch = Static < typeof orderPatchSchema >
+  export const orderPatchValidator = getDataValidator(orderPatchSchema, dataValidator)
+export const orderPatchResolver = resolve < Order,
+  HookContext > ({
+    properties: {
+      lineItems: async () => undefined
+    }
+  })
+
 // Schema for allowed query properties
 export const orderQueryProperties = Type.Omit(orderSchema, ['lineItems'], { additionalProperties: false })
 export const orderQuerySchema = querySyntax(orderQueryProperties)
