@@ -1,9 +1,10 @@
 import type { Static } from '@feathersjs/typebox';
 import type { HookContext } from '../../declarations';
-export declare enum DiscountType {
-    flat = "flat",
-    percent = "percent"
-}
+export declare const DiscountType: {
+    flat: string;
+    percent: string;
+};
+export type DiscountType = typeof DiscountType;
 export declare const productSchema: import("@sinclair/typebox").TObject<{
     id: import("@sinclair/typebox").TString<string>;
     shopId: import("@sinclair/typebox").TString<string>;
@@ -13,7 +14,7 @@ export declare const productSchema: import("@sinclair/typebox").TObject<{
     details: import("@sinclair/typebox").TString<string>;
     price: import("@sinclair/typebox").TNumber;
     discount: import("@sinclair/typebox").TNumber;
-    discountType: import("@sinclair/typebox").TEnum<typeof DiscountType>;
+    discountType: import("@sinclair/typebox").TUnsafe<string>;
     productModifiers: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TObject<{
         productId: import("@sinclair/typebox").TString<string>;
         modifierId: import("@sinclair/typebox").TString<string>;
@@ -33,7 +34,7 @@ export declare const productResolver: import("@feathersjs/schema").Resolver<{
     price: number;
     discount: number;
     categoryId: string;
-    discountType: DiscountType;
+    discountType: string;
 }, HookContext<any>>;
 export declare const productExternalResolver: import("@feathersjs/schema").Resolver<{
     productModifiers?: {
@@ -48,7 +49,7 @@ export declare const productExternalResolver: import("@feathersjs/schema").Resol
     price: number;
     discount: number;
     categoryId: string;
-    discountType: DiscountType;
+    discountType: string;
 }, HookContext<any>>;
 export declare const productDataSchema: import("@sinclair/typebox").TOmit<import("@sinclair/typebox").TObject<{
     id: import("@sinclair/typebox").TString<string>;
@@ -59,7 +60,7 @@ export declare const productDataSchema: import("@sinclair/typebox").TOmit<import
     details: import("@sinclair/typebox").TString<string>;
     price: import("@sinclair/typebox").TNumber;
     discount: import("@sinclair/typebox").TNumber;
-    discountType: import("@sinclair/typebox").TEnum<typeof DiscountType>;
+    discountType: import("@sinclair/typebox").TUnsafe<string>;
     productModifiers: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TObject<{
         productId: import("@sinclair/typebox").TString<string>;
         modifierId: import("@sinclair/typebox").TString<string>;
@@ -80,7 +81,7 @@ export declare const productDataResolver: import("@feathersjs/schema").Resolver<
     price: number;
     discount: number;
     categoryId: string;
-    discountType: DiscountType;
+    discountType: string;
 }, HookContext<any>>;
 export declare const productQueryProperties: import("@sinclair/typebox").TOmit<import("@sinclair/typebox").TObject<{
     id: import("@sinclair/typebox").TString<string>;
@@ -91,12 +92,12 @@ export declare const productQueryProperties: import("@sinclair/typebox").TOmit<i
     details: import("@sinclair/typebox").TString<string>;
     price: import("@sinclair/typebox").TNumber;
     discount: import("@sinclair/typebox").TNumber;
-    discountType: import("@sinclair/typebox").TEnum<typeof DiscountType>;
+    discountType: import("@sinclair/typebox").TUnsafe<string>;
     productModifiers: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TObject<{
         productId: import("@sinclair/typebox").TString<string>;
         modifierId: import("@sinclair/typebox").TString<string>;
     }>>>;
-}>, ["productModifiers"]>;
+}>, ["productModifiers", "discountType"]>;
 export declare const productQuerySchema: import("@sinclair/typebox").TIntersect<[import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
     $limit: import("@sinclair/typebox").TNumber;
     $skip: import("@sinclair/typebox").TNumber;
@@ -109,9 +110,8 @@ export declare const productQuerySchema: import("@sinclair/typebox").TIntersect<
         price: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
         discount: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
         categoryId: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
-        discountType: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
     }>;
-    $select: import("@sinclair/typebox").TUnsafe<("id" | "name" | "details" | "description" | "shopId" | "price" | "discount" | "categoryId" | "discountType")[]>;
+    $select: import("@sinclair/typebox").TUnsafe<("id" | "name" | "details" | "description" | "shopId" | "price" | "discount" | "categoryId")[]>;
     $or: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TObject<{
         id: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TString<string>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
             $gt: import("@sinclair/typebox").TString<string>;
@@ -184,15 +184,6 @@ export declare const productQuerySchema: import("@sinclair/typebox").TIntersect<
             $ne: import("@sinclair/typebox").TString<string>;
             $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
             $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
-        }>>]>>;
-        discountType: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TEnum<typeof DiscountType>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
-            $gt: import("@sinclair/typebox").TEnum<typeof DiscountType>;
-            $gte: import("@sinclair/typebox").TEnum<typeof DiscountType>;
-            $lt: import("@sinclair/typebox").TEnum<typeof DiscountType>;
-            $lte: import("@sinclair/typebox").TEnum<typeof DiscountType>;
-            $ne: import("@sinclair/typebox").TEnum<typeof DiscountType>;
-            $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TEnum<typeof DiscountType>>;
-            $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TEnum<typeof DiscountType>>;
         }>>]>>;
     }>>>;
     $and: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TObject<{
@@ -268,15 +259,6 @@ export declare const productQuerySchema: import("@sinclair/typebox").TIntersect<
             $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
             $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
         }>>]>>;
-        discountType: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TEnum<typeof DiscountType>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
-            $gt: import("@sinclair/typebox").TEnum<typeof DiscountType>;
-            $gte: import("@sinclair/typebox").TEnum<typeof DiscountType>;
-            $lt: import("@sinclair/typebox").TEnum<typeof DiscountType>;
-            $lte: import("@sinclair/typebox").TEnum<typeof DiscountType>;
-            $ne: import("@sinclair/typebox").TEnum<typeof DiscountType>;
-            $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TEnum<typeof DiscountType>>;
-            $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TEnum<typeof DiscountType>>;
-        }>>]>>;
     }>>>;
 }>>, import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TObject<{
     id: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TString<string>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
@@ -351,15 +333,6 @@ export declare const productQuerySchema: import("@sinclair/typebox").TIntersect<
         $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
         $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
     }>>]>>;
-    discountType: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TEnum<typeof DiscountType>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
-        $gt: import("@sinclair/typebox").TEnum<typeof DiscountType>;
-        $gte: import("@sinclair/typebox").TEnum<typeof DiscountType>;
-        $lt: import("@sinclair/typebox").TEnum<typeof DiscountType>;
-        $lte: import("@sinclair/typebox").TEnum<typeof DiscountType>;
-        $ne: import("@sinclair/typebox").TEnum<typeof DiscountType>;
-        $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TEnum<typeof DiscountType>>;
-        $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TEnum<typeof DiscountType>>;
-    }>>]>>;
 }>>]>;
 export type ProductQuery = Static<typeof productQuerySchema>;
 export declare const productQueryValidator: import("@feathersjs/schema").Validator<any, any>;
@@ -375,9 +348,8 @@ export declare const productQueryResolver: import("@feathersjs/schema").Resolver
         price?: number | undefined;
         discount?: number | undefined;
         categoryId?: number | undefined;
-        discountType?: number | undefined;
     };
-    $select: ("id" | "name" | "details" | "description" | "shopId" | "price" | "discount" | "categoryId" | "discountType")[];
+    $select: ("id" | "name" | "details" | "description" | "shopId" | "price" | "discount" | "categoryId")[];
     $or: {
         id?: string | Partial<{
             $gt: string;
@@ -450,15 +422,6 @@ export declare const productQueryResolver: import("@feathersjs/schema").Resolver
             $ne: string;
             $in: string[];
             $nin: string[];
-        }> | undefined;
-        discountType?: DiscountType | Partial<{
-            $gt: DiscountType;
-            $gte: DiscountType;
-            $lt: DiscountType;
-            $lte: DiscountType;
-            $ne: DiscountType;
-            $in: DiscountType[];
-            $nin: DiscountType[];
         }> | undefined;
     }[];
     $and: {
@@ -534,15 +497,6 @@ export declare const productQueryResolver: import("@feathersjs/schema").Resolver
             $in: string[];
             $nin: string[];
         }> | undefined;
-        discountType?: DiscountType | Partial<{
-            $gt: DiscountType;
-            $gte: DiscountType;
-            $lt: DiscountType;
-            $lte: DiscountType;
-            $ne: DiscountType;
-            $in: DiscountType[];
-            $nin: DiscountType[];
-        }> | undefined;
     }[];
 }> & {
     id?: string | Partial<{
@@ -616,14 +570,5 @@ export declare const productQueryResolver: import("@feathersjs/schema").Resolver
         $ne: string;
         $in: string[];
         $nin: string[];
-    }> | undefined;
-    discountType?: DiscountType | Partial<{
-        $gt: DiscountType;
-        $gte: DiscountType;
-        $lt: DiscountType;
-        $lte: DiscountType;
-        $ne: DiscountType;
-        $in: DiscountType[];
-        $nin: DiscountType[];
     }> | undefined;
 }, HookContext<any>>;

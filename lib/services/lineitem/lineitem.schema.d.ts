@@ -64,7 +64,7 @@ export declare const lineitemQueryProperties: import("@sinclair/typebox").TOmit<
     finalItemPrice: import("@sinclair/typebox").TNumber;
     quantity: import("@sinclair/typebox").TNumber;
     finalPrice: import("@sinclair/typebox").TNumber;
-}>, []>;
+}>, ["optionsId"]>;
 export declare const lineitemQuerySchema: import("@sinclair/typebox").TIntersect<[import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
     $limit: import("@sinclair/typebox").TNumber;
     $skip: import("@sinclair/typebox").TNumber;
@@ -72,14 +72,13 @@ export declare const lineitemQuerySchema: import("@sinclair/typebox").TIntersect
         id: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
         productId: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
         orderId: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
-        optionsId: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
         price: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
         discount: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
         finalItemPrice: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
         quantity: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
         finalPrice: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
     }>;
-    $select: import("@sinclair/typebox").TUnsafe<("id" | "productId" | "orderId" | "optionsId" | "price" | "discount" | "finalItemPrice" | "quantity" | "finalPrice")[]>;
+    $select: import("@sinclair/typebox").TUnsafe<("id" | "productId" | "orderId" | "price" | "discount" | "finalItemPrice" | "quantity" | "finalPrice")[]>;
     $or: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TObject<{
         id: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TNumber, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
             $gt: import("@sinclair/typebox").TNumber;
@@ -107,15 +106,6 @@ export declare const lineitemQuerySchema: import("@sinclair/typebox").TIntersect
             $ne: import("@sinclair/typebox").TString<string>;
             $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
             $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
-        }>>]>>;
-        optionsId: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
-            $gt: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
-            $gte: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
-            $lt: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
-            $lte: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
-            $ne: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
-            $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>>;
-            $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>>;
         }>>]>>;
         price: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TNumber, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
             $gt: import("@sinclair/typebox").TNumber;
@@ -191,15 +181,6 @@ export declare const lineitemQuerySchema: import("@sinclair/typebox").TIntersect
             $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
             $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
         }>>]>>;
-        optionsId: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
-            $gt: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
-            $gte: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
-            $lt: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
-            $lte: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
-            $ne: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
-            $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>>;
-            $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>>;
-        }>>]>>;
         price: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TNumber, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
             $gt: import("@sinclair/typebox").TNumber;
             $gte: import("@sinclair/typebox").TNumber;
@@ -274,15 +255,6 @@ export declare const lineitemQuerySchema: import("@sinclair/typebox").TIntersect
         $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
         $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
     }>>]>>;
-    optionsId: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
-        $gt: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
-        $gte: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
-        $lt: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
-        $lte: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
-        $ne: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
-        $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>>;
-        $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>>;
-    }>>]>>;
     price: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TNumber, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
         $gt: import("@sinclair/typebox").TNumber;
         $gte: import("@sinclair/typebox").TNumber;
@@ -338,14 +310,13 @@ export declare const lineitemQueryResolver: import("@feathersjs/schema").Resolve
         id?: number | undefined;
         productId?: number | undefined;
         orderId?: number | undefined;
-        optionsId?: number | undefined;
         price?: number | undefined;
         discount?: number | undefined;
         finalItemPrice?: number | undefined;
         quantity?: number | undefined;
         finalPrice?: number | undefined;
     };
-    $select: ("id" | "productId" | "orderId" | "optionsId" | "price" | "discount" | "finalItemPrice" | "quantity" | "finalPrice")[];
+    $select: ("id" | "productId" | "orderId" | "price" | "discount" | "finalItemPrice" | "quantity" | "finalPrice")[];
     $or: {
         id?: number | Partial<{
             $gt: number;
@@ -373,15 +344,6 @@ export declare const lineitemQueryResolver: import("@feathersjs/schema").Resolve
             $ne: string;
             $in: string[];
             $nin: string[];
-        }> | undefined;
-        optionsId?: string[] | Partial<{
-            $gt: string[];
-            $gte: string[];
-            $lt: string[];
-            $lte: string[];
-            $ne: string[];
-            $in: string[][];
-            $nin: string[][];
         }> | undefined;
         price?: number | Partial<{
             $gt: number;
@@ -457,15 +419,6 @@ export declare const lineitemQueryResolver: import("@feathersjs/schema").Resolve
             $in: string[];
             $nin: string[];
         }> | undefined;
-        optionsId?: string[] | Partial<{
-            $gt: string[];
-            $gte: string[];
-            $lt: string[];
-            $lte: string[];
-            $ne: string[];
-            $in: string[][];
-            $nin: string[][];
-        }> | undefined;
         price?: number | Partial<{
             $gt: number;
             $gte: number;
@@ -539,15 +492,6 @@ export declare const lineitemQueryResolver: import("@feathersjs/schema").Resolve
         $ne: string;
         $in: string[];
         $nin: string[];
-    }> | undefined;
-    optionsId?: string[] | Partial<{
-        $gt: string[];
-        $gte: string[];
-        $lt: string[];
-        $lte: string[];
-        $ne: string[];
-        $in: string[][];
-        $nin: string[][];
     }> | undefined;
     price?: number | Partial<{
         $gt: number;

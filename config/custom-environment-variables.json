@@ -6,5 +6,9 @@
   "host": "HOSTNAME",
   "authentication": {
     "secret": "FEATHERS_SECRET"
+  },
+  "shipday": {
+    "apiKey": "SHIPDAY_APIKEY"
   }
+
 }

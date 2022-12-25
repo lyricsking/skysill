@@ -6,7 +6,12 @@ import {
   orderResolver,
   orderDataResolver,
   orderQueryResolver,
-  orderExternalResolver
+  orderExternalResolver,
+  orderPatchSchema,
+  orderPatchResolver,
+  orderPatchValidator,
+  Order,
+  OrderStatus
 } from './order.schema'
 
 import type { Application, HookContext } from '../../declarations'
@@ -35,21 +40,26 @@ export const order = (app: Application) => {
       all: [
         schemaHooks.validateQuery(orderQueryValidator),
         resolveToNumber(['subtotal', 'deliveryFee']),
-        schemaHooks.validateData(orderDataValidator),
         schemaHooks.resolveQuery(orderQueryResolver),
-        schemaHooks.resolveData(orderDataResolver)
       ],
       create: [
+        schemaHooks.validateData(orderDataValidator),
+        schemaHooks.resolveData(orderDataResolver),
         generateId(11)
-      ]
+      ],
+      patch: [
+        schemaHooks.validateData(orderPatchValidator),
+        schemaHooks.resolveData(orderPatchResolver)
+      ], 
     },
     after: {
-      all: [schemaHooks.resolveResult(orderResolver), schemaHooks.resolveExternal(orderExternalResolver)]
+      all: [schemaHooks.resolveResult(orderResolver), schemaHooks.resolveExternal(orderExternalResolver)],
     },
     error: {
       all: []
     }
   })
+  .on('patched', onPatched)
 }
 
 // Add this service to the service type index
@@ -57,4 +67,26 @@ declare module '../../declarations' {
   interface ServiceTypes {
     order: OrderService
   }
+}
+
+const onPatched = (...orders: Order[]): void => {
+  orders.forEach(order => {
+    
+    if(order.orderStatus != undefined && order.orderStatus != null){
+      switch (order.orderStatus) {
+        case OrderStatus.pending:
+
+          break;
+        case OrderStatus.accepted:
+          // Vendor accepted to process the order
+        
+          break;
+        case OrderStatus.confirmed:
+          // Vendor confirmed order ready for delivery
+          break;
+        default:
+          break;
+    }
+  }
+  });
 }

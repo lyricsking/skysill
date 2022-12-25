@@ -43,7 +43,9 @@ app.hooks({
   around: {
     all: [logErrorHook]
   },
-  before: {},
+  before: {
+    all: []
+  },
   after: {},
   error: {}
 })

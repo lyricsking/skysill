@@ -1,6 +1,17 @@
 import type { Static } from '@feathersjs/typebox';
 import type { HookContext } from '../../declarations';
-
+export declare const OrderStatus: {
+    cart: string;
+    pending: string;
+    accepted: string;
+    confirmed: string;
+    assigned: string;
+    awaitingPickup: string;
+    inTransit: string;
+    delivered: string;
+    cancelled: string;
+};
+export type OrderStatus = typeof OrderStatus;
 export declare const orderSchema: import("@sinclair/typebox").TObject<{
     id: import("@sinclair/typebox").TString<string>;
     shopId: import("@sinclair/typebox").TString<string>;
@@ -9,8 +20,7 @@ export declare const orderSchema: import("@sinclair/typebox").TObject<{
     deliveryFee: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TNumber>;
     deliveryAddress: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
     deliveryGeopoint: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
-    isCart: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>;
-    orderStatus: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TEnum<typeof OrderStatus>>;
+    orderStatus: import("@sinclair/typebox").TUnsafe<string>;
     lineItems: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TRef<import("@sinclair/typebox").TObject<{
         id: import("@sinclair/typebox").TNumber;
         productId: import("@sinclair/typebox").TString<string>;
@@ -29,11 +39,10 @@ export declare const orderResolver: import("@feathersjs/schema").Resolver<{
     deliveryFee?: number | undefined;
     deliveryAddress?: string | undefined;
     deliveryGeopoint?: string | undefined;
-    isCart?: boolean | undefined;
-    orderStatus?: OrderStatus | undefined;
     id: string;
     shopId: string;
     shopperId: string;
+    orderStatus: string;
     lineItems: {
         id: number;
         productId: string;
@@ -51,11 +60,10 @@ export declare const orderExternalResolver: import("@feathersjs/schema").Resolve
     deliveryFee?: number | undefined;
     deliveryAddress?: string | undefined;
     deliveryGeopoint?: string | undefined;
-    isCart?: boolean | undefined;
-    orderStatus?: OrderStatus | undefined;
     id: string;
     shopId: string;
     shopperId: string;
+    orderStatus: string;
     lineItems: {
         id: number;
         productId: string;
@@ -68,7 +76,7 @@ export declare const orderExternalResolver: import("@feathersjs/schema").Resolve
         finalPrice: number;
     }[];
 }, HookContext<any>>;
-export declare const orderDataSchema: import("@sinclair/typebox").TOmit<import("@sinclair/typebox").TObject<{
+export declare const orderDataSchema: import("@sinclair/typebox").TPick<import("@sinclair/typebox").TObject<{
     id: import("@sinclair/typebox").TString<string>;
     shopId: import("@sinclair/typebox").TString<string>;
     shopperId: import("@sinclair/typebox").TString<string>;
@@ -76,8 +84,7 @@ export declare const orderDataSchema: import("@sinclair/typebox").TOmit<import("
     deliveryFee: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TNumber>;
     deliveryAddress: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
     deliveryGeopoint: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
-    isCart: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>;
-    orderStatus: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TEnum<typeof OrderStatus>>;
+    orderStatus: import("@sinclair/typebox").TUnsafe<string>;
     lineItems: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TRef<import("@sinclair/typebox").TObject<{
         id: import("@sinclair/typebox").TNumber;
         productId: import("@sinclair/typebox").TString<string>;
@@ -89,7 +96,7 @@ export declare const orderDataSchema: import("@sinclair/typebox").TOmit<import("
         quantity: import("@sinclair/typebox").TNumber;
         finalPrice: import("@sinclair/typebox").TNumber;
     }>>>;
-}>, ["id", "subtotal", "deliveryFee", "deliveryAddress", "deliveryGeopoint", "lineItems"]>;
+}>, ["shopId", "shopperId"]>;
 export type OrderData = Static<typeof orderDataSchema>;
 export declare const orderDataValidator: import("@feathersjs/schema").DataValidatorMap;
 export declare const orderDataResolver: import("@feathersjs/schema").Resolver<{
@@ -97,11 +104,54 @@ export declare const orderDataResolver: import("@feathersjs/schema").Resolver<{
     deliveryFee?: number | undefined;
     deliveryAddress?: string | undefined;
     deliveryGeopoint?: string | undefined;
-    isCart?: boolean | undefined;
-    orderStatus?: OrderStatus | undefined;
     id: string;
     shopId: string;
     shopperId: string;
+    orderStatus: string;
+    lineItems: {
+        id: number;
+        productId: string;
+        orderId: string;
+        optionsId: string[];
+        price: number;
+        discount: number;
+        finalItemPrice: number;
+        quantity: number;
+        finalPrice: number;
+    }[];
+}, HookContext<any>>;
+export declare const orderPatchSchema: import("@sinclair/typebox").TPick<import("@sinclair/typebox").TObject<{
+    id: import("@sinclair/typebox").TString<string>;
+    shopId: import("@sinclair/typebox").TString<string>;
+    shopperId: import("@sinclair/typebox").TString<string>;
+    subtotal: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TNumber>;
+    deliveryFee: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TNumber>;
+    deliveryAddress: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+    deliveryGeopoint: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
+    orderStatus: import("@sinclair/typebox").TUnsafe<string>;
+    lineItems: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TRef<import("@sinclair/typebox").TObject<{
+        id: import("@sinclair/typebox").TNumber;
+        productId: import("@sinclair/typebox").TString<string>;
+        orderId: import("@sinclair/typebox").TString<string>;
+        optionsId: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TString<string>>;
+        price: import("@sinclair/typebox").TNumber;
+        discount: import("@sinclair/typebox").TNumber;
+        finalItemPrice: import("@sinclair/typebox").TNumber;
+        quantity: import("@sinclair/typebox").TNumber;
+        finalPrice: import("@sinclair/typebox").TNumber;
+    }>>>;
+}>, ["deliveryAddress", "deliveryGeopoint", "orderStatus"]>;
+export type OrderPatch = Static<typeof orderPatchSchema>;
+export declare const orderPatchValidator: import("@feathersjs/schema").DataValidatorMap;
+export declare const orderPatchResolver: import("@feathersjs/schema").Resolver<{
+    subtotal?: number | undefined;
+    deliveryFee?: number | undefined;
+    deliveryAddress?: string | undefined;
+    deliveryGeopoint?: string | undefined;
+    id: string;
+    shopId: string;
+    shopperId: string;
+    orderStatus: string;
     lineItems: {
         id: number;
         productId: string;
@@ -122,8 +172,7 @@ export declare const orderQueryProperties: import("@sinclair/typebox").TOmit<imp
     deliveryFee: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TNumber>;
     deliveryAddress: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
     deliveryGeopoint: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>;
-    isCart: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>;
-    orderStatus: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TEnum<typeof OrderStatus>>;
+    orderStatus: import("@sinclair/typebox").TUnsafe<string>;
     lineItems: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TRef<import("@sinclair/typebox").TObject<{
         id: import("@sinclair/typebox").TNumber;
         productId: import("@sinclair/typebox").TString<string>;
@@ -147,10 +196,9 @@ export declare const orderQuerySchema: import("@sinclair/typebox").TIntersect<[i
         deliveryFee: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
         deliveryAddress: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
         deliveryGeopoint: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
-        isCart: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
         orderStatus: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TInteger>;
     }>;
-    $select: import("@sinclair/typebox").TUnsafe<("id" | "shopId" | "shopperId" | "subtotal" | "deliveryFee" | "deliveryAddress" | "deliveryGeopoint" | "isCart" | "orderStatus")[]>;
+    $select: import("@sinclair/typebox").TUnsafe<("id" | "shopId" | "shopperId" | "subtotal" | "deliveryFee" | "deliveryAddress" | "deliveryGeopoint" | "orderStatus")[]>;
     $or: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TObject<{
         id: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TString<string>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
             $gt: import("@sinclair/typebox").TString<string>;
@@ -215,23 +263,14 @@ export declare const orderQuerySchema: import("@sinclair/typebox").TIntersect<[i
             $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
             $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
         }>>]>>;
-        isCart: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
-            $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>;
-            $gte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>;
-            $lt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>;
-            $lte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>;
-            $ne: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>;
-            $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>>;
-            $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>>;
-        }>>]>>;
-        orderStatus: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TEnum<typeof OrderStatus>>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
-            $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TEnum<typeof OrderStatus>>;
-            $gte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TEnum<typeof OrderStatus>>;
-            $lt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TEnum<typeof OrderStatus>>;
-            $lte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TEnum<typeof OrderStatus>>;
-            $ne: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TEnum<typeof OrderStatus>>;
-            $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TEnum<typeof OrderStatus>>>;
-            $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TEnum<typeof OrderStatus>>>;
+        orderStatus: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TUnsafe<string>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
+            $gt: import("@sinclair/typebox").TUnsafe<string>;
+            $gte: import("@sinclair/typebox").TUnsafe<string>;
+            $lt: import("@sinclair/typebox").TUnsafe<string>;
+            $lte: import("@sinclair/typebox").TUnsafe<string>;
+            $ne: import("@sinclair/typebox").TUnsafe<string>;
+            $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TUnsafe<string>>;
+            $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TUnsafe<string>>;
         }>>]>>;
     }>>>;
     $and: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TObject<{
@@ -298,23 +337,14 @@ export declare const orderQuerySchema: import("@sinclair/typebox").TIntersect<[i
             $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
             $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
         }>>]>>;
-        isCart: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
-            $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>;
-            $gte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>;
-            $lt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>;
-            $lte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>;
-            $ne: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>;
-            $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>>;
-            $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>>;
-        }>>]>>;
-        orderStatus: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TEnum<typeof OrderStatus>>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
-            $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TEnum<typeof OrderStatus>>;
-            $gte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TEnum<typeof OrderStatus>>;
-            $lt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TEnum<typeof OrderStatus>>;
-            $lte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TEnum<typeof OrderStatus>>;
-            $ne: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TEnum<typeof OrderStatus>>;
-            $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TEnum<typeof OrderStatus>>>;
-            $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TEnum<typeof OrderStatus>>>;
+        orderStatus: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TUnsafe<string>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
+            $gt: import("@sinclair/typebox").TUnsafe<string>;
+            $gte: import("@sinclair/typebox").TUnsafe<string>;
+            $lt: import("@sinclair/typebox").TUnsafe<string>;
+            $lte: import("@sinclair/typebox").TUnsafe<string>;
+            $ne: import("@sinclair/typebox").TUnsafe<string>;
+            $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TUnsafe<string>>;
+            $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TUnsafe<string>>;
         }>>]>>;
     }>>>;
 }>>, import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TObject<{
@@ -381,23 +411,14 @@ export declare const orderQuerySchema: import("@sinclair/typebox").TIntersect<[i
         $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
         $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TString<string>>>;
     }>>]>>;
-    isCart: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
-        $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>;
-        $gte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>;
-        $lt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>;
-        $lte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>;
-        $ne: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>;
-        $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>>;
-        $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TBoolean>>;
-    }>>]>>;
-    orderStatus: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TEnum<typeof OrderStatus>>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
-        $gt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TEnum<typeof OrderStatus>>;
-        $gte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TEnum<typeof OrderStatus>>;
-        $lt: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TEnum<typeof OrderStatus>>;
-        $lte: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TEnum<typeof OrderStatus>>;
-        $ne: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TEnum<typeof OrderStatus>>;
-        $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TEnum<typeof OrderStatus>>>;
-        $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TEnum<typeof OrderStatus>>>;
+    orderStatus: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TUnsafe<string>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
+        $gt: import("@sinclair/typebox").TUnsafe<string>;
+        $gte: import("@sinclair/typebox").TUnsafe<string>;
+        $lt: import("@sinclair/typebox").TUnsafe<string>;
+        $lte: import("@sinclair/typebox").TUnsafe<string>;
+        $ne: import("@sinclair/typebox").TUnsafe<string>;
+        $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TUnsafe<string>>;
+        $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TUnsafe<string>>;
     }>>]>>;
 }>>]>;
 export type OrderQuery = Static<typeof orderQuerySchema>;
@@ -413,10 +434,9 @@ export declare const orderQueryResolver: import("@feathersjs/schema").Resolver<P
         deliveryFee?: number | undefined;
         deliveryAddress?: number | undefined;
         deliveryGeopoint?: number | undefined;
-        isCart?: number | undefined;
         orderStatus?: number | undefined;
     };
-    $select: ("id" | "shopId" | "shopperId" | "subtotal" | "deliveryFee" | "deliveryAddress" | "deliveryGeopoint" | "isCart" | "orderStatus")[];
+    $select: ("id" | "shopId" | "shopperId" | "subtotal" | "deliveryFee" | "deliveryAddress" | "deliveryGeopoint" | "orderStatus")[];
     $or: {
         id?: string | Partial<{
             $gt: string;
@@ -481,23 +501,14 @@ export declare const orderQueryResolver: import("@feathersjs/schema").Resolver<P
             $in: string[];
             $nin: string[];
         }> | undefined;
-        isCart?: boolean | Partial<{
-            $gt?: boolean | undefined;
-            $gte?: boolean | undefined;
-            $lt?: boolean | undefined;
-            $lte?: boolean | undefined;
-            $ne?: boolean | undefined;
-            $in: boolean[];
-            $nin: boolean[];
-        }> | undefined;
-        orderStatus?: OrderStatus | Partial<{
-            $gt?: OrderStatus | undefined;
-            $gte?: OrderStatus | undefined;
-            $lt?: OrderStatus | undefined;
-            $lte?: OrderStatus | undefined;
-            $ne?: OrderStatus | undefined;
-            $in: OrderStatus[];
-            $nin: OrderStatus[];
+        orderStatus?: string | Partial<{
+            $gt: string;
+            $gte: string;
+            $lt: string;
+            $lte: string;
+            $ne: string;
+            $in: string[];
+            $nin: string[];
         }> | undefined;
     }[];
     $and: {
@@ -564,23 +575,14 @@ export declare const orderQueryResolver: import("@feathersjs/schema").Resolver<P
             $in: string[];
             $nin: string[];
         }> | undefined;
-        isCart?: boolean | Partial<{
-            $gt?: boolean | undefined;
-            $gte?: boolean | undefined;
-            $lt?: boolean | undefined;
-            $lte?: boolean | undefined;
-            $ne?: boolean | undefined;
-            $in: boolean[];
-            $nin: boolean[];
-        }> | undefined;
-        orderStatus?: OrderStatus | Partial<{
-            $gt?: OrderStatus | undefined;
-            $gte?: OrderStatus | undefined;
-            $lt?: OrderStatus | undefined;
-            $lte?: OrderStatus | undefined;
-            $ne?: OrderStatus | undefined;
-            $in: OrderStatus[];
-            $nin: OrderStatus[];
+        orderStatus?: string | Partial<{
+            $gt: string;
+            $gte: string;
+            $lt: string;
+            $lte: string;
+            $ne: string;
+            $in: string[];
+            $nin: string[];
         }> | undefined;
     }[];
 }> & {
@@ -647,22 +649,13 @@ export declare const orderQueryResolver: import("@feathersjs/schema").Resolver<P
         $in: string[];
         $nin: string[];
     }> | undefined;
-    isCart?: boolean | Partial<{
-        $gt?: boolean | undefined;
-        $gte?: boolean | undefined;
-        $lt?: boolean | undefined;
-        $lte?: boolean | undefined;
-        $ne?: boolean | undefined;
-        $in: boolean[];
-        $nin: boolean[];
-    }> | undefined;
-    orderStatus?: OrderStatus | Partial<{
-        $gt?: OrderStatus | undefined;
-        $gte?: OrderStatus | undefined;
-        $lt?: OrderStatus | undefined;
-        $lte?: OrderStatus | undefined;
-        $ne?: OrderStatus | undefined;
-        $in: OrderStatus[];
-        $nin: OrderStatus[];
+    orderStatus?: string | Partial<{
+        $gt: string;
+        $gte: string;
+        $lt: string;
+        $lte: string;
+        $ne: string;
+        $in: string[];
+        $nin: string[];
     }> | undefined;
 }, HookContext<any>>;

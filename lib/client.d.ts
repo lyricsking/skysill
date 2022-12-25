@@ -1,3 +1,5 @@
+import type { Shipday, ShipdayData, ShipdayQuery, ShipdayService } from './services/shipday/shipday';
+export type { Shipday, ShipdayData, ShipdayQuery };
 import type { ProductModifier, ProductModifierData, ProductModifierQuery, ProductModifierService } from './services/product_modifier/product_modifier';
 export type { ProductModifier, ProductModifierData, ProductModifierQuery };
 import type { Twilio, TwilioData, TwilioQuery, TwilioService } from './services/twilio/twilio';
@@ -60,7 +62,10 @@ declare const twilioServiceMethods: readonly ["sendVerification", "verify"];
 type TwilioClientService = Pick<TwilioService, typeof twilioServiceMethods[number]>;
 declare const productModifierServiceMethods: readonly ["find", "get", "create", "update", "patch", "remove"];
 type ProductModifierClientService = Pick<ProductModifierService<Params<ProductModifierQuery>>, typeof productModifierServiceMethods[number]>;
+declare const shipdayServiceMethods: readonly ["find", "get", "create", "update", "patch", "remove"];
+type ShipdayClientService = Pick<ShipdayService, typeof shipdayServiceMethods[number]>;
 export interface ServiceTypes {
+    shipday: ShipdayClientService;
     productModifier: ProductModifierClientService;
     twilio: TwilioClientService;
     driver: DriverClientService;

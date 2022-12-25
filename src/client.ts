@@ -1,5 +1,21 @@
 import { feathers } from '@feathersjs/feathers'
 import type {
+  ShipdayDriver,
+  ShipdayDriverData,
+  ShipdayDriverQuery,
+  ShipdayDriverService
+} from './services/shipday-driver/shipday-driver'
+export type { ShipdayDriver, ShipdayDriverData, ShipdayDriverQuery }
+
+import type {
+  ShipdayOrder,
+  ShipdayOrderData,
+  ShipdayOrderQuery,
+  ShipdayOrderService
+} from './services/shipday-order/shipday-order'
+export type { ShipdayOrder, ShipdayOrderData, ShipdayOrderQuery }
+
+import type {
   ProductModifier,
   ProductModifierData,
   ProductModifierQuery,
@@ -127,8 +143,14 @@ type ProductModifierClientService = Pick<
   ProductModifierService<Params<ProductModifierQuery>>,
   typeof productModifierServiceMethods[number]
 >
+const shipdayOrderServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
+type ShipdayOrderClientService = Pick<ShipdayOrderService, typeof shipdayOrderServiceMethods[number]>
+const shipdayDriverServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
+type ShipdayDriverClientService = Pick<ShipdayDriverService, typeof shipdayDriverServiceMethods[number]>
 
 export interface ServiceTypes {
+  'shipday-driver': ShipdayDriverClientService
+  'shipday-order': ShipdayOrderClientService
   productModifier: ProductModifierClientService
   twilio: TwilioClientService
   driver: DriverClientService
@@ -197,6 +219,12 @@ export const createClient = <Configuration = any>(connection: TransportConnectio
   })
   client.use('productModifier', connection.service('productModifier'), {
     methods: productModifierServiceMethods
+  })
+  client.use('shipday-order', connection.service('shipday-order'), {
+    methods: shipdayOrderServiceMethods
+  })
+  client.use('shipday-driver', connection.service('shipday-driver'), {
+    methods: shipdayDriverServiceMethods
   })
   return client
 }

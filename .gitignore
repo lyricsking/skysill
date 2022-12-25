@@ -2,3 +2,8 @@ node_modules/
 
 #Hide SQLite
 skysill.sqlite
+
+# dotenv environment variables file
+.env
+.env.test
+.env.production

@@ -65,11 +65,13 @@ export const orderDataResolver = resolve<Order, HookContext>({
   }
 })
 
-export const orderPatchSchema = Type.Partial(orderSchema, {
-  $id: 'OrderPatch',
-})
+// Schema for patching order entries
+export const orderPatchSchema = Type.Pick(orderSchema, ['deliveryAddress', 'deliveryGeopoint', 'orderStatus' ], 
+  { 
+    $id: 'OrderPatch', additionalProperties: false
+  })
 export type OrderPatch = Static < typeof orderPatchSchema >
-  export const orderPatchValidator = getDataValidator(orderPatchSchema, dataValidator)
+export const orderPatchValidator = getDataValidator(orderPatchSchema, dataValidator)
 export const orderPatchResolver = resolve < Order,
   HookContext > ({
     properties: {

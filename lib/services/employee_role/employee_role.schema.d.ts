@@ -1,13 +1,15 @@
 import type { Static } from '@feathersjs/typebox';
 import type { HookContext } from '../../declarations';
+export declare const Role: {
+    manager: string;
+    assistance: string;
+};
+export type Role = typeof Role;
 export declare const employeeRoleSchema: import("@sinclair/typebox").TObject<{
     id: import("@sinclair/typebox").TNumber;
     businesId: import("@sinclair/typebox").TString<string>;
     shopId: import("@sinclair/typebox").TString<string>;
-    role: import("@sinclair/typebox").TEnum<{
-        manager: string;
-        assistance: string;
-    }>;
+    role: import("@sinclair/typebox").TUnsafe<string>;
 }>;
 export type EmployeeRole = Static<typeof employeeRoleSchema>;
 export declare const employeeRoleResolver: import("@feathersjs/schema").Resolver<{
@@ -26,10 +28,7 @@ export declare const employeeRoleDataSchema: import("@sinclair/typebox").TOmit<i
     id: import("@sinclair/typebox").TNumber;
     businesId: import("@sinclair/typebox").TString<string>;
     shopId: import("@sinclair/typebox").TString<string>;
-    role: import("@sinclair/typebox").TEnum<{
-        manager: string;
-        assistance: string;
-    }>;
+    role: import("@sinclair/typebox").TUnsafe<string>;
 }>, ["id"]>;
 export type EmployeeRoleData = Static<typeof employeeRoleDataSchema>;
 export declare const employeeRoleDataValidator: import("@feathersjs/schema").DataValidatorMap;
@@ -43,10 +42,7 @@ export declare const employeeRoleQueryProperties: import("@sinclair/typebox").TO
     id: import("@sinclair/typebox").TNumber;
     businesId: import("@sinclair/typebox").TString<string>;
     shopId: import("@sinclair/typebox").TString<string>;
-    role: import("@sinclair/typebox").TEnum<{
-        manager: string;
-        assistance: string;
-    }>;
+    role: import("@sinclair/typebox").TUnsafe<string>;
 }>, []>;
 export declare const employeeRoleQuerySchema: import("@sinclair/typebox").TIntersect<[import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
     $limit: import("@sinclair/typebox").TNumber;
@@ -68,38 +64,14 @@ export declare const employeeRoleQuerySchema: import("@sinclair/typebox").TInter
             $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TNumber>;
             $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TNumber>;
         }>>]>>;
-        role: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TEnum<{
-            manager: string;
-            assistance: string;
-        }>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
-            $gt: import("@sinclair/typebox").TEnum<{
-                manager: string;
-                assistance: string;
-            }>;
-            $gte: import("@sinclair/typebox").TEnum<{
-                manager: string;
-                assistance: string;
-            }>;
-            $lt: import("@sinclair/typebox").TEnum<{
-                manager: string;
-                assistance: string;
-            }>;
-            $lte: import("@sinclair/typebox").TEnum<{
-                manager: string;
-                assistance: string;
-            }>;
-            $ne: import("@sinclair/typebox").TEnum<{
-                manager: string;
-                assistance: string;
-            }>;
-            $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TEnum<{
-                manager: string;
-                assistance: string;
-            }>>;
-            $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TEnum<{
-                manager: string;
-                assistance: string;
-            }>>;
+        role: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TUnsafe<string>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
+            $gt: import("@sinclair/typebox").TUnsafe<string>;
+            $gte: import("@sinclair/typebox").TUnsafe<string>;
+            $lt: import("@sinclair/typebox").TUnsafe<string>;
+            $lte: import("@sinclair/typebox").TUnsafe<string>;
+            $ne: import("@sinclair/typebox").TUnsafe<string>;
+            $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TUnsafe<string>>;
+            $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TUnsafe<string>>;
         }>>]>>;
         shopId: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TString<string>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
             $gt: import("@sinclair/typebox").TString<string>;
@@ -130,38 +102,14 @@ export declare const employeeRoleQuerySchema: import("@sinclair/typebox").TInter
             $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TNumber>;
             $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TNumber>;
         }>>]>>;
-        role: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TEnum<{
-            manager: string;
-            assistance: string;
-        }>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
-            $gt: import("@sinclair/typebox").TEnum<{
-                manager: string;
-                assistance: string;
-            }>;
-            $gte: import("@sinclair/typebox").TEnum<{
-                manager: string;
-                assistance: string;
-            }>;
-            $lt: import("@sinclair/typebox").TEnum<{
-                manager: string;
-                assistance: string;
-            }>;
-            $lte: import("@sinclair/typebox").TEnum<{
-                manager: string;
-                assistance: string;
-            }>;
-            $ne: import("@sinclair/typebox").TEnum<{
-                manager: string;
-                assistance: string;
-            }>;
-            $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TEnum<{
-                manager: string;
-                assistance: string;
-            }>>;
-            $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TEnum<{
-                manager: string;
-                assistance: string;
-            }>>;
+        role: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TUnsafe<string>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
+            $gt: import("@sinclair/typebox").TUnsafe<string>;
+            $gte: import("@sinclair/typebox").TUnsafe<string>;
+            $lt: import("@sinclair/typebox").TUnsafe<string>;
+            $lte: import("@sinclair/typebox").TUnsafe<string>;
+            $ne: import("@sinclair/typebox").TUnsafe<string>;
+            $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TUnsafe<string>>;
+            $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TUnsafe<string>>;
         }>>]>>;
         shopId: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TString<string>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
             $gt: import("@sinclair/typebox").TString<string>;
@@ -192,38 +140,14 @@ export declare const employeeRoleQuerySchema: import("@sinclair/typebox").TInter
         $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TNumber>;
         $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TNumber>;
     }>>]>>;
-    role: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TEnum<{
-        manager: string;
-        assistance: string;
-    }>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
-        $gt: import("@sinclair/typebox").TEnum<{
-            manager: string;
-            assistance: string;
-        }>;
-        $gte: import("@sinclair/typebox").TEnum<{
-            manager: string;
-            assistance: string;
-        }>;
-        $lt: import("@sinclair/typebox").TEnum<{
-            manager: string;
-            assistance: string;
-        }>;
-        $lte: import("@sinclair/typebox").TEnum<{
-            manager: string;
-            assistance: string;
-        }>;
-        $ne: import("@sinclair/typebox").TEnum<{
-            manager: string;
-            assistance: string;
-        }>;
-        $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TEnum<{
-            manager: string;
-            assistance: string;
-        }>>;
-        $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TEnum<{
-            manager: string;
-            assistance: string;
-        }>>;
+    role: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TUnsafe<string>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
+        $gt: import("@sinclair/typebox").TUnsafe<string>;
+        $gte: import("@sinclair/typebox").TUnsafe<string>;
+        $lt: import("@sinclair/typebox").TUnsafe<string>;
+        $lte: import("@sinclair/typebox").TUnsafe<string>;
+        $ne: import("@sinclair/typebox").TUnsafe<string>;
+        $in: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TUnsafe<string>>;
+        $nin: import("@sinclair/typebox").TArray<import("@sinclair/typebox").TUnsafe<string>>;
     }>>]>>;
     shopId: import("@sinclair/typebox").TOptional<import("@sinclair/typebox").TUnion<[import("@sinclair/typebox").TString<string>, import("@sinclair/typebox").TPartial<import("@sinclair/typebox").TObject<{
         $gt: import("@sinclair/typebox").TString<string>;

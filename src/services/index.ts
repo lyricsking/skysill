@@ -1,3 +1,5 @@
+import { shipdayDriver } from './shipday-driver/shipday-driver'
+import { shipdayOrder } from './shipday-order/shipday-order'
 import { productModifier } from './product_modifier/product_modifier'
 import { twilio } from './twilio/twilio'
 import { driver } from './driver/driver'
@@ -16,6 +18,8 @@ import { user } from './user/user'
 import type { Application } from '../declarations'
 
 export const services = (app: Application) => {
+  app.configure(shipdayDriver)
+  app.configure(shipdayOrder)
   app.configure(productModifier)
   app.configure(twilio)
   app.configure(driver)
