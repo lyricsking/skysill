@@ -14,7 +14,7 @@ import {
   OrderStatus
 } from './order.schema'
 
-import type { Application, HookContext } from '../../declarations'
+import type { Application, HookContext, NextFunction } from '../../declarations'
 import { OrderService, getOptions } from './order.class'
 import { resolveToNumber } from '../../hooks/resolve-to-number'
 import { generateId } from '../../hooks/generate-id'
@@ -34,7 +34,12 @@ export const order = (app: Application) => {
   // Initialize hooks
   app.service('order').hooks({
     around: {
-      all: []
+      all: [],
+      patch: [
+        schemaHooks.validateData(orderPatchValidator),
+        schemaHooks.resolveData(orderPatchResolver),
+        patchOrder,
+      ],
     },
     before: {
       all: [
@@ -46,10 +51,6 @@ export const order = (app: Application) => {
         schemaHooks.validateData(orderDataValidator),
         schemaHooks.resolveData(orderDataResolver),
         generateId(11)
-      ],
-      patch: [
-        schemaHooks.validateData(orderPatchValidator),
-        schemaHooks.resolveData(orderPatchResolver)
       ], 
     },
     after: {
@@ -59,7 +60,6 @@ export const order = (app: Application) => {
       all: []
     }
   })
-  .on('patched', onPatched)
 }
 
 // Add this service to the service type index
@@ -69,24 +69,41 @@ declare module '../../declarations' {
   }
 }
 
-const onPatched = (...orders: Order[]): void => {
-  orders.forEach(order => {
+export const patchOrder = async (context: HookContext, next: NextFunction) => {
+  try {
+    console.log(`Running hook onOrderPatch on ${context.path}.${context.method}`)
     
-    if(order.orderStatus != undefined && order.orderStatus != null){
-      switch (order.orderStatus) {
+    const data = context.data;
+    if(data.orderStatus != undefined && data.orderStatus != null){
+      switch (data.orderStatus) {
         case OrderStatus.pending:
-
+          context.params.query.orderStatus = OrderStatus.cart;
           break;
         case OrderStatus.accepted:
           // Vendor accepted to process the order
-        
+          context.params.query.orderStatus = OrderStatus.pending;
           break;
         case OrderStatus.confirmed:
           // Vendor confirmed order ready for delivery
+          context.params.query.orderStatus = OrderStatus.accepted;
           break;
         default:
           break;
+      }
     }
+
+    const shouldUpdateDeliveryFee = (data.deliveryGeopoint != undefined && data.deliveryGeopoint != null)    
+    if(shouldUpdateDeliveryFee){
+      // Run logic to get delivery fee here
+      
+      // Update deliveryFee
+      context.data.deliveryFee = undefined;
+    }
+    // Run Service method
+    next();
+  } catch (error) {
+    
+  }finally{
+
   }
-  });
 }

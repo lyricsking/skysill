@@ -1,7 +1,7 @@
 import type { Id, NullableId, Params } from '@feathersjs/feathers'
 
 import type { Application } from '../../declarations'
-import type { ShipdayOrder, ShipdayOrderData, ShipdayOrderQuery } from './shipday-order.schema'
+import type { ShipdayOrder, ShipdayOrderData, ShipdayOrderPatch, ShipdayOrderQuery } from './shipday-order.schema'
 
 import axios from 'axios';
 
@@ -26,12 +26,19 @@ export class ShipdayOrderService {
   }
 
   async find(_params?: ShipdayOrderParams): Promise<ShipdayOrder[]> {
-    return []
+    const options = {
+      method: 'GET',
+      url: `${this.url}`,
+      headers: {
+        accept: 'application/json',
+        Authorization: `Basic ${this.apiKey}`
+      }
+    };
+    
+    return await axios.request(options)
   }
 
   async get(id: Id, _params?: ShipdayOrderParams): Promise<ShipdayOrder> {
-    const axios = require('axios');
-  
     const options = {
       method: 'GET',
       url: `${this.url}/${id}`,
@@ -40,19 +47,20 @@ export class ShipdayOrderService {
         Authorization: `Basic ${this.apiKey}`
       }
     };
-  
-    axios.request(options)
-    .then((response: { data: any; }) => {
-      console.log(response.data);
-    })
-    .catch(function (error: any) {
-      console.error(error);
-    });
-
-    return Object()
+    
+    return await axios.request(options);
   }
 
-  async create(data: ShipdayOrderData, params?: ShipdayOrderParams): Promise<ShipdayOrder>{ 
+  async create(data: ShipdayOrderData, params?: ShipdayOrderParams): Promise<ShipdayOrder>
+  async create(data: ShipdayOrderData[], params?: ShipdayOrderParams): Promise<ShipdayOrder[]>
+  async create(
+    data: ShipdayOrderData | ShipdayOrderData[],
+    params?: ShipdayOrderParams
+  ): Promise<ShipdayOrder | ShipdayOrder[]> { 
+    if (Array.isArray(data)) {
+      return Promise.all(data.map((current) => this.create(current, params)))
+    }
+
     const options = {
       method: 'POST',
       url: this.url,
@@ -61,46 +69,54 @@ export class ShipdayOrderService {
         Authorization: `Basic ${this.apiKey}`, 
         'Content-Type': 'application/json'
       },
-      data: {
-        orderNumber: '99qT5A',
-        customerName: 'Mr. Jhon Mason',
-        customerAddress: '556 Crestlake Dr, San Francisco, CA 94132, USA',
-        customerEmail: 'jhonMason@gmail.com',
-        customerPhoneNumber: '+14152392212',
-        restaurantName: 'Popeyes Louisiana Kitchen',
-        restaurantAddress: '890 Geneva Ave, San Francisco, CA 94112, United States',
-        restaurantPhoneNumber: '+14152392013',
-        expectedDeliveryDate: '2021-06-03',
-        expectedPickupTime: '17:45:00',
-        expectedDeliveryTime: '19:22:00',
-        pickupLatitude: 41.53867,
-        pickupLongitude: -72.0827,
-        deliveryLatitude: 41.53867,
-        deliveryLongitude: -72.0827,
-        tips: 2.5,
-        tax: 1.5,
-        discountAmount: 1.5,
-        deliveryFee: 3,
-        totalOrderCost: 13.47,
-        deliveryInstruction: 'fast',
-        orderSource: 'Seamless',
-        additionalId: '4532',
-        clientRestaurantId: 12,
-      }
+      data
     };
 
-    axios.request(options).then(function (response) {
-      console.log(response.data);
-    })
-    .catch(function (error) {
-      console.error(error);
-    })
+    const res = await axios.request(options);
+    
+    if(res.status == 200 && res.data.success == true){
+      return data.orderNumber = res.data.orderId
+    }
+
+    return res.data;
   }  
   
-  async remove(id: NullableId, _params?: ShipdayOrderParams): Promise<ShipdayOrder> {
-    return {
-      id: 0,
-      order: Object()
+  async patch(id: NullableId, data: ShipdayOrderPatch, params: ShipdayOrderParams){
+    const options = {
+      method: 'POST',
+      url: `${this.url}/edit/${id}`,
+      headers: {
+        accept: 'application/json',
+        Authorization: `Basic ${this.apiKey}`, 
+        'Content-Type': 'application/json'
+      },
+      data
+    };
+
+    const res = await axios.request(options);
+    
+    if(res.status == 200 && res.data.success == true){
+      return data.orderNumber = res.data.orderId
+    }
+
+    return res.data;
+  }
+
+  async remove(id: Id, _params?: ShipdayOrderParams): Promise<void> {
+    const options = {
+      method: 'DELETE',
+      url: `${this.url}/${id}`,
+      headers: {
+        accept: 'application/json',
+        Authorization: `Bsaic ${this.apiKey}`
+      }
+    };
+    
+    const res = await axios.request(options);
+    if(res.status == 204){
+
+    }else {
+      
     }
   }
 }
