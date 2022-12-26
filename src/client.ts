@@ -1,4 +1,5 @@
 import { feathers } from '@feathersjs/feathers'
+
 import type {
   ShipdayDriver,
   ShipdayDriverData,
@@ -88,6 +89,8 @@ import type { User, UserData, UserQuery, UserService } from './services/user/use
 export type { User, UserData, UserQuery }
 
 import type { TransportConnection, Params } from '@feathersjs/feathers'
+import authenticationClient from '@feathersjs/authentication-client'
+import type { AuthenticationClientOptions } from '@feathersjs/authentication-client';
 
 const userServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
 type UserClientService = Pick<UserService<Params<UserQuery>>, typeof userServiceMethods[number]>
@@ -143,10 +146,11 @@ type ProductModifierClientService = Pick<
   ProductModifierService<Params<ProductModifierQuery>>,
   typeof productModifierServiceMethods[number]
 >
-const shipdayOrderServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
+const shipdayOrderServiceMethods = ['find', 'get', 'create', 'patch', 'remove'] as const
 type ShipdayOrderClientService = Pick<ShipdayOrderService, typeof shipdayOrderServiceMethods[number]>
 const shipdayDriverServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
 type ShipdayDriverClientService = Pick<ShipdayDriverService, typeof shipdayDriverServiceMethods[number]>
+const deliveryInfoServiceMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'] as const
 
 export interface ServiceTypes {
   'shipday-driver': ShipdayDriverClientService
@@ -170,10 +174,22 @@ export interface ServiceTypes {
   //
 }
 
-export const createClient = <Configuration = any>(connection: TransportConnection<ServiceTypes>) => {
+/**
+ * Returns a typed client  app.
+ *
+ * @param connection The REST or Socket.io Feathers client connection
+ * @param authenticationOptions Additional settings for the authentication client
+ * @see https://dove.feathersjs.com/api/client.html
+ * @returns The Feathers client application
+ */
+export const createClient = <Configuration = any>(
+  connection: TransportConnection<ServiceTypes>,
+  authenticationOptions: Partial<AuthenticationClientOptions> = {}
+  ) => {
   const client = feathers<ServiceTypes, Configuration>()
 
   client.configure(connection)
+  client.configure(authenticationClient(authenticationOptions))
 
   client.use('user', connection.service('user'), {
     methods: userServiceMethods

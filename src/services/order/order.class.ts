@@ -3,7 +3,7 @@ import { KnexService } from '@feathersjs/knex'
 import type { KnexAdapterParams, KnexAdapterOptions } from '@feathersjs/knex'
 
 import type { Application } from '../../declarations'
-import type { Order, OrderData, OrderQuery } from './order.schema'
+import type { Order, OrderData, OrderPatch, OrderQuery } from './order.schema'
 
 export interface OrderParams extends KnexAdapterParams<OrderQuery> {}
 
@@ -11,7 +11,8 @@ export interface OrderParams extends KnexAdapterParams<OrderQuery> {}
 export class OrderService<ServiceParams extends Params = OrderParams> extends KnexService<
   Order,
   OrderData,
-  ServiceParams
+  ServiceParams,
+  OrderPatch
 > {}
 
 export const getOptions = (app: Application): KnexAdapterOptions => {

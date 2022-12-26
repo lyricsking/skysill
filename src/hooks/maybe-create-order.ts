@@ -10,6 +10,7 @@ export const maybeCreateOrder = async (context: HookContext) => {
   await orderService._find({
     query: {
       $limit: 1,
+      $select: ['id', 'shopId', 'orderStatus'],
       shopId: context.data.shopId,
       shopperId: context.data.shopperId,
       orderStatus: OrderStatus.cart, 

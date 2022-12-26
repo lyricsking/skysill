@@ -5,6 +5,8 @@ import type { Static } from '@feathersjs/typebox'
 import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../schemas/validators'
 import { lineitem, Lineitem, lineitemSchema } from '../lineitem/lineitem'
+import { shopSchema } from '../shop/shop.schema'
+import { userSchema } from '../user/user.schema'
 
 export const OrderStatus = {
   cart: 'cart',
@@ -25,12 +27,18 @@ export const orderSchema = Type.Object(
     id: Type.String(),
     shopId: Type.String(),
     shopperId: Type.String(),
+    deliveryId: Type.Optional(Type.String()),
     subtotal: Type.Optional(Type.Number()),
-    deliveryFee: Type.Optional(Type.Number()),
+    pickupAddress: Type.Optional(Type.String()),
+    pickupGeopoint: Type.Optional(Type.String()),
     deliveryAddress: Type.Optional(Type.String()),
     deliveryGeopoint: Type.Optional(Type.String()),
+    deliveryFee: Type.Optional(Type.Number()),
     orderStatus: StringEnum(Object.values(OrderStatus)),
-    lineItems: Type.Array(Type.Ref(lineitemSchema))
+    lineItems: Type.Array(Type.Ref(lineitemSchema)),
+    user:Type.Optional(Type.Ref(userSchema)),
+    shop: Type.Optional(Type.Ref(shopSchema)),
+
   },
   { $id: 'Order', additionalProperties: false }
 )
@@ -44,6 +52,12 @@ export const orderResolver = resolve<Order, HookContext>({
         },
         paginate: false
       })
+    },
+    user: async (_value, order, context) => {
+      return  await context.app.service('user').get(order.shopperId)
+    },
+    shop: async (_value, order, context) => {
+      return  await context.app.service('shop').get(order.shopId)
     }
   }
 })
@@ -66,14 +80,13 @@ export const orderDataResolver = resolve<Order, HookContext>({
 })
 
 // Schema for patching order entries
-export const orderPatchSchema = Type.Pick(orderSchema, ['deliveryAddress', 'deliveryGeopoint', 'orderStatus' ], 
+export const orderPatchSchema = Type.Pick(orderSchema, ['pickupAddress', 'pickupGeopoint', 'deliveryAddress', 'deliveryGeopoint', 'orderStatus' ], 
   { 
     $id: 'OrderPatch', additionalProperties: false
   })
 export type OrderPatch = Static < typeof orderPatchSchema >
 export const orderPatchValidator = getDataValidator(orderPatchSchema, dataValidator)
-export const orderPatchResolver = resolve < Order,
-  HookContext > ({
+export const orderPatchResolver = resolve <Order, HookContext>({
     properties: {
       lineItems: async () => undefined
     }

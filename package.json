@@ -52,11 +52,11 @@
     "@feathersjs/socketio": "^5.0.0-pre.31",
     "@feathersjs/transport-commons": "^5.0.0-pre.31",
     "@feathersjs/typebox": "^5.0.0-pre.31",
+    "@googlemaps/google-maps-services-js": "^3.3.16",
     "@stdlib/string-percent-encode": "^0.0.9",
     "knex": "^2.3.0",
     "koa-static": "^5.0.0",
     "nanoid": "^3.3.4",
-    "shipday": "^1.1.0",
     "sqlite3": "^5.1.2",
     "twilio": "^3.83.3",
     "winston": "^3.8.2"

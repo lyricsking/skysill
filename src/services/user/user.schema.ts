@@ -63,7 +63,12 @@ export const userDataResolver = resolve<User, HookContext>({
 
 // Schema for allowed query properties
 export const userQueryProperties = Type.Omit(userSchema, ['password', 'wallet'])
-export const userQuerySchema = querySyntax(userQueryProperties)
+export const userQuerySchema = Type.Intersect([
+  querySyntax(userQueryProperties),
+  Type.Object({}, { additionalProperties: false })
+], 
+{ additionalProperties: false })
+
 export type UserQuery = Static<typeof userQuerySchema>
 export const userQueryValidator = getValidator(userQuerySchema, queryValidator)
 export const userQueryResolver = resolve<UserQuery, HookContext>({
