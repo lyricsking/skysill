@@ -1,12 +1,12 @@
-import serveStatic from 'koa-static'
+// For more information about this file see https://dove.feathersjs.com/guides/cli/application.html
 import { feathers } from '@feathersjs/feathers'
 import configuration from '@feathersjs/configuration'
-import { koa, rest, bodyParser, errorHandler, parseAuthentication, cors } from '@feathersjs/koa'
+import { koa, rest, bodyParser, errorHandler, parseAuthentication, cors, serveStatic } from '@feathersjs/koa'
 import socketio from '@feathersjs/socketio'
 
 import type { Application } from './declarations'
-import { configurationValidator } from './schemas/configuration'
-import { logErrorHook } from './logger'
+import { configurationValidator } from './configuration'
+import { logError } from './hooks/log-error'
 import { sqlite } from './sqlite'
 import { authentication } from './authentication'
 import { services } from './services/index'
@@ -41,11 +41,9 @@ app.configure(channels)
 // Register hooks that run on all service methods
 app.hooks({
   around: {
-    all: [logErrorHook]
+    all: [logError]
   },
-  before: {
-    all: []
-  },
+  before: {},
   after: {},
   error: {}
 })

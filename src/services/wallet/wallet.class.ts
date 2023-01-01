@@ -1,9 +1,10 @@
+// For more information about this file see https://dove.feathersjs.com/guides/cli/service.class.html#database-services
 import type { Params } from '@feathersjs/feathers'
 import { KnexService } from '@feathersjs/knex'
 import type { KnexAdapterParams, KnexAdapterOptions } from '@feathersjs/knex'
 
 import type { Application } from '../../declarations'
-import type { Wallet, WalletData, WalletQuery } from './wallet.schema'
+import type { Wallet, WalletData, WalletPatch, WalletQuery } from './wallet.schema'
 
 export interface WalletParams extends KnexAdapterParams<WalletQuery> {}
 
@@ -11,7 +12,8 @@ export interface WalletParams extends KnexAdapterParams<WalletQuery> {}
 export class WalletService<ServiceParams extends Params = WalletParams> extends KnexService<
   Wallet,
   WalletData,
-  ServiceParams
+  ServiceParams,
+  WalletPatch
 > {}
 
 export const getOptions = (app: Application): KnexAdapterOptions => {

@@ -1,6 +1,7 @@
 import { authenticate } from '@feathersjs/authentication'
 
 import { hooks as schemaHooks } from '@feathersjs/schema'
+import { transaction as transactionHook } from '@feathersjs/knex'
 
 import {
   transactionDataValidator,
@@ -40,18 +41,27 @@ export const transaction = (app: Application) => {
         resolveToNumber('amount'),
         schemaHooks.validateData(transactionDataValidator),
         schemaHooks.resolveQuery(transactionQueryResolver),
-        schemaHooks.resolveData(transactionDataResolver)
+        schemaHooks.resolveData(transactionDataResolver),
+        // Transaction start
+        transactionHook.start()
       ]
     },
     after: {
       all: [
         schemaHooks.resolveResult(transactionResolver),
-        schemaHooks.resolveExternal(transactionExternalResolver)
+        schemaHooks.resolveExternal(transactionExternalResolver),
+        // Transaction ends
+        transactionHook.end()
       ],
-      create: [patchWalletBalance],
+      create: [
+        patchWalletBalance,
+      ],
     },
     error: {
-      all: []
+      all: [
+        // Transaction rollback
+        transactionHook.rollback()
+      ]
     }
   })
 }

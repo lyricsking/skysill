@@ -1,7 +1,7 @@
+// For more information about this file see https://dove.feathersjs.com/guides/cli/authentication.html
 import { AuthenticationService, JWTStrategy } from '@feathersjs/authentication'
 import { LocalStrategy } from '@feathersjs/authentication-local'
-import { OAuthStrategy } from '@feathersjs/authentication-oauth'
-import { oauth } from '@feathersjs/authentication-oauth'
+
 import type { Application } from './declarations'
 
 declare module './declarations' {
@@ -17,5 +17,4 @@ export const authentication = (app: Application) => {
   authentication.register('local', new LocalStrategy())
 
   app.use('authentication', authentication)
-  app.configure(oauth())
 }

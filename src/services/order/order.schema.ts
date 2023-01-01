@@ -3,19 +3,19 @@ import { Type, getDataValidator, getValidator, querySyntax, StringEnum } from '@
 import type { Static } from '@feathersjs/typebox'
 
 import type { HookContext } from '../../declarations'
-import { dataValidator, queryValidator } from '../../schemas/validators'
+import { dataValidator, queryValidator } from '../../validators'
 import { lineitem, Lineitem, lineitemSchema } from '../lineitem/lineitem'
 import { shopSchema } from '../shop/shop.schema'
 import { userSchema } from '../user/user.schema'
 
 export const OrderStatus = {
-  cart: 'cart',
-  pending : "pending",
-  accepted : "accepted",
-  confirmed : "confirmed",
-  assigned : "assigned",
-  awaitingPickup : "awaitingPickup",
-  inTransit : "inTransit",
+  cart: 'cart', // order item added to cart
+  pending : "pending", // order ready for checkout
+  accepted : "accepted", // vendor is willing to take the order
+  declined : "declined", // vendor declined order 
+  assigned : "assigned", // order has been assigned to a carrier
+  awaitingPickup : "awaitingPickup", // order is ready awaiting pickup
+  inTransit : "inTransit", // order picked up for delivery
   delivered : "delivered",
   cancelled : "cancelled"
 }
@@ -28,6 +28,7 @@ export const orderSchema = Type.Object(
     shopId: Type.String(),
     shopperId: Type.String(),
     deliveryId: Type.Optional(Type.String()),
+    transactionId: Type.Optional(Type.String()),
     subtotal: Type.Optional(Type.Number()),
     pickupAddress: Type.Optional(Type.String()),
     pickupGeopoint: Type.Optional(Type.String()),
@@ -80,7 +81,7 @@ export const orderDataResolver = resolve<Order, HookContext>({
 })
 
 // Schema for patching order entries
-export const orderPatchSchema = Type.Pick(orderSchema, ['pickupAddress', 'pickupGeopoint', 'deliveryAddress', 'deliveryGeopoint', 'orderStatus' ], 
+export const orderPatchSchema = Type.Pick(orderSchema, ['transactionId', 'pickupAddress', 'pickupGeopoint', 'deliveryAddress', 'deliveryGeopoint', 'orderStatus' ], 
   { 
     $id: 'OrderPatch', additionalProperties: false
   })
@@ -93,7 +94,7 @@ export const orderPatchResolver = resolve <Order, HookContext>({
   })
 
 // Schema for allowed query properties
-export const orderQueryProperties = Type.Omit(orderSchema, ['lineItems'], { additionalProperties: false })
+export const orderQueryProperties = Type.Omit(orderSchema, ['user', 'shop', 'lineItems'], { additionalProperties: false })
 export const orderQuerySchema = querySyntax(orderQueryProperties)
 export type OrderQuery = Static<typeof orderQuerySchema>
 export const orderQueryValidator = getValidator(orderQuerySchema, queryValidator)

@@ -5,8 +5,8 @@ export const createWallet = async (context: HookContext) => {
 
   const wallet = await context.app.service('wallet').create(
     {
+      id: context.result.id,
       owner: context.path,
-      ownerId: context.data.id,
       balance: 0,
     })
 

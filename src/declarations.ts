@@ -1,14 +1,18 @@
+// For more information about this file see https://dove.feathersjs.com/guides/cli/typescript.html
 import { HookContext as FeathersHookContext, NextFunction } from '@feathersjs/feathers'
 import { Application as FeathersApplication } from '@feathersjs/koa'
-import { ApplicationConfiguration } from './schemas/configuration'
+import { ApplicationConfiguration } from './configuration'
 
 import { User } from './services/user/user'
 
 export { NextFunction }
 
+// The types for app.get(name) and app.set(name)
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface Configuration extends ApplicationConfiguration {}
 
 // A mapping of service names to types. Will be extended in service files.
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ServiceTypes {}
 
 // The application instance type that will be used everywhere else

@@ -1,3 +1,4 @@
+// For more information about this file see https://dove.feathersjs.com/guides/cli/client.test.html
 import assert from 'assert'
 import axios from 'axios'
 
@@ -12,8 +13,6 @@ const appUrl = `http://${app.get('host')}:${port}`
 
 describe('application client tests', () => {
   const client = createClient(rest(appUrl).axios(axios))
-
-  client.configure(authenticationClient())
 
   before(async () => {
     await app.listen(port)
