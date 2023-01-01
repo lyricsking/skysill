@@ -1,9 +1,10 @@
+// For more information about this file see https://dove.feathersjs.com/guides/cli/service.class.html#database-services
 import type { Params } from '@feathersjs/feathers'
 import { KnexService } from '@feathersjs/knex'
 import type { KnexAdapterParams, KnexAdapterOptions } from '@feathersjs/knex'
 
 import type { Application } from '../../declarations'
-import type { Modifier, ModifierData, ModifierQuery } from './modifier.schema'
+import type { Modifier, ModifierData, ModifierPatch, ModifierQuery } from './modifier.schema'
 
 export interface ModifierParams extends KnexAdapterParams<ModifierQuery> {}
 
@@ -11,7 +12,8 @@ export interface ModifierParams extends KnexAdapterParams<ModifierQuery> {}
 export class ModifierService<ServiceParams extends Params = ModifierParams> extends KnexService<
   Modifier,
   ModifierData,
-  ServiceParams
+  ServiceParams,
+  ModifierPatch
 > {}
 
 export const getOptions = (app: Application): KnexAdapterOptions => {

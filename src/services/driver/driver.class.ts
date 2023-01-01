@@ -1,9 +1,10 @@
+// For more information about this file see https://dove.feathersjs.com/guides/cli/service.class.html#database-services
 import type { Params } from '@feathersjs/feathers'
 import { KnexService } from '@feathersjs/knex'
 import type { KnexAdapterParams, KnexAdapterOptions } from '@feathersjs/knex'
 
 import type { Application } from '../../declarations'
-import type { Driver, DriverData, DriverQuery } from './driver.schema'
+import type { Driver, DriverData, DriverPatch, DriverQuery } from './driver.schema'
 
 export interface DriverParams extends KnexAdapterParams<DriverQuery> {}
 
@@ -11,7 +12,8 @@ export interface DriverParams extends KnexAdapterParams<DriverQuery> {}
 export class DriverService<ServiceParams extends Params = DriverParams> extends KnexService<
   Driver,
   DriverData,
-  ServiceParams
+  ServiceParams,
+  DriverPatch
 > {}
 
 export const getOptions = (app: Application): KnexAdapterOptions => {

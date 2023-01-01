@@ -1,19 +1,25 @@
+// For more information about this file see https://dove.feathersjs.com/guides/cli/service.html
+import { authenticate } from '@feathersjs/authentication'
+
 import { hooks as schemaHooks } from '@feathersjs/schema'
 
 import {
   businessDataValidator,
+  businessPatchValidator,
   businessQueryValidator,
   businessResolver,
+  businessExternalResolver,
   businessDataResolver,
-  businessQueryResolver,
-  businessExternalResolver
+  businessPatchResolver,
+  businessQueryResolver
 } from './business.schema'
 
-import type { Application, HookContext } from '../../declarations'
+import type { Application } from '../../declarations'
 import { BusinessService, getOptions } from './business.class'
 import { generateId } from '../../hooks/generate-id'
 import { numberOfLength } from '../../utils/number-gen'
 import percentEncode from '@stdlib/string-percent-encode'
+import { createBusinessId } from '../../hooks/create-business-id'
 
 export * from './business.class'
 export * from './business.schema'
@@ -23,37 +29,39 @@ export const business = (app: Application) => {
   // Register our service on the Feathers application
   app.use('business', new BusinessService(getOptions(app)), {
     // A list of all methods this service exposes externally
-    methods: ['find', 'get', 'create', 'update', 'patch', 'remove'],
+    methods: ['find', 'get', 'create', 'patch', 'remove'],
     // You can add additional custom events to be sent to clients here
     events: []
   })
   // Initialize hooks
   app.service('business').hooks({
     around: {
-      all: []
+      all: [
+        authenticate('jwt'),
+        schemaHooks.resolveExternal(businessExternalResolver),
+        schemaHooks.resolveResult(businessResolver)
+      ]
     },
     before: {
       all: [
         schemaHooks.validateQuery(businessQueryValidator),
-        schemaHooks.validateData(businessDataValidator),
-        schemaHooks.resolveQuery(businessQueryResolver),
-        schemaHooks.resolveData(businessDataResolver)
+        schemaHooks.resolveQuery(businessQueryResolver)
       ],
+      find: [],
+      get: [],
       create: [
-        async (context: HookContext) => {
-          console.log(`Running hook generateBusinessId on ${context.path}.${context.method}`)
-          
-          const prefix: string = percentEncode(context.data.name);
-          
-          context.data.id = prefix + '-' + numberOfLength(5)
-        }
-      ]
+        schemaHooks.validateData(businessDataValidator),
+        schemaHooks.resolveData(businessDataResolver), 
+        createBusinessId
+      ],
+      patch: [
+        schemaHooks.validateData(businessPatchValidator),
+        schemaHooks.resolveData(businessPatchResolver)
+      ],
+      remove: []
     },
     after: {
-      all: [
-        schemaHooks.resolveResult(businessResolver),
-        schemaHooks.resolveExternal(businessExternalResolver)
-      ]
+      all: []
     },
     error: {
       all: []

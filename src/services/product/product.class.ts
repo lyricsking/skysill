@@ -1,9 +1,10 @@
+// For more information about this file see https://dove.feathersjs.com/guides/cli/service.class.html#database-services
 import type { Params } from '@feathersjs/feathers'
 import { KnexService } from '@feathersjs/knex'
 import type { KnexAdapterParams, KnexAdapterOptions } from '@feathersjs/knex'
 
 import type { Application } from '../../declarations'
-import type { Product, ProductData, ProductQuery } from './product.schema'
+import type { Product, ProductData, ProductPatch, ProductQuery } from './product.schema'
 
 export interface ProductParams extends KnexAdapterParams<ProductQuery> {}
 
@@ -11,7 +12,8 @@ export interface ProductParams extends KnexAdapterParams<ProductQuery> {}
 export class ProductService<ServiceParams extends Params = ProductParams> extends KnexService<
   Product,
   ProductData,
-  ServiceParams
+  ServiceParams,
+  ProductPatch
 > {}
 
 export const getOptions = (app: Application): KnexAdapterOptions => {

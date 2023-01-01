@@ -1,7 +1,7 @@
 import type { Knex } from 'knex'
 
 export async function up(knex: Knex): Promise<void> {
-  await knex.schema.createTable('employee_role', (table) => {
+  await knex.schema.createTable('employeeRole', (table) => {
     table.increments('id')
     table.string('businessId').references('business.id')
     table.string('shopId').references('shop.id')
@@ -10,5 +10,5 @@ export async function up(knex: Knex): Promise<void> {
 }
 
 export async function down(knex: Knex): Promise<void> {
-  await knex.schema.dropTable('employee_role')
+  await knex.schema.dropTable('employeeRole')
 }

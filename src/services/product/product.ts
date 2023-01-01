@@ -1,15 +1,20 @@
+// For more information about this file see https://dove.feathersjs.com/guides/cli/service.html
+import { authenticate } from '@feathersjs/authentication'
+
 import { hooks as schemaHooks } from '@feathersjs/schema'
 
 import {
   productDataValidator,
+  productPatchValidator,
   productQueryValidator,
   productResolver,
+  productExternalResolver,
   productDataResolver,
-  productQueryResolver,
-  productExternalResolver
+  productPatchResolver,
+  productQueryResolver
 } from './product.schema'
 
-import type { Application, HookContext } from '../../declarations'
+import type { Application } from '../../declarations'
 import { ProductService, getOptions } from './product.class'
 import { resolveToNumber } from '../../hooks/resolve-to-number'
 import percentEncode from '@stdlib/string-percent-encode'
@@ -22,38 +27,29 @@ export const product = (app: Application) => {
   // Register our service on the Feathers application
   app.use('product', new ProductService(getOptions(app)), {
     // A list of all methods this service exposes externally
-    methods: ['find', 'get', 'create', 'update', 'patch', 'remove'],
+    methods: ['find', 'get', 'create', 'patch', 'remove'],
     // You can add additional custom events to be sent to clients here
     events: []
   })
   // Initialize hooks
   app.service('product').hooks({
     around: {
-      all: []
+      all: [
+        authenticate('jwt'),
+        schemaHooks.resolveExternal(productExternalResolver),
+        schemaHooks.resolveResult(productResolver)
+      ]
     },
     before: {
-      all: [
-        schemaHooks.validateQuery(productQueryValidator),
-        resolveToNumber(['price', 'discount']),
-        schemaHooks.validateData(productDataValidator),
-        schemaHooks.resolveQuery(productQueryResolver),
-        schemaHooks.resolveData(productDataResolver)
-      ],
-      create: [
-        async (context: HookContext) => {
-          console.log(`Running hook generateBusinessId on ${context.path}.${context.method}`)
-          
-          const prefix: string = percentEncode(context.data.shopId);
-          const name = percentEncode(context.data.name);
-          context.data.id = prefix + '-' + name;
-        }
-      ]
+      all: [schemaHooks.validateQuery(productQueryValidator), schemaHooks.resolveQuery(productQueryResolver)],
+      find: [],
+      get: [],
+      create: [schemaHooks.validateData(productDataValidator), schemaHooks.resolveData(productDataResolver)],
+      patch: [schemaHooks.validateData(productPatchValidator), schemaHooks.resolveData(productPatchResolver)],
+      remove: []
     },
     after: {
-      all: [
-        schemaHooks.resolveResult(productResolver),
-        schemaHooks.resolveExternal(productExternalResolver)
-      ]
+      all: []
     },
     error: {
       all: []

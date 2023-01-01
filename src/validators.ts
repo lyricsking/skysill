@@ -16,7 +16,8 @@ const formats: FormatsPluginOptions = [
   'uri-template',
   'json-pointer',
   'relative-json-pointer',
-  'regex'
+  'regex',
+  'int32'
 ]
 
 export const dataValidator: Ajv = addFormats(new Ajv({}), formats)

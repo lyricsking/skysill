@@ -1,24 +1,22 @@
+// For more information about this file see https://dove.feathersjs.com/guides/cli/service.html
+
 import { hooks as schemaHooks } from '@feathersjs/schema'
 
 import {
   orderDataValidator,
+  orderPatchValidator,
   orderQueryValidator,
   orderResolver,
-  orderDataResolver,
-  orderQueryResolver,
   orderExternalResolver,
-  orderPatchSchema,
+  orderDataResolver,
   orderPatchResolver,
-  orderPatchValidator,
-  Order,
-  OrderStatus
+  orderQueryResolver
 } from './order.schema'
 
-import type { Application, HookContext, NextFunction } from '../../declarations'
+import type { Application } from '../../declarations'
 import { OrderService, getOptions } from './order.class'
-import { resolveToNumber } from '../../hooks/resolve-to-number'
-import { generateId } from '../../hooks/generate-id'
 import { aroundPatchOrder } from '../../hooks/around-patch-order'
+import { generateId } from '../../hooks/generate-id'
 
 export * from './order.class'
 export * from './order.schema'
@@ -28,34 +26,30 @@ export const order = (app: Application) => {
   // Register our service on the Feathers application
   app.use('order', new OrderService(getOptions(app)), {
     // A list of all methods this service exposes externally
-    methods: ['find', 'get', 'create', 'update', 'patch', 'remove'],
+    methods: ['find', 'get', 'create', 'patch', 'remove'],
     // You can add additional custom events to be sent to clients here
     events: []
   })
   // Initialize hooks
   app.service('order').hooks({
     around: {
-      all: [],
-      patch: [
-        schemaHooks.validateData(orderPatchValidator),
-        schemaHooks.resolveData(orderPatchResolver),
-        aroundPatchOrder,
-      ],
+      all: [schemaHooks.resolveExternal(orderExternalResolver), schemaHooks.resolveResult(orderResolver)],
+      patch: [aroundPatchOrder]
     },
     before: {
-      all: [
-        schemaHooks.validateQuery(orderQueryValidator),
-        resolveToNumber(['subtotal', 'deliveryFee']),
-        schemaHooks.resolveQuery(orderQueryResolver),
-      ],
+      all: [schemaHooks.validateQuery(orderQueryValidator), schemaHooks.resolveQuery(orderQueryResolver)],
+      find: [],
+      get: [],
       create: [
-        schemaHooks.validateData(orderDataValidator),
+        schemaHooks.validateData(orderDataValidator), 
         schemaHooks.resolveData(orderDataResolver),
         generateId(11)
-      ], 
+      ],
+      patch: [schemaHooks.validateData(orderPatchValidator), schemaHooks.resolveData(orderPatchResolver)],
+      remove: []
     },
     after: {
-      all: [schemaHooks.resolveResult(orderResolver), schemaHooks.resolveExternal(orderExternalResolver)],
+      all: []
     },
     error: {
       all: []
